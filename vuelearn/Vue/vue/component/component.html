@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>组件</title>
+		<script type="text/javascript" src="../../js/vue.js" ></script>
+	</head>
+	<body>
+		<div id="v1">
+			<button-counter></button-counter>
+			<button-counter></button-counter>
+			<button-counter></button-counter>
+			<button-counter></button-counter>
+		</div>
+		<div id="v2">
+			<prop-text v-for="(item,index) in posts" v-bind:key="'info-'+index" v-bind:post="item"></prop-text>
+			<div v-bind:style="{fontSize:postFontSize+'em'}">
+				<big-post  v-for="(item,index) in posts" v-bind:key="index" v-bind:post="item" 
+					v-on="{enlargebig:enlargebigfun,enlargesmall:enlargesmallfun,enlargetext:enlargetextfun}">
+					
+				</big-post>
+			</div>
+		</div>
+		<div id="v3">动态组件
+			<template>
+				<dynamic-component></dynamic-component>
+			</template>
+		</div>
+		
+		<script type="text/jscript">
+			//定义一个名为button-counter 的新组件
+			Vue.component('button-counter',{
+				data:function(){//一个组件的data选项必须是一个函数
+					return{
+						count:0
+					}
+				},
+				/*data:{//直接报错
+					count:0
+				},*/
+				template:'<button @click="count++">点击我{{count}}次了</button>'
+			});
+			//Prop向子组件传递数据
+			Vue.component('prop-text',{
+				props:['post'],//该处变量应该和title传进来的变量一致
+				template:`
+				<div class="blog-post">
+					<h3>{{post.title}}</h3>
+					<div v-html="post.content"></div>
+				</div>`
+			});
+			//监听子组件事件
+			Vue.component('big-post',{
+				/*data:function(){
+					
+				},*/
+				props:['post'],
+				template:`
+				<div class="blog-post">
+					<h3>{{post.title}}</h3>
+					<button @click="$emit('enlargebig',0.1)">放大</button><!--使用事件抛出一个值-->
+					<button @click="$emit('enlargesmall')">缩小</button>
+					<button @click="$emit('enlargetext')">还原</button>
+					<div v-html="post.content"></div>
+				</div>
+				`
+			});
+			Vue.component('dynamic-component',{
+				//props:[''],
+				template:`	
+					<p>
+						<component :is="currentView"></component>
+						<button @click="changeView('A')">切换到A</button>
+						<button @click="changeView('B')">切换到B</button>
+						<button @click="changeView('C')">切换到C</button>
+					</p>
+				`
+			})
+			
+			let v1=new Vue({
+				el:'#v1',
+				data:{}
+			});
+			let v2=new Vue({
+				el:'#v2',
+				data:{
+					posts:[
+					{ id: 1, title: '缘起则聚，缘灭则散' ,content:'夜，结束了一天的喧嚣后安静下来，伴随着远处路灯那微弱的光。风，毫无预兆地席卷整片旷野，撩动人的思绪万千。星，遥遥地挂在天空之中，闪烁着它那微微星光，不如阳光般灿烂却如花儿般如痴如醉。'},
+      				{ id: 2, title: '时间煮雨' ,content:'“风吹雨成花，时间追不上白马。你年少掌心的梦话，依然紧握着吗？云翻涌成夏，眼泪被岁月蒸发，这条路上的你我她，有谁迷路吗……”听着吴亦凡演唱的《时间煮雨》，心中躁动不安的织梦儿，是否倏而沉默不语心有所感呢？'},
+      				{ id: 3, title: '你是我生命里无息的花开' ,content:'春露，从指尖滑落，溅出一朵绝美的花，留下一行忧伤的痕迹，梦里！谁在穿行？雨花伞下的并肩，在流年不老的记忆中渐行渐远，独留一抹清冷的时光，笑看花开花落人来人往。'}
+      				],
+      				postFontSize:1
+				},
+				methods:{
+					enlargebigfun:function(a){
+						this.postFontSize +=a;
+					},
+					enlargesmallfun:function(){
+						if(this.postFontSize>1){
+							this.postFontSize -=0.1;
+						}else{
+							alert('已调整到最小了，不能再缩小了哦');
+						}
+					},
+					enlargetextfun(){
+						this.postFontSize =1;
+					}
+				}
+			});
+			let v3=new Vue({
+				el:'#v3',
+				data:{
+					currentView:'comA'
+				},
+				methods:{
+					changeView(data){
+						this.currentView='com'+data;
+					}
+				},
+				component:{
+					comA:{
+						template:'<p>组件A</p>'
+					},
+					comB:{
+						template:'<p>组件B</p>'
+					},
+					comC:{
+						template:'<p>组件C</p>'
+					}
+				}
+			})
+			
+		</script>
+	</body>
+</html>

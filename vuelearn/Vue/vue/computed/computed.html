@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>计算属性</title>
+		<link rel="stylesheet" href="computed.css" />
+		<script type="text/javascript" src="../../js/vue.js" ></script>
+	</head>
+	<body>
+		<div id="v1">
+			<!--{{message.split('').reverse().join('')}}-->
+			{{message}}反转字符串后："{{leftMessage}}"			
+		</div>
+		<div id="v2" class="static" v-bind:class="{active:isActive}">			
+		</div>
+		<div id="v3">
+			<p v-if="one">您好！</p>
+			<p v-else>我不好</p>
+			<template v-if="ok">
+				<p>Paragraph1</p>
+				<p>Paragraph2</p>
+				<p>Paragraph3</p>
+				<p>Paragraph4</p>
+			</template>
+			<div v-if="randommath>0.5">随机数{{randommath}}大于0.5</div>
+			<div v-else>随机数{{randommath}}小于0.5</div>
+		</div>
+		<div id="v4">
+			<template v-if="logintype">
+				<label>Username</label>
+				<input placeholder="Enter your username" key="username-input"/>
+			</template>
+			<template v-else>
+				<label>Email</label>
+				<input placeholder="Enter your Email address" key="email-input" />
+			</template>
+			<button v-on:click="qiehuan">Toggle login type</button>
+		</div>
+		<div id="v5">
+			<a :href="url">百度一下</a>
+		</div>
+	</body>
+	<script type="text/javascript" src="computed.js" ></script>
+</html>

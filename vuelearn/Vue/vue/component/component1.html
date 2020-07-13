@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>组件自定义</title>
+		<script type="text/javascript" src="../../js/vue.js" ></script>
+	</head>
+	<body>
+		<div id="example">
+			<parent></parent>
+		</div>
+		<script>
+			var childNode = {
+			  template: `<button @click="incrementCounter">{{ counter }}</button>`,
+			  data(){
+			    return {
+			      counter: 0
+			    }
+			  },
+			  methods:{
+			    incrementCounter(){
+			      this.counter ++;
+			      this.$emit('increment');
+			    }
+			  },
+			}
+			var parentNode = {
+			  template: `
+			  <div class="parent">
+			    <p>{{total}}</p>
+			    <child @increment="incrementTotal"></child>
+			    <child @increment="incrementTotal"></child>
+			  </div>
+			  `,
+			  components: {//对象里面有组件这个属性吗，是否一定识别
+			    'child': childNode
+			  },
+			  data(){
+			    return {
+			      'total':0
+			    }
+			  },
+			  methods:{
+			    incrementTotal(){
+			      this.total ++;
+			    }
+			  }
+			};
+			// 创建根实例
+			let v1=new Vue({
+			  el: '#example',
+			  components: {
+			    'parent': parentNode
+			  }
+			})
+		</script>
+
+	</body>
+</html>

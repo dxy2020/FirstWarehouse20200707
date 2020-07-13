@@ -10,6 +10,36 @@
 
 ## 3.Vue实例
 
+1. $mount和le的区别
+
+   >\* 效果一样，将实例化后的vue挂载到指定的dom元素中。
+   >
+   >\* 如果在实例化vue的时候指定el，则该vue将会渲染在此`el`对应的dom中，反之，若没有指定el，则vue实例会处于一种“未挂载”的状态，此时可以通过`$mount`来手动执行挂载。
+   >
+   >\* 如果`$mount`没有提供参数，模板将被渲染为文档之外的的元素，并且你必须使用原生DOM API把它插入文档中
+
+   ```javascript
+   var MyComponent = Vue.extend({
+     template: '<div>Hello!</div>'
+   })
+   
+   // 创建并挂载到 #app (会替换 #app)
+   new MyComponent().$mount('#app')
+   
+   // 同上
+   new MyComponent({ el: '#app' })
+   
+   // 或者，在文档之外渲染并且随后挂载
+   var component = new MyComponent().$mount()
+   document.getElementById('app').appendChild(component.$el)
+   ```
+
+2. 实例属性
+
+   >\* <font color=red>`$options`</font>:获取定义在data外的数据和方法的。如：`this.$options.name`
+   >
+   >\* 
+
 ## 4.模板语法
 
 ### 4.1 介绍
@@ -207,8 +237,6 @@ watch: {
    ```
 
    ----
-
-   
 
 ## 7. 条件渲染
 
@@ -512,7 +540,7 @@ watch: {
 ## 14.插槽
 
 1. 具名插槽和作用域插槽：`v-slot`;
-2. 
+2. 父级模板里的所有内容都是在父级作用域中编译的；子模板里的所有内容都是在子作用域中编译的
 
 ## 15.动态组件&异步组件
 
@@ -535,6 +563,294 @@ watch: {
    xxx-enter/xxx-leave-to：指定隐藏时的样式
 
 ## 18.可重复性&组合
+
+### 18.1 混入
+
+1. 混入(mixin):来分发 Vue 组件中的可复用功能。一个混入对象可以包含任意组件选项。当组件使用混入对象时，所有混入对象的选项将被“混合”进入该组件本身的选项。
+
+   ```javascript
+   // 定义一个混入对象
+   var myMixin = {
+     created: function () {
+       this.hello()
+     },
+     methods: {
+       hello: function () {
+         console.log('hello from mixin!')
+       }
+     }
+   }
+   
+   // 定义一个使用混入对象的组件
+   var Component = Vue.extend({
+     mixins: [myMixin]
+   })
+   
+   var component = new Component() // => "hello from mixin!"
+   ```
+
+2. 选项合并:当组件和混入对象含有同名选项时，这些选项将以恰当的方式进行“合并”。
+
+   ```javascript
+   //数据对象在内部会进行递归合并，并在发生冲突时以组件数据优先。
+   var mixin = {
+     data: function () {
+       return {
+         message: 'hello',
+         foo: 'abc'
+       }
+     }
+   }
+   
+   new Vue({
+     mixins: [mixin],
+     data: function () {
+       return {
+         message: 'goodbye',
+         bar: 'def'
+       }
+     },
+     created: function () {
+       console.log(this.$data)
+       // => { message: "goodbye", foo: "abc", bar: "def" }
+     }
+   })
+   ```
+
+3. 同名钩子函数将合并为一个数组，因此都将被调用。另外，混入对象的钩子将在组件自身钩子**之前**调用。
+
+   ```javascript
+   var mixin = {
+     created: function () {
+       console.log('混入对象的钩子被调用')
+     }
+   }
+   
+   new Vue({
+     mixins: [mixin],
+     created: function () {
+       console.log('组件钩子被调用')
+     }
+   })
+   
+   // => "混入对象的钩子被调用"
+   // => "组件钩子被调用"
+   ```
+
+4. 值为对象的选项，例如 `methods`、`components` 和 `directives`，将被合并为同一个对象。两个对象键名冲突时，取组件对象的键值对。
+
+   ```javascript
+   var mixin = {
+     methods: {
+       foo: function () {
+         console.log('foo')
+       },
+       conflicting: function () {
+         console.log('from mixin')
+       }
+     }
+   }
+   
+   var vm = new Vue({
+     mixins: [mixin],
+     methods: {
+       bar: function () {
+         console.log('bar')
+       },
+       conflicting: function () {
+         console.log('from self')
+       }
+     }
+   })
+   
+   vm.foo() // => "foo"
+   vm.bar() // => "bar"
+   vm.conflicting() // => "from self"
+   ```
+
+5. 全局混入：一旦使用全局混入，它将影响**每一个**之后创建的 Vue 实例。使用恰当时，这可以用来为自定义选项注入处理逻辑。请谨慎使用全局混入，因为它会影响每个单独创建的 Vue 实例 (包括第三方组件)。大多数情况下，只应当应用于自定义选项，就像上面示例一样。推荐将其作为[插件](https://cn.vuejs.org/v2/guide/plugins.html)发布，以避免重复应用混入。
+
+   ```javascript
+   // 为自定义的选项 'myOption' 注入一个处理器。
+   Vue.mixin({
+     created: function () {
+       var myOption = this.$options.myOption
+       if (myOption) {
+         console.log(myOption)
+       }
+     }
+   })
+   
+   new Vue({
+     myOption: 'hello!'
+   })
+   // => "hello!"
+   ```
+
+6. 自定义选项合并策略：自定义选项将使用默认策略，即简单地覆盖已有值。如果想让自定义选项以自定义逻辑合并，可以向 `Vue.config.optionMergeStrategies` 添加一个函数
+
+   ```javascript
+   Vue.config.optionMergeStrategies.myOption = function (toVal, fromVal) {
+     // 返回合并后的值
+   }
+   ```
+
+### 18.2 自定义指令
+
+1. 全局自定义指令
+
+   ```javascript
+   // 注册一个全局自定义指令 `v-focus`
+   Vue.directive('focus', {
+     // 当被绑定的元素插入到 DOM 中时……
+     inserted: function (el) {
+       // 聚焦元素
+       el.focus()
+     }
+   })
+   ```
+
+2. 局部自定义指令
+
+   ```javascript
+   directives: {
+     focus: {
+       // 指令的定义
+       inserted: function (el) {
+         el.focus()
+       }
+     }
+   }
+   ```
+
+3. 钩子函数：一个指令定义对象可以提供如下几个钩子函数 (均为可选)
+
+   >- `bind`：只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置。
+   >- `inserted`：被绑定元素插入父节点时调用 (仅保证父节点存在，但不一定已被插入文档中)。
+   >- `update`：所在组件的 VNode 更新时调用，**但是可能发生在其子 VNode 更新之前**。指令的值可能发生了改变，也可能没有。但是你可以通过比较更新前后的值来忽略不必要的模板更新 (详细的钩子函数参数见下)。
+   >
+   >- `componentUpdated`：指令所在组件的 VNode **及其子 VNode** 全部更新后调用。
+   >- `unbind`：只调用一次，指令与元素解绑时调用。
+
+4. 钩子函数参数
+
+   >- `el`：指令所绑定的元素，可以用来直接操作 DOM。
+   >- `binding`：一个对象，包含以下 property：
+   >  - `name`：指令名，不包括 `v-` 前缀。
+   >  - `value`：指令的绑定值，例如：`v-my-directive="1 + 1"` 中，绑定值为 `2`。
+   >  - `oldValue`：指令绑定的前一个值，仅在 `update` 和 `componentUpdated` 钩子中可用。无论值是否改变都可用。
+   >  - `expression`：字符串形式的指令表达式。例如 `v-my-directive="1 + 1"` 中，表达式为 `"1 + 1"`。
+   >  - `arg`：传给指令的参数，可选。例如 `v-my-directive:foo` 中，参数为 `"foo"`。
+   >  - `modifiers`：一个包含修饰符的对象。例如：`v-my-directive.foo.bar` 中，修饰符对象为 `{ foo: true, bar: true }`。
+   >- `vnode`：Vue 编译生成的虚拟节点。
+   >- `oldVnode`：上一个虚拟节点，仅在 `update` 和 `componentUpdated` 钩子中可用。
+
+   ```html
+   <div id="hook-arguments-example" v-demo:foo.a.b="message"></div>
+   <script type="text/javascript">
+       Vue.directive('demo', {
+     bind: function (el, binding, vnode) {
+       var s = JSON.stringify
+       el.innerHTML =
+         'name: '       + s(binding.name) + '<br>' +
+         'value: '      + s(binding.value) + '<br>' +
+         'expression: ' + s(binding.expression) + '<br>' +
+         'argument: '   + s(binding.arg) + '<br>' +
+         'modifiers: '  + s(binding.modifiers) + '<br>' +
+         'vnode keys: ' + Object.keys(vnode).join(', ')
+     }
+   })
+   
+   new Vue({
+     el: '#hook-arguments-example',
+     data: {
+       message: 'hello!'
+     }
+   })
+   </script>
+   ```
+
+5. 动态指令参数
+
+   > - 指令的参数可以是动态的。例如：在<font color=red>`v-mydirective:[argument]="value"` </font>中，<font color=red>`argument` </font>参数可以根据组件实例数据进行更新！
+
+   ```html
+   <!--例如你想要创建一个自定义指令，用来通过固定布局将元素固定在页面上。我们可以像这样创建一个通过指令值来更新竖直位置像素值的自定义指令：-->
+   <div id="baseexample">
+     <p>Scroll down the page</p>
+     <p v-pin="200">Stick me 200px from the top of the page</p>
+   </div>
+   <script type="text/javascript">
+       Vue.directive('pin', {
+         bind: function (el, binding, vnode) {
+           el.style.position = 'fixed'
+           el.style.top = binding.value + 'px'
+         }
+       })
+   
+   new Vue({
+     el: '#baseexample'
+   })
+   </script>
+   ```
+
+   ```html
+   <!--这会把该元素固定在距离页面顶部 200 像素的位置。但如果场景是我们需要把元素固定在左侧而不是顶部又该怎么办呢？这时使用动态参数就可以非常方便地根据每个组件实例来进行更新。-->
+   <div id="dynamicexample">
+     <h3>Scroll down inside this section ↓</h3>
+     <p v-pin:[direction]="200">I am pinned onto the page at 200px to the left.</p>
+   </div>
+   <script type="text/javascript">
+   Vue.directive('pin', {
+     bind: function (el, binding, vnode) {
+       el.style.position = 'fixed'
+       var s = (binding.arg == 'left' ? 'left' : 'top')
+       el.style[s] = binding.value + 'px'
+     }
+   })
+   
+   new Vue({
+     el: '#dynamicexample',
+     data: function () {
+       return {
+         direction: 'left'
+       }
+     }
+   })
+   </script>
+   ```
+
+6. 函数简写
+
+   <font color=red> `bind`</font> 和<font color=red> `update` </font>时触发相同行为，而不关心其它的钩子。
+
+   ```javascript
+   Vue.directive('color-swatch', function (el, binding) {
+     el.style.backgroundColor = binding.value
+   })
+   ```
+
+7. 对象字面量
+
+   如果指令需要多个值，可以传入一个 JavaScript 对象字面量。记住，指令函数能够接受所有合法的 JavaScript 表达式。
+
+   ```html
+   <div v-demo="{ color: 'white', text: 'hello!' }"></div>
+   <script type="text/javascript">
+       Vue.directive('demo', function (el, binding) {
+     console.log(binding.value.color) // => "white"
+     console.log(binding.value.text)  // => "hello!"
+   })
+   </script>
+   ```
+
+### 18.3 渲染函数&JSX
+
+### 18.4 插件
+
+### 18.5 过滤器
+
+
 
 ## 19.工具
 
@@ -604,3 +920,12 @@ Vue还会对事件进行监听 ,当我们改变视图(view)的时候 ,通过DOM 
 
    beforeDestroy():做首尾工作，如：清除定时器
 
+## 14.API
+
+### 14.1 vue.extend()
+
+1. vue.extend()方法：vue的一个构造器，继承自vue。
+
+2. Vue构造器：创建一个"子类"。参数是一个包含组件选项的对象。
+
+3. data选项是特例，需要注意-在Vue.extend()中它必须是函数。

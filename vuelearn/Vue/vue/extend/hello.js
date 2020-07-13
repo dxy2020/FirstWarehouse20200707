@@ -1,0 +1,23 @@
+//hello.js
+//有问题，待处理
+import HelloTemplate from './createobj.js';
+//使用extend方法创建vue的子类
+const HelloConstructor=Vue.extend(HelloTemplate);
+//使用这个方法调用hello组件
+function Hello(options){
+	options=options||{};
+	if(typeof options==='string'){
+		options={
+			text:options
+		}
+	}
+}
+
+//实例化子组件，然后获取到DOM结构并挂载到body上
+const helloInstence=new HelloConstructor({data:'hello'});//const helloInstence=new HelloConstructor({data:options});
+console.log(helloInstence);
+helloInstence.vm=helloInstence.$mount();
+console.log(helloInstence.vm);
+document.body.appendChild(helloInstence.vm.$el);
+
+export default Hello;

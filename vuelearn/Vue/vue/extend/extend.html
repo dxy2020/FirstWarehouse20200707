@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>extend构造器</title>
+		<script type="text/javascript" src="../../js/vue.js" ></script>
+	</head>
+	<body>
+		<!--vue.extend()方法：vue的一个构造器，继承自vue。-->
+		<!--Vue构造器：创建一个"子类"。参数是一个包含组件选项的对象。-->
+		<!--data选项是特例，需要注意-在Vue.extend()中它必须是函数。-->
+		<div id="v1"></div>
+		<script type="text/javascript">
+			//创建构造器
+			let ex=Vue.extend({
+				data:function(){
+					return{
+						firstName:'Z',
+						lastName:'S',
+						myName:'zhangsan'
+					}
+				},
+				template:'<p>firstName:{{firstName}},lastName:{{lastName}},myName:{{myName}}</p>',
+			});
+			//创建ex实例，并挂载到一个元素上。
+			new ex().$mount('#v1');
+		</script>
+		<script type="module" src="./hello.js" ></script>
+		<!--<script type="module" src="./main.js" ></script>-->
+		
+	</body>
+</html>

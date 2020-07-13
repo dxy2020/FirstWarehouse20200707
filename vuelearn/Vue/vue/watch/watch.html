@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>监听属性</title>
+		<script type="text/javascript" src="../../js/vue.js" ></script>
+	</head>
+	<body>
+		<div id="v1">
+			<p style="font-size: 25px;">计时器：{{counter}}</p>
+			<button @click="counter++">点击+1</button>
+		</div>
+		<div id="v2" style="padding-top: 10px;">
+			千米：<input type="text" v-model="Kilometer" />
+			米：<input type="text" v-model="meter"/>
+			<p id="distancetext"></p>
+		</div>
+		<script type="text/javascript">
+			let v1=new Vue({
+				el:'#v1',
+				data:{
+					counter:0
+				}
+			});
+			v1.$watch('counter',function(nval,oval){//对counter进行监听
+				console.log('计数器值的变化:',oval,' 变为：',nval);
+			});
+			let v2=new Vue({
+				el:'#v2',
+				data:{
+					Kilometer:0,
+					meter:0
+				},
+				watch:{
+					Kilometer:function(val){
+						this.meter=this.Kilometer*1000;
+					},
+					meter:function(){
+						this.Kilometer=this.meter/1000;
+					}
+				}
+			});//$watch实例方法
+			v2.$watch('Kilometer',function(newval,oldval){//vm.kilometers改变后回调
+				document.getElementById('distancetext').innerHTML= "修改前值为: " + oldval + "，修改后值为: " + newval;
+			})
+		</script>
+	</body>
+</html>

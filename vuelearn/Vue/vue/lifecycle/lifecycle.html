@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>生命周期</title>
+		<script type="text/javascript" src="../../js/vue.js" ></script>
+	</head>
+	<body>
+		<div id="v1">
+			<button @click="destory">停止</button>
+			<p v-show="isShow">生命周期</p>
+		</div>
+		<script type="text/javascript">
+			let v1=new Vue({
+				el:'#v1',
+				data:{
+					isShow:true,
+					sum:0,
+					//intervalId:''
+				},
+				//1.初始化阶段
+				beforeCreate(){
+					
+				},
+				created(){
+					
+				},
+				beforeMounted(){
+					
+				},
+				mounted:function(){//初始化显示之后立即调用(1次)
+					this.intervalId=setInterval(()=>{//setInterval() 方法可按照指定的周期（以毫秒计）来调用函数或计算表达式。
+						console.log("this.sum++");
+						this.isShow=!this.isShow
+					},1000)
+				},
+				//2.更新阶段
+				beforeUpdate(){
+					
+				},
+				updated(){
+					console.log("我在更新");
+				},
+				//死亡阶段
+				beforeDestroy:function(){//死亡之前调用(1次)
+					//消除定时器
+					clearInterval(this.intervalId);
+				},
+				destroy:function(){},
+				methods:{
+					destory:function(){
+						//停止
+						this.$destroy();//该方法可以停车<p>内容的闪烁，但不能停止循环定时器
+					}
+				}
+			})
+			
+		</script>
+	</body>
+</html>

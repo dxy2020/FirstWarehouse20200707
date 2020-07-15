@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>插件</title>
+		<script type="text/javascript" src="../../js/vue.js" ></script>
+		<script type="text/javascript" src="MyPlugin.js" ></script>
+	</head>
+	<body>
+		<div id="v1">
+			<p v-my-directive="msg"></p>
+		</div>
+		<script type="text/javascript">
+			//声明使用插件
+			Vue.use(MyPlugin);//内部会执行MyPlugin.install(Vue)
+			Vue.myGlobalMethod();
+			const vm=new Vue({
+				el:'#v1',
+				data:{
+					msg:'you found me!'
+				}
+			});
+			vm.$myMethod();//调用实例方法
+		</script>
+	</body>
+</html>

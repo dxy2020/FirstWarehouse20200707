@@ -7,6 +7,7 @@
 1. 构建用户界面的渐进式框架。
 2. 自底向上增量开发的设计。
 3. 通过尽可能简单的API实现响应的数据绑定和组合的视图组件。
+4. Vue做的都是单页应用（<font color=red>解释</font>:**当你的项目准备打包时，运行`npm run build`时，就会生成dist文件夹，这里面只有静态资源和一个index.html页面**）
 
 ## 3.Vue实例
 
@@ -548,6 +549,402 @@ watch: {
 
 ## 16.处理边界情况
 
+## 17.路由
+
+1. `Vue.js` 路由允许我们通过不同的 URL 访问不同的内容。
+
+2. 通过 Vue.js 可以实现多视图的单页Web应用（single page web application，SPA）。
+
+3. SPA(单页应用)的路径管理器。或vue-router就是WebApp的链接路径管理系统。
+
+4. vue的单页面应用是基于路由和组件的，路由用于设定访问路径，并将路径和组件映射起来。
+
+5. **路由模块的本质就是建立起URL和页面之间的映射关系。**
+
+6. **vue-router实现原理：**
+
+   SPA(single page application):单一页面应用程序，只有一个完整的页面；它在加载页面时，不会加载整个页面，而是只更新某个指定的容器中内容。**单页面应用(SPA)的核心之一是: 更新视图而不重新请求页面**;vue-router在实现单页面前端路由时，提供了两种方式：Hash模式和History模式；根据mode参数来决定采用哪一种方式。
+
+   **1.Hash模式：**
+
+   >**vue-router 默认 hash 模式 —— 使用 URL 的 hash 来模拟一个完整的 URL，于是当 URL 改变时，页面不会重新加载。** hash（#）是URL 的锚点，代表的是网页中的一个位置，单单改变#后的部分，浏览器只会滚动到相应位置，不会重新加载网页，也就是说**hash 出现在 URL 中，但不会被包含在 http 请求中，对后端完全没有影响，因此改变 hash 不会重新加载页面**；同时每一次改变#后的部分，都会在浏览器的访问历史中增加一个记录，使用”后退”按钮，就可以回到上一个位置；所以说**Hash模式通过锚点值的改变，根据不同的值，渲染指定DOM位置的不同数据。hash 模式的原理是 onhashchange 事件(监测hash值变化)，可以在 window 对象上监听这个事件**。
+
+   **2.History模式：**
+
+   >由于hash模式会在url中自带#，如果不想要很丑的 hash，我们可以用路由的 history 模式，只需要在配置路由规则时，加入"mode: 'history'",**这种模式充分利用了html5 history interface 中新增的 pushState() 和 replaceState() 方法。这两个方法应用于浏览器记录栈，在当前已有的 back、forward、go 基础之上，它们提供了对历史记录修改的功能。只是当它们执行修改时，虽然改变了当前的 URL ，但浏览器不会立即向后端发送请求**。
+   >
+   >```javascript
+   >//main.js文件中
+   >const router = new VueRouter({
+   >  mode: 'history',
+   >  routes: [...]
+   >})
+   >```
+
+   ><font color=red>注意：</font>**建议在服务端增加一个覆盖所有情况的候选资源：如果 URL 匹配不到任何静态资源，则应该返回同一个 index.html 页面，这个页面就是你 app 依赖的页面。**
+   >
+   >```javascript
+   > export const routes = [ 
+   >  {path: "/", name: "homeLink", component:Home}
+   >  {path: "/register", name: "registerLink", component: Register},
+   >  {path: "/login", name: "loginLink", component: Login},
+   >  {path: "*", redirect: "/"}]
+   >/*此处就设置如果URL输入错误或者是URL 匹配不到任何静态资源，就自动跳到到Home页面*/
+   >```
+
+7. **使用路由模块来实现页面跳转的方式**
+
+   >- 方式1：直接修改地址栏
+   >- 方式2：this.$router.push(‘路由地址’)
+   >- 方式3：`<router-link to="路由地址"></router-link>`
+
+8. vue-router使用方式
+
+   >1.下载 `npm i vue-router -S`
+   >2.在main.js中引入 `import VueRouter from 'vue-router'`;
+   >3.安装插件`Vue.use(VueRouter)`;
+   >4.创建路由对象并配置路由规则 `let router = new VueRouter({routes:[{path:'/home',component:Home}]})`;
+   >5.将其路由对象传递给Vue的实例，options中加入 `router:router`
+   >6.在app.vue中留坑 `<router-view></router-view>`
+
+```javascript
+//main.js文件中引入
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+//主体
+import App from './components/app.vue';
+import Home from './components/home.vue'
+//安装插件
+Vue.use(VueRouter); //挂载属性
+//创建路由对象并配置路由规则
+let router = new VueRouter({
+    routes: [
+        //一个个对象
+        { path: '/home', component: Home }
+    ]
+});
+//new Vue 启动
+new Vue({
+    el: '#app',
+    //让vue知道我们的路由规则
+    router: router, //可以简写router
+    render: c => c(App),
+})
+```
+
+```vue
+//app.vue中
+<template>
+    <div>
+        <!-- 留坑，非常重要 -->
+        <router-view></router-view>
+    </div>
+</template>
+<script>
+    export default {
+        data(){
+            return {}
+        }
+    }
+</script>
+```
+
+9. vue-router参数传递
+
+   > 声明式的导航`<router-link :to="...">`和编程式的导航`router.push(...)`都可以传参。
+   >
+   > 1. 用name传递参数：在路由文件src/router/index.js里配置name属性。
+   >
+   >    ```javascript
+   >    routes: [
+   >        {
+   >          path: '/',
+   >          name: 'Hello',
+   >          component: Hello
+   >        }
+   >    ]
+   >    /*模板里(src/App.vue)用$route.name来接收 比如：<p>{{ $route.name}}</p>*/
+   >    ```
+   >
+   > 2. 通过<font color=red>`<router-link>`</font>标签中的to传参
+   >
+   >    ```javascript
+   >    <router-link :to="{name:xxx,params:{key:value}}">valueString</router-link>
+   >    ```
+   >
+   >    比如先在src/App.vue文件中:
+   >
+   >    ```javascript
+   >    <router-link :to="{name:'hi1',params:{username:'jspang',id:'555'}}">Hi页面1</router-link>
+   >    ```
+   >
+   >    然后把src/router/index.js文件里给hi1配置的路由起个name,就叫hi1.
+   >
+   >    ```javascript
+   >    {path:'/hi1',name:'hi1',component:Hi1}
+   >    ```
+   >
+   >    最后在模板里(src/components/Hi1.vue)用`$route.params.username`进行接收.
+   >
+   >    ```javascript
+   >    {{$route.params.username}}-{{$route.params.id}}
+   >    ```
+   >
+   > 3. **利用URL传递参数--在配置文件里以冒号的形式设置参数。**
+   >
+   >    我们在/src/router/index.js文件里配置路由
+   >
+   >    ```javascript
+   >    {
+   >        path:'/params/:newsId/:newsTitle',
+   >        component:Params
+   >    }
+   >    ```
+   >
+   >    ```javascript
+   >    /*我们需要传递参数是新闻ID（newsId）和新闻标题（newsTitle）.所以我们在路由配置文件里制定了这两个值。
+   >    在src/components目录下建立我们params.vue组件，也可以说是页面。我们在页面里输出了url传递的的新闻ID和新闻标题。*/
+   >    <template>
+   >        <div>
+   >            <h2>{{ msg }}</h2>
+   >            <p>新闻ID：{{ $route.params.newsId}}</p>
+   >            <p>新闻标题：{{ $route.params.newsTitle}}</p>
+   >        </div>
+   >    </template>
+   >    <script>
+   >    export default {
+   >      name: 'params',
+   >      data () {
+   >        return {
+   >          msg: 'params page'
+   >        }
+   >      }
+   >    }
+   >    </script>
+   >    /*在App.vue文件里加入我们的<router-view>标签。这时候我们可以直接利用url传值了
+   >    <router-link to="/params/198/jspang website is very good">params</router-link>*/
+   >    ```
+   >
+   > 4. 使用path来匹配路由，然后通过query来传递参数
+   >
+   >    ```javascript
+   >    <router-link :to="{ name:'Query',query: { queryId:  status }}" >
+   >         router-link跳转Query
+   >    </router-link>
+   >    ```
+   >
+   >    对应路由配置
+   >
+   >    ```javascript
+   >    {
+   >         path: '/query',
+   >         name: 'Query',
+   >         component: Query
+   >       }
+   >    //获得参数：this.$route.query.queryId
+   >    ```
+
+10. vue-router配置子路由（二级路由）
+
+    **如何实现下图效果(H1页面和H2页面嵌套在主页中)**？
+
+    ![image-20200714145410162](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\vue-router-效果页面.gif)
+
+    > 1. 首先用`<router-link>`标签增加了两个新的导航链接
+    >
+    >    ```javascript
+    >    <router-link :to="{name:'HelloWorld'}">主页</router-link>
+    >    <router-link :to="{name:'H1'}">H1页面</router-link>
+    >    <router-link :to="{name:'H2'}">H2页面</router-link>
+    >    ```
+    >
+    >    
+    >
+    > 2. 在HelloWorld.vue加入`<router-view>`标签，给子模板提供插入位置
+    >
+    >    ```vue
+    >    <template>
+    >      <div class="hello">
+    >        <h1>{{ msg }}</h1>
+    >        <router-view></router-view>
+    >      </div>
+    >    </template>
+    >    ```
+    >
+    >    
+    >
+    > 3. 在components目录下新建两个组件模板 H1.vue 和 H2.vue
+    >    两者内容类似，以下是H1.vue页面内容：
+    >
+    >    ```javascript
+    >     <template>
+    >      <div class="hello">
+    >        <h1>{{ msg }}</h1>
+    >      </div>
+    >    </template>
+    >    <script>
+    >      export default {
+    >        data() {
+    >          return {
+    >            msg: 'I am H1 page,Welcome to H1'
+    >          }
+    >        }
+    >      }
+    >    </script>
+    >    ```
+    >
+    >    
+    >
+    > 4. 修改router/index.js代码，子路由的写法是在原有的路由配置下加入children字段。
+    >
+    >    ```javascript
+    >    routes: [
+    >        {
+    >          path: '/',
+    >          name: 'HelloWorld',
+    >          component: HelloWorld,
+    >          children: [{path: '/h1', name: 'H1', component: H1},//子路由的<router-view>必须在HelloWorld.vue中出现
+    >            {path: '/h2', name: 'H2', component: H2}
+    >          ]
+    >        }
+    >      ]
+    >    ```
+    >
+    >    
+
+11. 单页面多路由区域操作
+
+    在一个页面里我们有两个以上`<router-view>`区域，我们通过配置路由的js文件，来操作这些区域的内容
+
+    >1. App.vue文件，在`<router-view>`下面新写了两行`<router-view>`标签,并加入了些CSS样式.
+    >
+    >   ```vue
+    >   <template>
+    >     <div id="app">
+    >       <img src="./assets/logo.png">
+    >          <router-link :to="{name:'HelloWorld'}"><h1>H1</h1></router-link>
+    >          <router-link :to="{name:'H1'}"><h1>H2</h1></router-link>
+    >       <router-view></router-view>
+    >       <router-view name="left" style="float:left;width:50%;background-color:#ccc;height:300px;"/>
+    >       <router-view name="right" style="float:right;width:50%;background-color:yellowgreen;height:300px;"/>
+    >     </div>
+    >   </template>
+    >   ```
+    >
+    >2. 需要在路由里配置这三个区域，配置主要是在components字段里进行.
+    >
+    >   ```javascript
+    >   export default new Router({
+    >       routes: [
+    >         {
+    >           path: '/',
+    >           name: 'HelloWorld',
+    >           components: {default: HelloWorld,
+    >             left:H1,//显示H1组件内容'I am H1 page,Welcome to H1'
+    >             right:H2//显示H2组件内容'I am H2 page,Welcome to H2'
+    >           }
+    >         },
+    >         {
+    >           path: '/h1',
+    >           name: 'H1',
+    >           components: {default: HelloWorld,
+    >             left:H2,//显示H2组件内容
+    >             right:H1//显示H1组件内容
+    >           }
+    >         }
+    >       ]
+    >     })
+    >   ```
+
+12. `$route` 和 `$router` 的区别
+
+    **$route 是“路由信息对象”，包括 path，params，hash，query，fullPath，matched，name 等路由信息参数。**
+
+    **① `$route.path`**
+     字符串，对应当前路由的路径，总是解析为绝对路径，如 "/order"。
+
+    **② `$route.params`**
+     一个 key/value 对象，包含了 动态片段 和 全匹配片段，
+     如果没有路由参数，就是一个空对象。
+
+    **③ `$route.query`**
+     一个 key/value 对象，表示 URL 查询参数。
+     例如，对于路径 /foo?user=1，则有 $route.query.user为1，
+     如果没有查询参数，则是个空对象。
+
+    **④ `$route.hash`**
+     当前路由的 hash 值 (不带 #) ，如果没有 hash 值，则为空字符串。
+
+    **⑤ `$route.fullPath`**
+     完成解析后的 URL，包含查询参数和 hash 的完整路径。
+
+    **⑥ `$route.matched`**
+     数组，包含当前匹配的路径中所包含的所有片段所对应的配置参数对象。
+
+    **⑦ `$route.name`   当前路径名字**
+
+    **$router 是“路由实例”对象，即使用 new VueRouter创建的实例，包括了路由的跳转方法，钩子函数等。**
+
+    ```html
+    <!--$router常见跳转条件-->
+    <button @click="goToMenu" class="btn btn-success">Let's order！</button>
+    .....
+    <script>
+      export default{
+        methods:{
+          goToMenu(){
+            this.$router.go(-1)//跳转到上一次浏览的页面
+            this.$router.replace('/menu')//指定跳转的地址
+            this.$router.replace({name:'menuLink'})//指定跳转路由的名字下
+            this.$router.push('/menu')//通过push进行跳转
+            this.$router.push({name:'menuLink'})//通过push进行跳转路由的名字下
+          }
+        }
+      }
+    </script>
+    ```
+
+    **`$router.push`和`$router.replace`的区别**：
+
+    - 使用push方法的跳转会向 history 栈添加一个新的记录，当我们点击浏览器的返回按钮时可以看到之前的页面。
+    - 使用replace方法不会向 history 添加新记录，而是替换掉当前的 history 记录，即当replace跳转到的网页后，‘后退’按钮不能查看之前的页面。
+
+13. 如何设置404页面
+
+    用户会经常输错页面，当用户输错页面时，我们希望给他一个友好的提示页面，这个页面就是我们常说的404页面。vue-router也为我们提供了这样的机制。
+
+    >1. 设置我们的路由配置文件（/src/router/index.js）
+    >
+    >   ```javascript
+    >   {
+    >      path:'*',
+    >      component:Error
+    >   }
+    >   //这里的path:'*'就是输入地址不匹配时，自动显示出Error.vue的文件内容
+    >   ```
+    >
+    >2. 在/src/components/文件夹下新建一个Error.vue的文件。简单输入一些有关错误页面的内容。
+    >
+    >   ```javascript
+    >   <template>
+    >       <div>
+    >           <h2>{{ msg }}</h2>
+    >       </div>
+    >   </template>
+    >   <script>
+    >   export default {
+    >     data () {
+    >       return {
+    >         msg: 'Error:404'
+    >       }
+    >     }
+    >   }
+    >   </script>
+    >   //此时我们随意输入一个错误的地址时，便会自动跳转到404页面
+    >   ```
+
+    -------
+
 ## 17.过渡&动画
 
 1. 操作css的trasition或animation
@@ -850,6 +1247,8 @@ watch: {
 
 ### 18.5 过滤器
 
+1. 对显示的数据进行格式化。
+
 
 
 ## 19.工具
@@ -860,7 +1259,7 @@ watch: {
 
 ## 22.迁移
 
-## 12.MVVM设计思想
+## 23.MVVM设计思想
 
 1.前端视图层概念，视图层分离。：MVVM把前端的视图层，分为了三部分 `Model`，`View` ，`VM ViewModel`
 
@@ -880,7 +1279,7 @@ Vue还会对事件进行监听 ,当我们改变视图(view)的时候 ,通过DOM 
 
 
 
-## 13.生命周期
+## 24.生命周期
 
 1. 初始化显示——>更新显示——>死亡
 
@@ -920,12 +1319,71 @@ Vue还会对事件进行监听 ,当我们改变视图(view)的时候 ,通过DOM 
 
    beforeDestroy():做首尾工作，如：清除定时器
 
-## 14.API
+## 25.API
 
-### 14.1 vue.extend()
+### 25.1 vue.extend()
 
 1. vue.extend()方法：vue的一个构造器，继承自vue。
 
 2. Vue构造器：创建一个"子类"。参数是一个包含组件选项的对象。
 
 3. data选项是特例，需要注意-在Vue.extend()中它必须是函数。
+
+## 26.Ajax(axios)
+
+1. axios 是一个基于Promise 用于浏览器和 nodejs 的 HTTP 客户端。
+
+   >\* 从浏览器中创建 XMLHttpRequest
+   >
+   >\* 从 node.js 发出 http 请求
+   >
+   >\* 支持 Promise API
+   >
+   >\* 拦截请求和响应
+   >
+   >\* 转换请求和响应数据
+   >
+   >\* 取消请求
+   >
+   >\* 自动转换JSON数据
+   >
+   >\* 客户端支持防止 CSRF/XSRF
+
+## 27.Vue-cli
+
+
+
+## 28.VueX(Vue状态管理模式)
+
+1. `Vue`为这些被多个组件频繁使用的值提供了一个统一管理的工具——`VueX`。在具有`VueX`的Vue项目中，我们只需要把这些值定义在VueX中，即可在整个Vue项目的组件中使用。
+
+2. 安装:转至vue-cli搭建的项目文件目录下
+
+   >1. Npm安装Vuex
+   >
+   >   ```
+   >   npm i vuex -s
+   >   ```
+   >
+   >2. 在项目的根目录下新增一个`store`文件夹，在该文件夹内创建index.js，项目的src文件夹结构如下：
+   >
+   >   ```
+   >   │  App.vue
+   >   │  main.js
+   >   │
+   >   ├─assets
+   >   │      logo.png
+   >   │
+   >   ├─components
+   >   │      HelloWorld.vue
+   >   │
+   >   ├─router
+   >   │      index.js
+   >   │
+   >   └─store
+   >          index.js
+   >   ```
+   >
+   >   
+   >
+   >   

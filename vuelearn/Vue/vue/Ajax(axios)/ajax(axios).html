@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>ajax(axios)请求</title>
+		<script type="text/javascript" src="../../js/vue.js" ></script>
+		<script type="text/javascript" src="../../js/axios.min.js" ></script>
+	</head>
+	<body>
+		<div id="v1">
+			<div v-for="site in info">{{info[site]}}</div>
+		</div>
+		<script type="text/javascript">
+			let v1=new Vue({
+				el:'#v1',
+				data:{
+//					info:0//无法个该处的info赋值
+				},
+				data(){
+					return{
+						info:1
+					}
+				},
+				mounted(){
+					console.log(this.info);
+					axios.get('http://127.0.0.1:90/vue-axios/vue-axios.php').
+					then(response=>{console.log(this.info);
+						this.info = response.data;
+						console.log(response.data);
+						let res=response.data;
+//						console.log(response.data.sites[0]);
+						
+					}
+					
+					).
+					catch(function(error){
+						console.log(error);
+					});
+				}
+			})
+		</script>
+	</body>
+</html>

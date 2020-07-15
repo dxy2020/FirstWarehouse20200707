@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>渲染函数</title>
+		<script type="text/javascript" src="../../js/vue.js" ></script>
+		
+	</head>
+	<body>
+		<div id="v1">
+			<blog-post>
+				<h1 slot="header">About Me</h1>
+				<p>Here's some page content, which will be included in vm.$slots.default, because it's not inside a named slot.</p>
+				<p slot="footer">Copyright 2016 Evan You</p>
+				<p>If I have some content down here, it will also be included in vm.$slots.default.</p>
+			</blog-post>
+		</div>
+		<script type="text/javascript">
+			// 注册
+			Vue.component('blog-post', {
+			  render: function (createElement) {
+			/*用来访问被插槽分发的内容，每个具名插槽有其相应的属性，例如slot="header"的内容将会在vm.$slots.header中找到，
+			vm.$slots实际就是插槽集内容，类似于$refs一样集合。（注意：vm.$slots.default 属性包括了所有没有被包含在具名
+			插槽中的节点，意思就是没丢在插槽集的多余节点。）*/
+			    var header = this.$slots.header//获得插槽集里名为header的内容
+			    var body   = this.$slots.default
+			    var footer = this.$slots.footer
+			//下面的div为包含创建三个节点的标签名，第一个header为组件名，第二个header为上面变量值
+			    return createElement('div', [
+			      createElement('header', header),
+			      createElement('main', body),
+			      createElement('footer', footer)
+			    ])
+			  }
+			})
+			// 创建根实例
+			new Vue({
+			  el: '#v1'
+			})
+		</script>
+	</body>
+</html>

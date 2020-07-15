@@ -1243,6 +1243,20 @@ new Vue({
 
 ### 18.3 渲染函数&JSX
 
+1. render：createElement、render、vm.$slot
+
+   > \* createElement接收3个参数：
+   >
+   > 1. 第一个参数可以是HTML标签名，组件或者函数都可以；此参数是必须的；
+   >
+   > 2. 第二个为数据对象（可选）;
+   >
+   > 3. 第三个为子节点（可选），实际就是加个东西进去。
+
+   
+
+   
+
 ### 18.4 插件
 
 ### 18.5 过滤器
@@ -1324,10 +1338,10 @@ Vue还会对事件进行监听 ,当我们改变视图(view)的时候 ,通过DOM 
 ### 25.1 vue.extend()
 
 1. vue.extend()方法：vue的一个构造器，继承自vue。
-
 2. Vue构造器：创建一个"子类"。参数是一个包含组件选项的对象。
-
 3. data选项是特例，需要注意-在Vue.extend()中它必须是函数。
+4. extend创建的是一个组件构造器，<font color=red>而不是一个具体的组件实例</font>，最终还是要通过Vue.component注册才可以使用。
+5. 组件构造器相当于Vue.component()方法的第二个参数部分。
 
 ## 26.Ajax(axios)
 

@@ -1365,6 +1365,325 @@ Vue还会对事件进行监听 ,当我们改变视图(view)的时候 ,通过DOM 
 
 ## 27.Vue-cli
 
+- 通过`@vue/cli`实现的一致的项目脚手架。
+- 通过`@vue/cli`+ `@vue/cli-service-global`实现的零配置原型开发。
+- 一个运行时依赖（`@vue/cli-service`），该依赖：
+  - 可升级；
+  - 基于webpack构建，并具有合理的替代配置；
+  - 可以通过项目内的配置文件进行配置；
+  - 可以通过插件进行扩展。
+- 一个丰富的官方插件集合，集成了前端生态中最好的工具。
+- 一套完全图形化的创建和管理Vue.js项目的用户界面。
+
+-----
+
+### 27.1 vue-cli2脚手架
+
+1. nodejs/npm环境安装
+
+- 常用dos命令：
+
+- - cd 打开文件夹、md创建新文件夹、dir 查看文件夹内容、cd .. 返回上一级文件夹、cls清屏
+
+2. vue-cli2安装：
+
+- npm(node package manager)是nodejs的包管理器，用于node插件管理（包括安装、卸载、管理依赖等）
+
+- cnpm 因为npm安装插件是从国外服务器下载，受网络影响大，可能出现异常，所以淘宝团队分享了使用国内镜像来代替国外服务器
+
+- 参数
+
+- - -g 参数，全局安装
+  - -S, `--save`安装包信息将加入到dependencie(生产阶段的依赖)
+  - -D, `--save --dev` 安装包信息将加入到devDependencie(开发阶段的依赖)
+  - i, 是 install 的缩写（前面没有 -）
+  - -gd/-gD/-g -d，综合上面两个参数，将开发华环境和生成环境都加进来
+  - npm root -g,查看全局安装的位置
+
+- npm install -g cnpm --registrys=[https://registry.npm.taobao.org](https://link.zhihu.com/?target=https%3A//registry.npm.taobao.org)
+
+- 为了避免每次安装都需要 --registry参数，可以使用如下命令进行永久设置
+
+- - npm config set registry [https://registry.npm.taobao.org](https://link.zhihu.com/?target=https%3A//registry.npm.taobao.org)
+
+- 安装 cnpm install -gd vue-cli，使用 `vue -V`，版本号为2.9.6
+
+### 27.2 创建vue-cli项目
+
+- 语法：vue init webpack projectName，这里使用的是webpack,projectName是工程名，注意工程名字一般小写
+- 创建过程的配置
+- - 是否安装vue-router，要安装
+  - 是否使用ESLint管理代码，代码风格管理工具，用来统一代码，不是项目的话，可以选择n
+  - 其他默认
+- 进入D盘，md vuecli/ cd vuecli
+- 初始化，vue init webpack test1，test1是子文件夹名字，如果初始化失败，重新安装
+- - 初始化后生成的目录主要有 build/config/node_modules/src
+  - src下包括有 assets/components/router/App.vue/main.js
+- 按照系统提示
+- - cd test1
+  - npm run dev
+- 然后就会进入 8080 本地界面
+
+### 27.3 自定义首页
+
+- 在components组件文件夹创建 first.vue
+- 编写代码：
+
+```js
+<template>
+    <div>
+        first.vue
+    </div>
+</template>
+```
+
+- 进入router文件夹下的 index.js，用来控制页面路由，添加代码，
+
+- - 首先引入 `import First from '@/components/first'`
+  - 然后重新执行，npm run dev
+
+### 27.4 router实现页面跳转
+
+- 在首页，可以通过链接进入a,b两个“页面”，其实是进入components中的vue页面
+- 修改 first.vue
+
+```js
+<template>
+    <div>
+        <router-link to="">转向A</router-link>
+        <router-link to="">转向B</router-link>
+    </div>
+</template>
+```
+
+1. 新创建两个components下的vue文件 A.vue/B.vue
+
+```js
+<template>
+    <div>
+        <p>我是A/B页面</p>
+        <p><router-link to="/">返回</router-link></p>  //这里直接返回根目录
+    </div>
+</template>
+```
+
+1. 在index.js中引入
+
+```js
+import A from '@/components/A
+import B from '@/components/B
+
+export default new Router({
+  export default new Router({
+  routes: [
+    {
+      path: '/',
+      //name: 'HelloWorld',
+      //component: HelloWorld
+      name: 'First',
+      component: First
+    },
+    {
+      path: '/a',  //定义路径名字
+      component: A
+    },
+    {
+      path: '/b',  //定义路径名字
+      component: B
+    }
+  ]
+})
+})
+```
+
+1. 进入跳转的页面 first.vue
+2. 在to后面添加路径名字，"/a"，"/b"
+
+### 27.5 router实现子路由1
+
+- 实现嵌套路由的效果：`children:[{},{}]`
+- 实现多层路由
+- 创建A1.vue作为A的子路由
+
+```js
+<template>
+    <div>
+        <p>我是A1页面</p>
+        <p><router-link to="/a">返回上一级<router-link></p>
+        <p><router-link to="/">返回首页</router-link></p>
+    </div>
+</template>
+```
+
+- 首先引入：`import A1 from '@/components/A1`
+- 作为子路由：
+
+```js
+export default new Router({
+  export default new Router({
+  routes: [
+    {
+      path: '/',
+      //name: 'HelloWorld',
+      //component: HelloWorld
+      name: 'First',
+      component: First
+    },
+    {
+      path: '/a',  //定义路径名字
+      component: A,
+      children: [
+        {
+            path:'/A1',
+            component: A1
+        }
+      ]
+    },
+    {
+      path: '/b',  //定义路径名字
+      component: B
+    }
+  ]
+})
+})
+```
+
+- 在A.vue中添加 `<p><router-link to:"/A1">转向A1</router-link></p>`
+
+- 这时候还不能进入到子路由A1页面，需要将路由挂载进来，在A.vue中添加`<router-view></router-view>`
+
+- - **但这里会将原来A.vue页面的元素也显示出来，也就是父子页面同时显示**，可以应用于某些固定的导航栏页面跳转
+
+### 27.6 router实现子路由2
+
+- 上一个子路由是父子的关系，这里要使用平级的功能
+- 只要将上一部分的children去掉，并将里面的内容提取到平级的部分
+
+```js
+{
+    path: '/a',  //定义路径名字
+    component: A,
+},
+{
+    path:'/A1',
+    component: A1
+}
+```
+
+### 27. 7 为什么不使用#号
+
+- 路由两种显示模式
+
+- - hash模式：地址栏包括#符号，且#后面的不被后台获取
+  - history模式：具有对url历史记录进行修改的功能（使用较多）
+
+- 在微信支付，分享url作为参数传递时，#不能满足需求
+
+- history需要后台配合，处理404问题
+
+- 去掉#符号，在index.js文件中修改
+
+```js
+export default new Router({
+  mode: 'history',   //这里添加 history的模式
+  routes: [
+    {
+        ...
+```
+
+### 27.8 单独安装 eslint
+
+- npm i eslint -S/--save （安装到本地目录，也就是该工程目录下）
+
+- 所有安装好的在package.json文件的dependencies下（或者devDependencies）下都会有相应的添加的项
+
+- eslint是规范检查，应该在开发环境中，生产环境中已经不太需要
+
+- 那我们首先卸载 npm uninstall eslint
+
+- 再重新安装到 dev 下，npm i eslint -D，这样就安装到devDependencies，也就是开发环境下。
+
+- - 不能使用 npm i eslint --dev，这样还是安装到生产环境，使用 npm i eslint --save-dev
+  - 可以使用 -D/--save-dev 安装到开发环境，缺一不可
+
+### 27.9 导入其他项目添加依赖并运行
+
+- 怎样导入vue-cli项目
+- 进入工程文件夹，npm install 安装相关依赖，部署配置环境，前提是vue和npm都安装
+- npm run dev 开始运行
+
+### 27.10 居中如何实现（主组件的样式设置）
+
+- 主页面的V logo 是怎么设置的？
+- 在 App.vue 的style样式设置中
+
+## 28.vue-cli3
+
+### 28.1 手动搭建vue-cli环境
+
+- 步骤
+
+- 安装依赖 npm install/ cnpm install
+
+- 初始化 npm init -f/ cnpm init -f
+
+- 安装组件，并查看安装后的内容
+
+- 具体流程如下：
+
+- 创建文件夹
+
+- 进入文件夹，安装依赖 npm install
+
+- 初始化 npm init -f，会生成 package.json 的文件
+
+- 安装router到开发环境，npn i vue-router -D/--save-dve，就会新增一个 node_modules 的文件夹
+
+- - 如果是全局安装，会安装到nodejs文件夹中的 node_modules文件夹
+
+- cd no*，进入到以 no 开头的文件夹
+
+### 28.2 卸载vue-cli2，并安装vue-cli3
+
+- 重新打开一个控制台，运行 npm uni/uninstall vue-cli -g
+- 如果运行 vue -V 仍能查找到版本号，则使用 cnpm 再卸载一次
+- 安装vue-cli3
+- 普通安装：npm install -g @vue/cli
+- 淘宝镜像：cnpm install -g @vue/cli
+
+### 28.3 vue-cli3图形界面
+
+- 在控制台输入 vue ui，便可以进入ui界面
+
+### 28.4 vue-cli3创建项目
+
+1. 首先创建新的文件夹，md test3，然后进入 cd test3
+2. 创建新的工程 vue create test3
+3. 用上下键来选择 default(babel,eslint)或者(Manually select features)
+4. 我们选择后面的一项，然后可以进入选择更多的插件
+5. 用上下键选择到某一个项，然后按空格键选择，去掉Linter（这里的eslint规范，初期先不加进去，不然会有很多格式的报错），选择后回车
+6. 选择history mode for router为 yes
+7. placing config for Babel,ESLint,etc,选择 package.json，这里需要按方向键调整
+8. 回车到开始安装
+9. 安装结束后，系统系统， cd test3, npm run serve
+10. App running at:
+11. Local: http://localhost:8080/
+12. Network: [http://172.31.226.37:8080/](https://link.zhihu.com/?target=http%3A//172.31.226.37%3A8080/)
+13. 上面是localhost
+14. 下面是本机配置的局域网IP地址
+
+### 28.5 项目目录结构
+
+- vue-cli3和vue-cli2有较大区别
+- 主要源程序还是在 src目录结构下， src下的components主要存放组件，views下主要存放视图
+
+### 28.6 vue-cli3导入其他项目
+
+- 先进入原来的test1工程的文件夹下
+- 安装依赖 npm install
+- 启动 npm run serve，会出现错误
+- 运行 npm run dev，可以正常运行
+
 
 
 ## 28.VueX(Vue状态管理模式)

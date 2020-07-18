@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>数据代理</title>
+		<script type="text/javascript" src="../../js/vue.js" ></script>
+	</head>
+	<body>
+		<div id="v1"></div>
+		<script type="text/javascript">
+			const v1=new Vue({
+				el:'#v1',
+				data:{
+					name:'databroker'
+				}
+			});
+			console.log(v1.name,v1);//databroker  vm代理对data数据的读操作
+			v1.name='newdata';//v1代理对data数据的写操作
+			console.log(v1._data.name,v1.name);//newdata
+		</script>
+	</body>
+</html>

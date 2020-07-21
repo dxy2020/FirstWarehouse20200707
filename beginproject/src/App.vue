@@ -7,17 +7,19 @@
       <router-link to="/about">About</router-link>
     </div>
     <router-view />-->
-    <HomePage></HomePage>
+	<router-view></router-view>
+    <!-- <Login></Login> -->
   </div>
 </template>
 <script>
-	import HomePage from "@/components/homepage/homepage.vue";
-	export default {
-  name: "homepage",//此时name的值不能与HomePage一样？
-  components: {
-    HomePage
-  }
-};
+	// import HomePage from "@/components/homepage/homepage.vue";
+// 	import Login from "@/components/login.vue";
+// 	export default {
+//   name: "login",//此时name的值不能与HomePage一样？
+//   components: {
+//     Login
+//   }
+// };
 </script>
 
 <style lang="less">

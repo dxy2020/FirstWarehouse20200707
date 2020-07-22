@@ -1,15 +1,26 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-import NewContact from "@/components/NewContact";
 import Login from "@/views/login/login.vue";
 import HomePage from "@/views/homepage/homepage.vue";
+import PlanService from "@/components/homepage/planservice.vue";
+import Home from "@/views/home.vue";
+import LeftMenu from "@/components/homepage/leftmenu";
 
 Vue.use(VueRouter);//组件
 
 const routes = [
 	{
-	  	path:"/",
+		path:"/leftmenu",
+		name:"LeftMenu",
+		component:LeftMenu
+	},
+	{
+		path:"/planservice",
+		name:"PlanService",
+		component:PlanService
+	},
+	{
+	  	path:"/login",
 	  	name:"Login",
 	  	component:Login
 	},
@@ -24,36 +35,31 @@ const routes = [
 				component: {homepage1:() =>
 				import("@/components/homepage/commonwork.vue")
 				}
-			},
-			{
-				path:'/planningservices',
-				name:"PlanningServices",
-				component:{homepage1: () =>
-				import("@/components/homepage/planningservices.vue")
-				}
-				
 			}
+			// {
+			// 	path:'/planservice',
+			// 	name:"PlanService",
+			// 	component:{homepage1: () =>
+			// 	import("@/components/homepage/planservice.vue")
+			// 	}
+				
+			// }
 		]
 	},
 	{
-	    path: "/home",
+	    path: "/",
 	    name: "Home",
 	    component: Home
-	},
-	{
-	    path: "/about",
-		name: "About",
-		// route level code-splitting
-		// this generates a separate chunk (about.[hash].js) for this route
-		// which is lazy-loaded when the route is visited.
-		component: () =>
-	  import(/* webpackChunkName: "about" */ "../views/About.vue")
-	},
-  	{
-	  	path:"/newContact",
-	  	name:"NewContact",
-	  	component:NewContact
-  	}
+	}
+	// {
+	//     path: "/about",
+	// 	name: "About",
+	// 	// route level code-splitting
+	// 	// this generates a separate chunk (about.[hash].js) for this route
+	// 	// which is lazy-loaded when the route is visited.
+	// 	component: () =>
+	//   import(/* webpackChunkName: "about" */ "../views/About.vue")
+	// }
   	
 ];
 

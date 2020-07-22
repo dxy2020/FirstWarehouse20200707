@@ -1,25 +1,11 @@
 <template>
   <div id="app">
-    <!--<div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/newContact">NewContact</router-link>|
-      <router-link to="/signUp">Signup</router-link>|
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />-->
 	<router-view></router-view>
-    <!-- <Login></Login> -->
   </div>
 </template>
+
 <script>
-	// import HomePage from "@/components/homepage/homepage.vue";
-// 	import Login from "@/components/login.vue";
-// 	export default {
-//   name: "login",//此时name的值不能与HomePage一样？
-//   components: {
-//     Login
-//   }
-// };
+
 </script>
 
 <style lang="less">

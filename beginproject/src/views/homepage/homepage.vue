@@ -3,13 +3,11 @@
 		<el-container>
 	  		<el-header style="width: 100%;height: 10%;">
 	  			<div class="menutwo">
-						  		<img src="./img/u72.png"/>
-						  		<p><span>规划服务</span></p>
-						  </div>
+				</div>
 	  		</el-header>
 		  		<el-container class="downcontainer">
-			    	<el-aside style="width: 8%;">
-						<div>
+			    	<el-aside style="width: 20%;">
+						<div class="left-menu">
 							<el-menu mode="vertical" default-active="1" menu-trigger="click" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"  collapse>
 							  <img src="./img/u24.png" style="margin-top: 10px;" />
 								<router-link to="commonwork">
@@ -47,7 +45,7 @@
 							  </el-menu-item>
 							</el-menu>
 						</div>
-						<div>
+						<div class="router-right">
 							<router-view></router-view>
 						</div>
 			    	</el-aside>
@@ -126,9 +124,6 @@ import OSM from "ol/source/OSM";
 		text-align: center;
 		/*line-height: 60px;*/
 	}
-	.downcontainer{
-
-	}
 	.el-aside{
 		background-color: #D3DCE6;
 		color: #333;/*无必要*/
@@ -158,17 +153,20 @@ import OSM from "ol/source/OSM";
   		
   	}
   	
-  	.el-menu-vertical-demo:not(.el-menu--collapse) {
-	    min-height: 100px;
+  /* 	.el-menu-vertical-demo:not(.el-menu--collapse) {
+	    min-height: 100px;   
 	   
-	   
-  	}
+  	} */
   	.el-menu-item {
   		margin-top: 12px;
   		height:12%; 
   		/* overflow: auto;	 */
   		
   	}
+	.left-menu,.router-right{
+		width: 10%;
+		float: left;
+	}
   	.el-menu-item div{
   		text-align: center;
   		height: 100%;

@@ -4,21 +4,22 @@ import Login from "@/views/login/login.vue";
 import HomePage from "@/views/homepage/homepage.vue";
 import PlanService from "@/components/homepage/planservice.vue";
 import Home from "@/views/home.vue";
-import LeftMenu from "@/components/homepage/leftmenu";
+// import LeftMenu from "@/components/homepage/leftmenu";
+import RationalityAnalysis from "@/components/homepage/rationalityAnalysis.vue"
 
 Vue.use(VueRouter);//组件
 
 const routes = [
-	{
-		path:"/leftmenu",
-		name:"LeftMenu",
-		component:LeftMenu
-	},
-	{
-		path:"/planservice",
-		name:"PlanService",
-		component:PlanService
-	},
+	// {
+	// 	path:"/leftmenu",
+	// 	name:"LeftMenu",
+	// 	component:LeftMenu,		
+	// },
+	// {
+	// 	path:"/",//rationalityAnalysis
+	// 	name:"RationalityAnalysis",
+	// 	component:RationalityAnalysis
+	// },
 	{
 	  	path:"/login",
 	  	name:"Login",
@@ -49,7 +50,29 @@ const routes = [
 	{
 	    path: "/",
 	    name: "Home",
-	    component: Home
+	    component: Home,
+		children:[
+			{
+				path:"/home/planservice",
+				name:"PlanService",
+				component:PlanService,
+				// redirect:'/home/planservice/rationalityAnalysis',
+				children:[
+					{					
+						path:"rationalityAnalysis",//rationalityAnalysis
+						name:"RationalityAnalysis",
+						component:RationalityAnalysis					
+						
+					}
+				]
+			},
+			{
+				path:"/home/rationalityAnalysis",//rationalityAnalysis
+				name:"RationalityAnalysis",
+				component:RationalityAnalysis					
+				
+			}
+		]
 	}
 	// {
 	//     path: "/about",

@@ -1,10 +1,11 @@
 import Vue from "vue";
-import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import ElementUI from "element-ui";
 import 'element-ui/lib/theme-chalk/index.css';
 import axios from 'axios';
+import VCharts from 'v-charts';
+import App from "./App.vue";
 //import Map from "ol/Map";
 //import View from "ol/View";
 //import TileLayer from "ol/layer/Tile";
@@ -12,6 +13,7 @@ import axios from 'axios';
 //import "ol/ol.css";
 Vue.prototype.$axios=axios;
 Vue.use(ElementUI);
+Vue.use(VCharts);
 Vue.config.productionTip = false;
 
 

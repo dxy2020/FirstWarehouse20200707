@@ -4,9 +4,9 @@
 		<div id="contain">
 			<div id="left" @click="onshow"><!-- <div id="left" @click="isShow=!isShow"> -->
 				<div id="left01"><leftmenu></leftmenu></div>				
-				<div id="left02" v-show="isShow">
-					<planservice></planservice>
-				</div>
+				<div id="left02">
+					<router-view></router-view>							
+				</div><!-- <planservice></planservice> -->
 			</div>
 			<div id="main" :style="{width:mainwh.width+'px'}"></div>
 		</div>
@@ -15,12 +15,12 @@
 
 <script>
 // @ is an alias to /src
-import planservice from "@/components/homepage/planservice.vue";
+// import planservice from "@/components/homepage/planservice.vue";
 import leftmenu from "@/components/homepage/leftmenu.vue"
 export default {
 	name:'home',
 	components:{
-		planservice,
+		// planservice,
 		leftmenu
 	},
 	data(){
@@ -43,6 +43,8 @@ export default {
 		console.log(this.screenWidth);
 		this.mainwh.width=this.screenWidth-108;
 		console.log(this.mainwh.width);
+		// let left02=document.getElementById('left02');//查看left02的宽度//324px
+		// console.log(window.getComputedStyle(left02).width);
 		window.onresize=()=>{
 			return(()=>{
 				this.screenWidth=document.body.clientWidth;
@@ -96,7 +98,7 @@ export default {
 		position: relative;		
 		background-color: #42B983;
 		left: 110px;
-		width: 180%;
+		width: 300%;
 		height: 100%;
 		float: left;
 		z-index: 2;

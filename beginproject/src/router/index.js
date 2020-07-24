@@ -57,14 +57,14 @@ const routes = [
 				name:"PlanService",
 				component:PlanService,
 				// redirect:'/home/planservice/rationalityAnalysis',
-				children:[
-					{					
-						path:"rationalityAnalysis",//rationalityAnalysis
-						name:"RationalityAnalysis",
-						component:RationalityAnalysis					
+				// children:[
+				// 	{					
+				// 		path:"rationalityAnalysis",//rationalityAnalysis
+				// 		name:"RationalityAnalysis",
+				// 		component:RationalityAnalysis					
 						
-					}
-				]
+				// 	}
+				// ]
 			},
 			{
 				path:"/home/rationalityAnalysis",//rationalityAnalysis

@@ -5,11 +5,23 @@ import HomePage from "@/views/homepage/homepage.vue";
 import PlanService from "@/components/homepage/planservice.vue";
 import Home from "@/views/home.vue";
 // import LeftMenu from "@/components/homepage/leftmenu";
-import RationalityAnalysis from "@/components/homepage/rationalityAnalysis.vue"
+import RationalityAnalysis from "@/components/homepage/rationalityAnalysis.vue";
+import DrawerChart from "@/components/homepage/drawerchart.vue";
+import TableChart from "@/components/homepage/tablechart.vue";
 
 Vue.use(VueRouter);//组件
 
 const routes = [
+	{
+		path:"/",//tablechart
+		name:"TableChart",
+		component:TableChart,		
+	},
+	{
+		path:"/drawerchart",//drawerchart
+		name:"DrawerChart",
+		component:DrawerChart,		
+	},
 	// {
 	// 	path:"/leftmenu",
 	// 	name:"LeftMenu",
@@ -48,7 +60,7 @@ const routes = [
 		]
 	},
 	{
-	    path: "/",
+	    path: "/home",
 	    name: "Home",
 	    component: Home,
 		children:[

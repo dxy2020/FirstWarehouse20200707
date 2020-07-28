@@ -6,7 +6,8 @@ const store = new Vuex.Store({
  
   state: {
     // 存储token
-    Authorization: localStorage.getItem('Authorization') ? localStorage.getItem('Authorization') : ''
+    Authorization: localStorage.getItem('Authorization') ? localStorage.getItem('Authorization') : '',
+	opendrawerchart:false
   },
  
   mutations: {
@@ -14,7 +15,10 @@ const store = new Vuex.Store({
     changeLogin (state, user) {
       state.Authorization = user.Authorization;
       localStorage.setItem('Authorization', user.Authorization);
-    }
+    },
+	opendrawerchart(state){
+		state.opendrawerchart=!state.opendrawerchart;
+	}
   }
 });
  

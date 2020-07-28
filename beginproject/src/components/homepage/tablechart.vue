@@ -38,7 +38,7 @@
 					:show-summary="true"
 					:summary-method="getsummaries"
 					:default-sort = "{prop: 'SUM_TBDLMJ_input'}"
-					height="355px"
+					height="100%"
 				    style="width: 100%"
 				    >
 				    <el-table-column
@@ -61,7 +61,7 @@
 			</div>
 			<div id="tablechart05">
 				<template>
-					<ve-pie :data="charData"></ve-pie>
+					<ve-pie :data="charData" style="height: 100%;width: 100%"></ve-pie>
 				</template>
 			</div>
 		</div>		
@@ -101,9 +101,6 @@
 			indexMethod(index) {
 				return index +1;
 			},
-			 //  setCurrent(row) {
-			 //    this.$refs.singleTable.setCurrentRow(row);
-				// },
 			handleCurrentChange(val) {
 				this.currentRow = val;
 				console.log(this.currentRow);
@@ -151,77 +148,48 @@
 </script>
 
 <style scoped="scoped">
-	#tablechart01::before,
-	#tablechart01::after{
-		content: '';
-		display: table;
-		clear: both;		
-	}
 	#tablechart01{
-		height: 45%;
-		width: 70%;
-		position: absolute;
-		right: 0;
-		bottom: 0;
-		/* background-color: #D3DCE6; */
+		height: 100%;
+		width: 100%;
 	}
 	#tablechart02{
 		width: 20%;
-		height: 100%;
-		/* float: left;		 */
-		position: relative;		
+		height: 100%;	
 	}
 	#tablechart03{		
 		width: 80%;
 		height: 100%;
 		position: relative;
 		left: 20%;
-		top: -100%;
-		/* background-color: #2C3E50; */
+		bottom: 100%;
 		text-align: center;
 		font-size: 18px;
 	}
-/* 	#tablechart03::before,
-	#tablechart03::after{
-		content: '';
-		display: table;
-		clear: both;		
-	} */
 	#tablechart03 >p{
-	/* 	height:35px;
-		width: 100%; */
 		margin: 0;
-		height: 10%;
-		/* background-color: #00FF00; */
-		
+		padding: 0;
+		height: 8%;
 	}
 	#tablechart04{
-		width: 50%;
-		height: auto;
-		position: relative;
-		margin-top: 6px;
-		
+		position: relative;		
+		height: 90%;
+		top: 0;	
+		width: 45%;	
 	}
 	#tablechart05{
-		width: 50%;
-		height: 345px;
-		/* background-color: #0000FF; */
-		position: relative;
-		left: 50%;
-		top:-354px;
-		
-		/* height: 90%; */
+		position: absolute;
+		right: 0;
+		top: 10%;
+		margin: 0;
+		padding: 0;
+		width: 54%;
+		height: 92%;
 	}
-	/* .el-table-column{
-		cursor:pointer;
-	}
-	 */
-  
 </style>
 
 <!--滚动条样式
 .dahangtiao::-webkit-scrollbar {
-  /*滚动条整体样式*/
+  /*滚动条整体样式
   width: 10px;  /*高宽分别对应横竖滚动条的尺寸*/
   height: 1px;
   }

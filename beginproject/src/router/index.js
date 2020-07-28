@@ -13,7 +13,7 @@ Vue.use(VueRouter);//组件
 
 const routes = [
 	{
-		path:"/",//tablechart
+		path:"/tablechart",//tablechart
 		name:"TableChart",
 		component:TableChart,		
 	},
@@ -60,7 +60,7 @@ const routes = [
 		]
 	},
 	{
-	    path: "/home",
+	    path: "/",//home
 	    name: "Home",
 	    component: Home,
 		children:[

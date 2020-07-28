@@ -1,8 +1,8 @@
 <template>
 	<div id="menu01">
 		<img src="../img/u24.png" style="margin-top: 10px;margin-bottom: 5px;" />
-		<div class="menu02" v-for="(value,index) in menu" :key="index">
-			<router-link :to="value.tolink" tag="div" append>
+		<div class="menu02" v-for="(value,index) in menu" :key="index" v-on:click="$emit('isopen')">
+			<router-link :to="value.tolink" tag="div" append style="cursor:pointer">
 				<img :src="value.imgsrc" style="width: 35%;"/>
 				<p><span>{{value.menucontent}}</span></p>
 			</router-link>

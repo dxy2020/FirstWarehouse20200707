@@ -1,19 +1,22 @@
 <template>
 	<div id="home01">
-		<div id="header"><button @click="drawer=true" type="primary">点击</button></div>
+		<div id="header">
+			<headertop></headertop>
+		</div>
 		<div id="contain">
-			<div id="left" @click="onshow"><!-- <div id="left" @click="isShow=!isShow"> -->
-				<div id="left01"><leftmenu></leftmenu></div>				
-				<div id="left02">
+			<div id="left"><!-- <div id="left" @click="isShow=!isShow"> -->
+				<div id="left01"><leftmenu v-on:isopen="onshow"></leftmenu></div>				
+				<div id="left02" v-show="isShow">
 					<router-view></router-view>							
 				</div><!-- <planservice></planservice> -->
 			</div>
 			<div id="main" :style="{width:mainwh.width+'px'}">
 				<olmap :mapWidth="mainwh.mapwidth+'px'"/>
-				<el-drawer title="占用永久基本农田分析" :visible.sync="drawer" direction="btt" 
+				<!-- <el-drawer title="占用永久基本农田分析" :visible.sync="drawer" direction="btt" 
 				:before-close="handleClose" :append-to-body="isin" width="180px">
 					<span>我来啦！</span>
-				</el-drawer>
+				</el-drawer> -->
+				<!-- <div id="drawerchart" v-show="drawer"> --><drawerchart :isOpen="isShow"></drawerchart><!-- </div> -->
 			</div>
 		</div>
 	</div>
@@ -24,16 +27,20 @@
 // import planservice from "@/components/homepage/planservice.vue";
 import leftmenu from "@/components/homepage/leftmenu.vue";
 import olmap from "@/components/homepage/olmap.vue";
+import drawerchart from "@/components/homepage/drawerchart.vue";
+import headertop from "@/components/homepage/headertop.vue";
 export default {
 	name:'home',
 	components:{
 		// planservice,
+		headertop,
 		leftmenu,
-		olmap
+		olmap,
+		drawerchart
 	},
 	data(){
 		return{
-			isShow:true,
+			isShow:false,
 			mainwh:{
 				width:'',
 				height:'',
@@ -83,6 +90,12 @@ export default {
 	/* &.router-link-exact-active {
 	     color: #42b983;
 	} */
+	#home01::before,
+	#home01::after{
+		content: '';
+		display: table;
+		clear: both;		
+	}
 	#home01{
 		margin: 0;
 		padding: 0;
@@ -90,41 +103,60 @@ export default {
 		width: 100%;
 	}
 	#header{
-		height: 12%;
+		height: 8%;
 		width: 100%;
-		background-color: #2C3E50;
+		background-color: #4680d1;
 	}
 	#contain{
-		height: 88%;
+		height: 92%;
 		width: 100%;
+		position: relative;
 	}
 	#left{
 		width: 108px;
 		height: 100%;
-		background-color: blue;
-		float: left;
+		background-color: #323949;
+		/* float: left; */
 	}
 	#main{
-		/* display: inline; */
+		position: relative;
 		height: 100%;
-		width: 1713px;
-		float: left;
-		background-color: #B3C0D1;
+		/* width: 1713px; */
+		margin: 0;
+		right: 0;
+		width: auto;
+		background-color: #B3C0D1;		
+		left: 108px;
+		top:-100%;
 		/* overflow:scroll; */
-		overflow: hidden;
+		/* overflow: hidden; */
 	}
 	#left01{
 		position: absolute;
+		width: 100%;
+		height: 100%;
 	}
 	#left02{
 		padding: 0;
 		position: relative;		
-		background-color: #42B983;
+		/* background-color:rgb(255,0,255,0.8); */
+		background-color: white;
 		left: 110px;
-		width: 300%;
+		width: 350px;
 		height: 100%;
 		float: left;
 		z-index: 2;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
+	}
+	#drawerchart{
+		position: absolute;
+		left:352px;
+		height:60%;
+		width: auto;
+		margin: 0;
+		right: 0;
+		bottom: 0;
+		background-color: #0000FF;
 	}
 	
 </style>

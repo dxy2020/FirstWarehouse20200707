@@ -1,9 +1,7 @@
 <template>
-	<div id="drawerchart01" >
-		<button @click="isopen=!isopen">打开/关闭</button>
-		<div id="drawerchart02">
+		<!-- <button @click="isopen=!isopen">打开/关闭</button> -->
 			<transition name="el-zoom-in-bottom">
-			    <div v-show="isopen" id="transition-box">
+			    <div v-show="this.$store.state.opendrawerchart" id="transition-box">
 					<!-- <div class="mask"> -->
 					<div id="header">
 						<p><span>占用永久基本农田分析</span>
@@ -11,21 +9,22 @@
 						</p>
 					</div><hr/>
 					<div id="chartcontain">
-						<div class="chartcontainleft"><tablechart></tablechart></div>
-						<div class="chartcontainmiddle"></div>
-						<div class="chartcontainright"></div>
+						<tablechart></tablechart>
 					</div>
 				</div>
 			</transition>
-						
-		</div>
-	</div>
 </template>
 
 <script>
 	import tablechart from "./tablechart.vue";
 	
 	export default{
+		props:{
+			isOpen:{
+				type:Boolean,
+				default:false
+			}
+		},
 		data(){
 			return{
 				isopen:true,
@@ -63,55 +62,38 @@
 </script>
  
 <style scoped="scoped">
-	#drawerchart01{
-		height: 100%;
-		width: 100%;
+	#transition-box::before,
+	#transition-box::after{
+		content: '';
+		display: table;
+		clear: both;		
 	}
-	#drawerchart02{
-		width: 70%;
-		height: 100%;
-		background-color: #42B983;
-		position: absolute;
-		display: flex;;
-		right: 0;
-		bottom: 0;		
-	}
-	#transition-box{
+	/* #transition-box{
+		margin: 0;
+		padding: 0;
 		width: 100%;
-		height: 50%;
-		position: absolute;
-		right: 0;
-		bottom: 0;
+		height: 100%;
 		z-index: 10;
-		margin-left:0;
-		margin-top: 0;
 		background-color: #333333;
 		line-height: 30px;
+	} */
+	#transition-box{
+		position: absolute;
+		left:352px;
+		height:60%;
+		width: auto;
+		margin: 0;
+		right: 0;
+		bottom: 0;
+		background-color: #0000FF;
 	}
 	#header{
 		width: 100%;
-		height: 8%;
+		height: 12%;
 	}
 	#chartcontain{
 		width: 100%;
-		height: 92%;
-	}
-	.chartcontainleft{
-		height: 100%;
-		background-color: #D94854;
-		width: 25%;
-		float: left;
-	}
-	.chartcontainmiddle{
-		height: 100%;
-		background-color: #55007f;
-		width: 40%;
-		float: left;
-	}
-	.chartcontainright{
-		height: 100%;
-		background-color: #00ff00;
-		width: 35%;
-		float: left;
+		height: 88%;
+		position: relative;
 	}
 </style>

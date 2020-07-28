@@ -22,7 +22,7 @@
 				<el-input type="text" v-model="num"></el-input>
 				<span>米</span>
 				</span>
-			<el-button type="primary" class="priBtn">开始分析</el-button>
+			<el-button type="primary" class="priBtn" @click="isopendrawerchart">开始分析</el-button>
 		</span>
 	  </el-container>
   </div>
@@ -39,7 +39,13 @@ export default {
 	  radata:['土地利用总体规划符合性分析','占用永久基本农田分析','占用高标准农田分析','矿产资源规划符合性分析',
 	  '禁止勘查符合性分析','压覆国家级自然保护区分析','压覆国家级风景名胜区分析','压覆国家公园分析','土地整治规划符合性分析']
     };
+  },
+  methods:{
+	  isopendrawerchart(){
+		  this.$store.commit('opendrawerchart');
+	  }
   }
+  
 };
 </script>
 

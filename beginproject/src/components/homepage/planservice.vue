@@ -9,8 +9,8 @@
 			</div>
 			<div class="anniu02" v-for="(value,index) in anniuData" :key="index" 
 			:style="{'border-right':index%2===0?'1px solid #B3C0D1':'none'}">
-				<router-link :to="value.routerlinkthird" tag="div">
-					<img :src="value.imgsrc" />
+				<router-link :to="value.routerlinkthird" tag="div" style="cursor:pointer">
+					<img :src="value.imgsrc" style="margin-top: 16px;" />
 					<p><span>{{value.contentname}}</span></p>
 				</router-link>
 			</div>		
@@ -29,7 +29,7 @@
 				anniuData:[
 					{
 						routerlinkthird:'/home/rationalityAnalysis',
-						imgsrc:'#',
+						imgsrc:require('../img/analysis01.png'),
 						contentname:'智能选址'
 					},
 					{

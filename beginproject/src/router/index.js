@@ -22,16 +22,6 @@ const routes = [
 		name:"DrawerChart",
 		component:DrawerChart,		
 	},
-	// {
-	// 	path:"/leftmenu",
-	// 	name:"LeftMenu",
-	// 	component:LeftMenu,		
-	// },
-	// {
-	// 	path:"/",//rationalityAnalysis
-	// 	name:"RationalityAnalysis",
-	// 	component:RationalityAnalysis
-	// },
 	{
 	  	path:"/login",
 	  	name:"Login",
@@ -49,14 +39,6 @@ const routes = [
 				import("@/components/homepage/commonwork.vue")
 				}
 			}
-			// {
-			// 	path:'/planservice',
-			// 	name:"PlanService",
-			// 	component:{homepage1: () =>
-			// 	import("@/components/homepage/planservice.vue")
-			// 	}
-				
-			// }
 		]
 	},
 	{
@@ -67,16 +49,7 @@ const routes = [
 			{
 				path:"/home/planservice",
 				name:"PlanService",
-				component:PlanService,
-				// redirect:'/home/planservice/rationalityAnalysis',
-				// children:[
-				// 	{					
-				// 		path:"rationalityAnalysis",//rationalityAnalysis
-				// 		name:"RationalityAnalysis",
-				// 		component:RationalityAnalysis					
-						
-				// 	}
-				// ]
+				component:PlanService
 			},
 			{
 				path:"/home/rationalityAnalysis",//rationalityAnalysis
@@ -99,6 +72,7 @@ const routes = [
 ];
 
 const router = new VueRouter({//路由
+  mode : 'history',
   routes
 });
 

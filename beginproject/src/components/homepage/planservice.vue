@@ -2,10 +2,13 @@
 	<!-- <div> -->
 		<div id="ps01" v-show="psstatus">
 			<div class="anniu01">
-				<p>
-					<span>规划服务</span>
-					<img src="#" style="display: inline;float: right;" @click="getpsstatus"/>
-				</p>
+				<div id="breadcrumb01">
+					<el-breadcrumb separator-class="el-icon-arrow-right">
+						<el-breadcrumb-item :to="{path:'/'}">首页</el-breadcrumb-item>
+						<el-breadcrumb-item>规划服务</el-breadcrumb-item>
+					</el-breadcrumb>
+					<i class="el-icon-arrow-left" @click="isopenleftmenu02" style="font-size: 24px; display: inline-block;position: absolute; right: 0;top: 3px;"></i>
+				</div>
 			</div>
 			<div class="anniu02" v-for="(value,index) in anniuData" :key="index" 
 			:style="{'border-right':index%2===0?'1px solid #B3C0D1':'none'}">
@@ -88,14 +91,17 @@
 		methods:{
 			getpsstatus(){
 				this.psstatus=!this.psstatus;
+			},
+			isopenleftmenu02(){
+				this.$store.commit('openleftmenu02');
 			}
+			
 		}
 	}
 </script>
 
 <style scoped="scoped">
 	#ps01{
-		margin: 0;
 		width: 100%;
 		height: 100%;
 		/* background-color: #42B983; */
@@ -105,18 +111,18 @@
 		padding: 0;
 		background-color: #D3DCE6;		
 	}
-	.anniu01 p{
-		margin: 0;
-		padding: 0;
-	}
 	.anniu02{
 		width: 48%;
-		height: 16%;
+		height: 15.8%;
 		/* background-color: #333333; */
 		float: left;
 		text-align: center;
 		border-bottom: 1px solid #B3C0D1;
 		font-size: 0.8em;
 		/* box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1); */
+	}
+	#breadcrumb01{
+		height: 24px;
+		padding-top: 5px;
 	}
 </style>

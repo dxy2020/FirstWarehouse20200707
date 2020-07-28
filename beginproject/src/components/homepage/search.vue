@@ -3,7 +3,7 @@
 		<el-input placeholder="请输入关键字" v-model="input1" style="width: 70%;margin-right: 30px;">
 			<el-button slot="append" icon="el-icon-search" style="background-color: #4680d1;color: white;"></el-button>
 		</el-input>
-		<el-button plain style="margin: 0;">朴素按钮</el-button>
+		<el-button plain style="margin: 0;">组合查询</el-button>
 	</div>
 </template>
 

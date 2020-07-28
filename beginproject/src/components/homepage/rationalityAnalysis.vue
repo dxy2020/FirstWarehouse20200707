@@ -43,6 +43,12 @@ export default {
   methods:{
 	  isopendrawerchart(){
 		  this.$store.commit('opendrawerchart');
+		  this.$store.commit('selectanalysisfactor',this.radata[this.radio]);
+	  }
+  },
+  watch:{
+	  radio:function(val){
+		  this.$store.commit('selectanalysisfactor',this.radata[val]);
 	  }
   }
   
@@ -53,7 +59,7 @@ export default {
 	#ra01{
 		margin: 0;
 		padding: 0;
-		width: 324px;
+		width: 100%;
 		height: 100%;
 	}
 	.el-container {

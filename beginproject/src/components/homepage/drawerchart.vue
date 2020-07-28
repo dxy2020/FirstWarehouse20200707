@@ -1,18 +1,15 @@
 <template>
-		<!-- <button @click="isopen=!isopen">打开/关闭</button> -->
-			<transition name="el-zoom-in-bottom">
-			    <div v-show="this.$store.state.opendrawerchart" id="transition-box">
-					<!-- <div class="mask"> -->
-					<div id="header">
-						<p><span>占用永久基本农田分析</span>
-						<el-button size="mini" type="primary" round style="float: right;margin-right: 10px;" @click="getjson">收起</el-button>
-						</p>
-					</div><hr/>
-					<div id="chartcontain">
-						<tablechart></tablechart>
-					</div>
-				</div>
-			</transition>
+	<transition name="el-zoom-in-bottom" style="margin: 0;padding: 0;">
+		<div v-show="this.$store.state.opendrawerchart" id="transition-box">
+			<div id="header">
+				<span style="font-size: 18px;">{{selectanalysis}}</span>
+				<el-button size="mini" type="primary" round style="float: right;margin-top: 8px; margin-right: 10px;" @click="getjson">收起</el-button>
+			</div>
+			<div id="chartcontain">
+				<tablechart></tablechart>
+			</div>
+		</div>
+	</transition>
 </template>
 
 <script>
@@ -28,11 +25,17 @@
 		data(){
 			return{
 				isopen:true,
-				datajson:[]
+				datajson:[],
+				// selectanalysis:''
 			}
 		},
 		components:{
 			tablechart
+		},
+		computed:{			
+			selectanalysis(){
+				return this.$store.state.selectanalysisfactor
+			}
 		},
 		methods:{
 			getjson(){
@@ -49,12 +52,6 @@
 							alert('访问失败！');
 							console.log(res)
 					})
-			//方式二:
-			// 	this.$axios.get('/data/planservices.json').then((response) => {
-			// 	        alert(response.data);
-			// 	    }).catch((response) => {
-			// 	        alert("错误：" + response);
-			// 	    })
 			}
 		},
 	}
@@ -62,38 +59,41 @@
 </script>
  
 <style scoped="scoped">
-	#transition-box::before,
-	#transition-box::after{
-		content: '';
-		display: table;
-		clear: both;		
-	}
-	/* #transition-box{
-		margin: 0;
-		padding: 0;
-		width: 100%;
-		height: 100%;
-		z-index: 10;
-		background-color: #333333;
-		line-height: 30px;
-	} */
 	#transition-box{
 		position: absolute;
-		left:352px;
-		height:60%;
-		width: auto;
+		height:55%;
+		width: 100%;
+		border-radius: 4px;
+		box-sizing: border-box;
 		margin: 0;
 		right: 0;
-		bottom: 0;
-		background-color: #0000FF;
+		bottom: 1px;
+		padding:2px 2px 2px 2px;
+		background-color: #ff5500;
+		/* z-index: 10; */
 	}
 	#header{
 		width: 100%;
 		height: 12%;
+		/* border: 1px solid #2C3E50; */
 	}
+	#header:before{
+		content:'';
+		display: inline-block;
+		vertical-align: middle;
+		height: 100%;
+	}
+	
 	#chartcontain{
+		position: relative;
 		width: 100%;
 		height: 88%;
-		position: relative;
+		padding: 2px 2px 2px 2px;
+		bottom: 0;
+		right: 0;
+		left: 0;
+		top: 0;
+		background-color: #2C3E50;
+		overflow: hidden;
 	}
 </style>

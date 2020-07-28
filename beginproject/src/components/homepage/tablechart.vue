@@ -12,7 +12,7 @@
 				 <el-table-column
 					type="index"
 					:index="indexMethod">
-				  </el-table-column><!-- 自动编号 -->
+				 </el-table-column><!-- 自动编号 -->
 				  <!-- <el-table-column
 					prop="COUNT"
 					label="序号"
@@ -21,7 +21,7 @@
 				  <el-table-column
 					prop="ZLDWMC_input"
 					label="村名"
-					width="90">
+					width="60">
 				  </el-table-column>
 				  <el-table-column
 					prop="SUM_TBDLMJ_input"
@@ -30,8 +30,8 @@
 				</el-table>
 			</div>
 		<div id="tablechart03">
-			<p>{{currentRow.ZLDWMC_input}}({{currentRow.ZLDWDM_input}})</p>
-			<div id="tablechart04">
+			<div id="tablechart04"><span>{{currentRow.ZLDWMC_input}}({{currentRow.ZLDWDM_input}})</span></div>
+			<div id="tablechart05">
 				<el-table
 				    :data="onecundata"
 					border
@@ -44,12 +44,12 @@
 				    <el-table-column
 				      prop="DLBM_input"
 				      label="代码"
-				      width="90">
+				      width="80">
 				    </el-table-column>
 				    <el-table-column
 				      prop="DLMC_input"
 				      label="名称"
-				      width="180">
+				      width="100">
 				    </el-table-column>
 				    <el-table-column
 				      prop="SUM_TBDLMJ_input"
@@ -59,9 +59,9 @@
 				    </el-table-column>
 				  </el-table>
 			</div>
-			<div id="tablechart05">
+			<div id="tablechart06">
 				<template>
-					<ve-pie :data="charData" style="height: 100%;width: 100%"></ve-pie>
+					<ve-pie :data="charData" :settings="chartSettings"></ve-pie>
 				</template>
 			</div>
 		</div>		
@@ -72,6 +72,10 @@
 	export default{
 		name:'tablechart',
 		data(){
+			this.chartSettings={
+				radius:50,
+				// offsetY:300
+			};
 			return{
 				datajson:[],
 				ZLDWMC:'',
@@ -96,6 +100,12 @@
 						alert('访问失败！');
 						console.log(res)
 				})
+				//方式二:
+				// 	this.$axios.get('/data/planservices.json').then((response) => {
+				// 	        alert(response.data);
+				// 	    }).catch((response) => {
+				// 	        alert("错误：" + response);
+				// 	    })
 		},
 		methods: {
 			indexMethod(index) {
@@ -151,6 +161,8 @@
 	#tablechart01{
 		height: 100%;
 		width: 100%;
+		margin: 0;
+		padding: 1px 1px 1px 1px;
 	}
 	#tablechart02{
 		width: 20%;
@@ -163,27 +175,27 @@
 		left: 20%;
 		bottom: 100%;
 		text-align: center;
-		font-size: 18px;
-	}
-	#tablechart03 >p{
-		margin: 0;
-		padding: 0;
-		height: 8%;
+		padding: 1px 1px 1px 1px;
+		font-size: 10px;
+		background-color: #550000;
 	}
 	#tablechart04{
-		position: relative;		
-		height: 90%;
-		top: 0;	
-		width: 45%;	
+		height: 8%;
 	}
 	#tablechart05{
-		position: absolute;
-		right: 0;
-		top: 10%;
-		margin: 0;
-		padding: 0;
-		width: 54%;
 		height: 92%;
+		width: 45%;
+		padding: 1px 1px 1px 1px;
+	}
+	#tablechart06{
+		position: relative;
+		left: 45%;
+		bottom: 92%;
+		height: 92%;
+		width: 55%;
+		padding: 1px 1px 1px 1px;
+		/* background-color: red; */
+		background-color: #294D99;
 	}
 </style>
 

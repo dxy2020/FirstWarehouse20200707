@@ -1,5 +1,5 @@
 <template>
-	<div id="map" ref="rootmap" :style="{width:mapWidth}">
+	<div id="map" ref="rootmap"> <!-- :style="{width:mapWidth}" -->
 		<div id="search01"><search></search></div>
 		<div id="toolbox01"><toolbox></toolbox></div>
 	</div>
@@ -14,12 +14,13 @@
 	import toolbox from "@/components/homepage/toolbox.vue"
 	export default {
 		name:'olmap',
-		props:{
-			mapWidth:{
-			type: [String, Number],
-			default: 100
-			}
-		},
+		// 从父组件出获取宽度
+		// props:{
+		// 	mapWidth:{
+		// 	type: [String, Number],
+		// 	default: 100
+		// 	}
+		// },
 		data() {
 			return {
 			  map: null
@@ -49,7 +50,8 @@
 </script>
 
 <style scoped="scoped">
-	#map{height:100%;width: 100%;word-wrap: break-word;
+	#map{position: relative;
+		height:100%;width: 100%;word-wrap: break-word;
 		word-break: break-all;}
 	/*隐藏ol的一些自带元素*/
 	.ol-attribution,.ol-zoom { display: none;}
@@ -57,7 +59,7 @@
 		width: 500px;
 		height: 40px;
 		position: absolute;
-		left: 12px;
+		left: 40px;
 		top: 12px;
 		z-index: 10;
 	}

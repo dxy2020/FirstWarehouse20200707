@@ -6,15 +6,14 @@
 				<el-button size="mini" type="primary" round style="float: right;margin-top: 8px; margin-right: 10px;" @click="getjson">收起</el-button>
 			</div>
 			<div id="chartcontain">
-				<tablechart></tablechart>
+				<home-main-drawer-table-chart></home-main-drawer-table-chart>
 			</div>
 		</div>
 	</transition>
 </template>
 
 <script>
-	import tablechart from "./tablechart.vue";
-	
+	import HomeMainDrawerTableChart from "./HomeMainDrawerTableChart.vue";
 	export default{
 		props:{
 			isOpen:{
@@ -30,7 +29,7 @@
 			}
 		},
 		components:{
-			tablechart
+			HomeMainDrawerTableChart
 		},
 		computed:{			
 			selectanalysis(){

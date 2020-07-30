@@ -1,35 +1,35 @@
 <template>
 	<div id="home01">
 		<div id="header">
-			<headertop></headertop>
+			<HomeHeader></HomeHeader>
 		</div>
 		<div id="contain">
 			<div id="left"><!-- <div id="left" @click="isShow=!isShow"> -->
-				<div id="left01"><leftmenu v-on:isopen="onshow"></leftmenu></div>				
+				<div id="left01"><FirstMenu v-on:isopen="onshow"></FirstMenu></div>				
 				<div id="left02" v-show="this.$store.state.openleftmenu02">
 					<router-view></router-view>							
 				</div><!-- <planservice></planservice> -->
 			</div>
 			<div id="main" :style="{width:mainwh.width+'px'}">
-				<olmap></olmap><!--:mapWidth="mainwh.mapwidth+'px'"-->
-				<drawerchart :isOpen="isShow"></drawerchart><!-- </div> -->
+				<BaseMap></BaseMap><!--:mapWidth="mainwh.mapwidth+'px'"-->
+				<HomeMainDrawer :isOpen="isShow"></HomeMainDrawer><!-- </div> -->
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import leftmenu from "@/components/homepage/leftmenu.vue";
-import olmap from "@/components/homepage/olmap.vue";
-import drawerchart from "@/components/homepage/drawerchart.vue";
-import headertop from "@/components/homepage/headertop.vue";
+import FirstMenu from "@/components/home-aside/first-menu/FirstMenu.vue";
+import BaseMap from "@/components/home-main/BaseMap.vue";
+import HomeMainDrawer from "@/components/common-components/HomeMainDrawer.vue";
+import HomeHeader from "@/components/home-header/HomeHeader.vue";
 export default {
 	name:'home',
 	components:{
-		headertop,
-		leftmenu,
-		olmap,
-		drawerchart
+		HomeHeader,
+		FirstMenu,
+		BaseMap,
+		HomeMainDrawer
 	},
 	data(){
 		return{

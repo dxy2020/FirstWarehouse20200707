@@ -1,6 +1,6 @@
 <template>
 	<div id="menu01">
-		<img src="../img/u24.png" style="margin-top: 10px;margin-bottom: 5px;" />
+		<img src="./img/u24.png" style="margin-top: 10px;margin-bottom: 5px;" />
 		<div class="menu02" v-for="(value,index) in menu" :key="index" @click="isopenleftmenu02">
 			<router-link :to="value.tolink" tag="div" append style="cursor:pointer">
 				<img :src="value.imgsrc" style="width: 35%;"/>
@@ -12,33 +12,33 @@
 
 <script>
 	export default{
-		name:'leftmenu',
+		name:'FirstMenu',
 		data(){
 			return{
 					menu:[
 					{
 						tolink:'/home/planservice',
-						imgsrc:require('../img/u69.png'),//此时需要用require，否则图片无法加载
+						imgsrc:require('./img/u69.png'),//此时需要用require，否则图片无法加载
 						menucontent:'通用功能'
 					},
 					{
 						tolink:'/home/planservice',
-						imgsrc:require('../img/u72.png'),
+						imgsrc:require('./img/u72.png'),
 						menucontent:'规划服务'
 					},
 					{
 						tolink:'/home/planservice',
-						imgsrc:require('../img/u79.png'),
+						imgsrc:require('./img/u79.png'),
 						menucontent:'监管服务'
 					},
 					{
 						tolink:'/home/planservice',
-						imgsrc:require('../img/u65.png'),
+						imgsrc:require('./img/u65.png'),
 						menucontent:'监管服务'
 					},
 					{
 						tolink:'/home/planservice',
-						imgsrc:require('../img/u67.png'),
+						imgsrc:require('./img/u67.png'),
 						menucontent:'决策服务'
 					}
 					

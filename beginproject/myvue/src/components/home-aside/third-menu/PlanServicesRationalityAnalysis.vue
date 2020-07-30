@@ -30,7 +30,7 @@
 
 <script>
 export default {
-  name: "rationalityAnalysis",
+  name: "PlanServicesRationalityAnalysis",
   // props: {},
   data() {
     return {

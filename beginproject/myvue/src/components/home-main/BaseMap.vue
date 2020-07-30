@@ -1,7 +1,7 @@
 <template>
 	<div id="map" ref="rootmap"> <!-- :style="{width:mapWidth}" -->
-		<div id="search01"><search></search></div>
-		<div id="toolbox01"><toolbox></toolbox></div>
+		<div id="search01"><home-main-search-input-query></home-main-search-input-query></div>
+		<div id="toolbox01"><home-main-tool-box></home-main-tool-box></div>
 	</div>
 </template>
 
@@ -10,8 +10,8 @@
 	import { Map, View } from "ol";
 	import TileLayer from "ol/layer/Tile";
 	import OSM from "ol/source/OSM";
-	import search from "@/components/homepage/search.vue";
-	import toolbox from "@/components/homepage/toolbox.vue"
+	import HomeMainSearchInputQuery from "../common-components/HomeMainSearchInputQuery.vue";
+	import HomeMainToolBox from "../common-components/HomeMainToolBox.vue";
 	export default {
 		name:'olmap',
 		// 从父组件出获取宽度
@@ -27,8 +27,8 @@
 			};
 		},
 		components:{
-			search,
-			toolbox
+			HomeMainSearchInputQuery,
+			HomeMainToolBox
 		},
 		mounted() {
 			// var mapcontainer = this.$refs.rootmap;

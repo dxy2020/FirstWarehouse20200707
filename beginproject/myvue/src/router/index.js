@@ -1,45 +1,18 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Login from "@/views/login/login.vue";
-import PlanService from "@/components/homepage/planservice.vue";
-import Home from "@/views/home.vue";
-// import LeftMenu from "@/components/homepage/leftmenu";
-import RationalityAnalysis from "@/components/homepage/rationalityAnalysis.vue";
-import DrawerChart from "@/components/homepage/drawerchart.vue";
-import TableChart from "@/components/homepage/tablechart.vue";
+import Login from "@/views/Login/Login.vue";
+import Home from "@/views/Home/Home.vue";
+import PlanServices from "@/components/home-aside/second-menu/PlanServices.vue";
+import PlanServicesRationalityAnalysis from "@/components/home-aside/third-menu/PlanServicesRationalityAnalysis.vue";
 
 Vue.use(VueRouter);//组件
 
 const routes = [
 	{
-		path:"/tablechart",//tablechart
-		name:"TableChart",
-		component:TableChart,		
-	},
-	{
-		path:"/drawerchart",//drawerchart
-		name:"DrawerChart",
-		component:DrawerChart,		
-	},
-	{
 	  	path:"/login",
 	  	name:"Login",
 	  	component:Login
 	},
-	// {
-	//   	path:"/homepage",
-	//   	name:"HomePage",
-	//   	component:HomePage,
-	// 	children:[
-	// 		{
-	// 			path:'/commonwork',
-	// 			name:"CommonWork",
-	// 			component: {homepage1:() =>
-	// 			import("@/components/homepage/commonwork.vue")
-	// 			}
-	// 		}
-	// 	]
-	// },
 	{
 	    path: "/",//home
 	    name: "Home",
@@ -47,27 +20,17 @@ const routes = [
 		children:[
 			{
 				path:"/home/planservice",
-				name:"PlanService",
-				component:PlanService
+				name:"PlanServices",
+				component:PlanServices
 			},
 			{
-				path:"/home/rationalityAnalysis",//rationalityAnalysis
-				name:"RationalityAnalysis",
-				component:RationalityAnalysis					
+				path:"/home/PlanServicesRationalityAnalysis",//rationalityAnalysis
+				name:"PlanServicesRationalityAnalysis",
+				component:PlanServicesRationalityAnalysis
 				
 			}
 		]
 	}
-	// {
-	//     path: "/about",
-	// 	name: "About",
-	// 	// route level code-splitting
-	// 	// this generates a separate chunk (about.[hash].js) for this route
-	// 	// which is lazy-loaded when the route is visited.
-	// 	component: () =>
-	//   import(/* webpackChunkName: "about" */ "../views/About.vue")
-	// }
-  	
 ];
 
 const router = new VueRouter({//路由

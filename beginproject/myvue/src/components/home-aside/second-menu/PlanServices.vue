@@ -24,7 +24,7 @@
 
 <script>
 	export default{
-		name:'planservice',
+		name:'PlanServices',
 		data(){
 			return{
 				status:false,
@@ -32,7 +32,7 @@
 				anniuData:[
 					{
 						routerlinkthird:'/home/rationalityAnalysis',
-						imgsrc:require('../img/analysis01.png'),
+						imgsrc:require('./img/analysis01.png'),
 						contentname:'智能选址'
 					},
 					{

@@ -11,46 +11,46 @@
 </template>
 
 <script>
-	export default{
-		name:'FirstMenu',
-		data(){
-			return{
-					menu:[
-					{
-						tolink:'/home/planservice',
-						imgsrc:require('./img/u69.png'),//此时需要用require，否则图片无法加载
-						menucontent:'通用功能'
-					},
-					{
-						tolink:'/home/planservice',
-						imgsrc:require('./img/u72.png'),
-						menucontent:'规划服务'
-					},
-					{
-						tolink:'/home/planservice',
-						imgsrc:require('./img/u79.png'),
-						menucontent:'监管服务'
-					},
-					{
-						tolink:'/home/planservice',
-						imgsrc:require('./img/u65.png'),
-						menucontent:'监管服务'
-					},
-					{
-						tolink:'/home/planservice',
-						imgsrc:require('./img/u67.png'),
-						menucontent:'决策服务'
-					}
-					
-				]
-			}
-		},
-		methods:{
-			isopenleftmenu02(){
-				this.$store.commit('openleftmenu02');
-			}
-		}
-	}
+export default {
+  name: 'FirstMenu',
+  data() {
+    return {
+      menu: [
+        {
+          tolink: '/home/planservice',
+          imgsrc: require('./img/u69.png'), // 此时需要用require，否则图片无法加载
+          menucontent: '通用功能'
+        },
+        {
+          tolink: '/home/planservice',
+          imgsrc: require('./img/u72.png'),
+          menucontent: '规划服务'
+        },
+        {
+          tolink: '/home/planservice',
+          imgsrc: require('./img/u79.png'),
+          menucontent: '监管服务'
+        },
+        {
+          tolink: '/home/planservice',
+          imgsrc: require('./img/u65.png'),
+          menucontent: '监管服务'
+        },
+        {
+          tolink: '/home/planservice',
+          imgsrc: require('./img/u67.png'),
+          menucontent: '决策服务'
+        }
+
+      ]
+    }
+  },
+  methods: {
+    isopenleftmenu02() {
+      this.$store.commit('openleftmenu02')
+    }
+  }
+}
 </script>
 
 <style scoped="scoped">

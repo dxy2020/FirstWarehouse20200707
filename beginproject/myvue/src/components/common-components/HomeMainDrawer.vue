@@ -13,50 +13,50 @@
 </template>
 
 <script>
-	import HomeMainDrawerTableChart from "./HomeMainDrawerTableChart.vue";
-	export default{
-		props:{
-			isOpen:{
-				type:Boolean,
-				default:false
-			}
-		},
-		data(){
-			return{
-				isopen:true,
-				datajson:[],
-				// selectanalysis:''
-			}
-		},
-		components:{
-			HomeMainDrawerTableChart
-		},
-		computed:{			
-			selectanalysis(){
-				return this.$store.state.selectanalysisfactor
-			}
-		},
-		methods:{
-			getjson(){
-				this.$axios({
-					method:'get',
-					url:'/data/planservices.json',
-					/*数据需要放在public文件夹中，并且URL不用写public(publi是向外曝露的服务器路径)
+import HomeMainDrawerTableChart from './HomeMainDrawerTableChart.vue'
+export default {
+  props: {
+    isOpen: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      isopen: true,
+      datajson: []
+      // selectanalysis:''
+    }
+  },
+  components: {
+    HomeMainDrawerTableChart
+  },
+  computed: {
+    selectanalysis() {
+      return this.$store.state.selectanalysisfactor
+    }
+  },
+  methods: {
+    getjson() {
+      this.$axios({
+        method: 'get',
+        url: '/data/planservices.json'
+        /* 数据需要放在public文件夹中，并且URL不用写public(publi是向外曝露的服务器路径)
 					vue-cli3把以前的static改为public，故vue-cli3之前版本放在static，vue-cli3放在public中
 					*/
-					}).then(res=>{
-							// console.log(res.data);
-							this.datajson=res.data;
-						}).catch(res=>{
-							alert('访问失败！');
-							console.log(res)
-					})
-			}
-		},
-	}
-	
+      }).then(res => {
+        // console.log(res.data);
+        this.datajson = res.data
+      }).catch(res => {
+        alert('访问失败！')
+        console.log(res)
+      })
+    }
+  }
+}
+
 </script>
- 
+
 <style scoped="scoped">
 	#transition-box{
 		position: absolute;
@@ -82,7 +82,7 @@
 		vertical-align: middle;
 		height: 100%;
 	}
-	
+
 	#chartcontain{
 		position: relative;
 		width: 100%;

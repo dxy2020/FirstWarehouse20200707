@@ -8,13 +8,13 @@
 </template>
 
 <script>
-	export default{
-		data(){
-			return{
-				input1:''
-			}
-		}
-	}
+export default {
+  data() {
+    return {
+      input1: ''
+    }
+  }
+}
 </script>
 
 <style scoped="scoped">

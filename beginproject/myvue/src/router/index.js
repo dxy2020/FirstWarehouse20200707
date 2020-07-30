@@ -1,7 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Login from "@/views/login/login.vue";
-import HomePage from "@/views/homepage/homepage.vue";
 import PlanService from "@/components/homepage/planservice.vue";
 import Home from "@/views/home.vue";
 // import LeftMenu from "@/components/homepage/leftmenu";
@@ -27,20 +26,20 @@ const routes = [
 	  	name:"Login",
 	  	component:Login
 	},
-	{
-	  	path:"/homepage",
-	  	name:"HomePage",
-	  	component:HomePage,
-		children:[
-			{
-				path:'/commonwork',
-				name:"CommonWork",
-				component: {homepage1:() =>
-				import("@/components/homepage/commonwork.vue")
-				}
-			}
-		]
-	},
+	// {
+	//   	path:"/homepage",
+	//   	name:"HomePage",
+	//   	component:HomePage,
+	// 	children:[
+	// 		{
+	// 			path:'/commonwork',
+	// 			name:"CommonWork",
+	// 			component: {homepage1:() =>
+	// 			import("@/components/homepage/commonwork.vue")
+	// 			}
+	// 		}
+	// 	]
+	// },
 	{
 	    path: "/",//home
 	    name: "Home",

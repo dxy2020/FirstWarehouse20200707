@@ -1,88 +1,91 @@
 <template>
-	<div id="tablechart01">
-		<div id="tablechart02">
-			<el-table
-				ref="singleTable"
-				:data="datajson"
-				height="100%"
-				:show-header="false"
-				style="width: 100%"
-				highlight-current-row
-				@current-change="handleCurrentChange">
-				<el-table-column
-					type="index"
-					:index="indexMethod">
-				</el-table-column><!-- 自动编号 -->
-				<!-- <el-table-column
+    <div id="tablechart01">
+        <div id="tablechart02">
+            <el-table
+                ref="singleTable"
+                :data="datajson"
+                height="100%"
+                :show-header="false"
+                style="width: 100%"
+                highlight-current-row
+                @current-change="handleCurrentChange"
+            >
+                <el-table-column
+                    type="index"
+                    :index="indexMethod"
+                /><!-- 自动编号 -->
+                <!-- <el-table-column
 					prop="COUNT"
 					label="序号"
 					width="10">
 				</el-table-column> -->
-				<el-table-column
-					prop="ZLDWMC_input"
-					label="村名"
-					width="60">
-				</el-table-column>
-				<el-table-column
-					prop="SUM_TBDLMJ_input"
-					label="面积">
-				</el-table-column>
-				</el-table>
-			</div>
-		<div id="tablechart03">
-			<div id="tablechart04"><span>{{currentRow.ZLDWMC_input}}({{currentRow.ZLDWDM_input}})</span></div>
-			<div id="tablechart05">
-				<el-table
-				:data="onecundata"
-				border
-				:show-summary="true"
-				:summary-method="getsummaries"
-				:default-sort = "{prop: 'SUM_TBDLMJ_input'}"
-				height="100%"
-				style="width: 100%"
-				>
-				<el-table-column
-					prop="DLBM_input"
-					label="代码"
-					width="80">
-				</el-table-column>
-				<el-table-column
-					prop="DLMC_input"
-					label="名称"
-					width="100">
-				</el-table-column>
-				<el-table-column
-					prop="SUM_TBDLMJ_input"
-					label="面积(平方米)"
-					sortable
-					:formatter="formatter">
-				</el-table-column>
-				</el-table>
-			</div>
-			<div id="tablechart06">
-				<template>
-					<ve-pie :data="charData" :settings="chartSettings"></ve-pie>
-				</template>
-			</div>
-		</div>
-	</div>
+                <el-table-column
+                    prop="ZLDWMC_input"
+                    label="村名"
+                    width="60"
+                />
+                <el-table-column
+                    prop="SUM_TBDLMJ_input"
+                    label="面积"
+                />
+            </el-table>
+        </div>
+        <div id="tablechart03">
+            <div id="tablechart04">
+                <span>{{ currentRow.ZLDWMC_input }}({{ currentRow.ZLDWDM_input }})</span>
+            </div>
+            <div id="tablechart05">
+                <el-table
+                    :data="onecundata"
+                    border
+                    :show-summary="true"
+                    :summary-method="getsummaries"
+                    :default-sort="{prop: 'SUM_TBDLMJ_input'}"
+                    height="100%"
+                    style="width: 100%"
+                >
+                    <el-table-column
+                        prop="DLBM_input"
+                        label="代码"
+                        width="80"
+                    />
+                    <el-table-column
+                        prop="DLMC_input"
+                        label="名称"
+                        width="100"
+                    />
+                    <el-table-column
+                        prop="SUM_TBDLMJ_input"
+                        label="面积(平方米)"
+                        sortable
+                        :formatter="formatter"
+                    />
+                </el-table>
+            </div>
+            <div id="tablechart06">
+                <template>
+                    <ve-pie :data="charData" :settings="chartSettings" />
+                </template>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'tablechart',
+  name: 'Tablechart',
   data() {
     this.chartSettings = {
       radius: 50
       // offsetY:300
-    }
+    };
     return {
       datajson: [],
       ZLDWMC: '',
       currentRow: {},
       onecundata: [],
       charData: { columns: [], rows: [] }
-    }
+    };
   },
   mounted() {
     this.$axios({
@@ -93,13 +96,13 @@ export default {
 				*/
     }).then(res => {
       // console.log(res.data);
-      this.datajson = res.data
+      this.datajson = res.data;
 
       // console.log(this.datajson)
     }).catch(res => {
-      alert('访问失败！')
-      console.log(res)
-    })
+      alert('访问失败！');
+      console.log(res);
+    });
     // 方式二:
     // 	this.$axios.get('/data/planservices.json').then((response) => {
     // 	        alert(response.data);
@@ -109,52 +112,52 @@ export default {
   },
   methods: {
     indexMethod(index) {
-      return index + 1
+      return index + 1;
     },
     handleCurrentChange(val) {
-      this.currentRow = val
-      console.log(this.currentRow)
-      console.log(this.currentRow.ZLDWMC_input)
-      const mc = this.currentRow.ZLDWMC_input
-      const arr = this.datajson
+      this.currentRow = val;
+      console.log(this.currentRow);
+      console.log(this.currentRow.ZLDWMC_input);
+      const mc = this.currentRow.ZLDWMC_input;
+      const arr = this.datajson;
       const onecundata = arr.filter(function(item) {
-        return item.ZLDWMC_input === mc
-      })
-      this.onecundata = onecundata
-      this.charData.columns = ['DLMC_input', 'SUM_TBDLMJ_input']
-      this.charData.rows = onecundata
+        return item.ZLDWMC_input === mc;
+      });
+      this.onecundata = onecundata;
+      this.charData.columns = ['DLMC_input', 'SUM_TBDLMJ_input'];
+      this.charData.rows = onecundata;
     },
     formatter(row, column) {
-      console.log(row, column)
-      return row.SUM_TBDLMJ_input
+      console.log(row, column);
+      return row.SUM_TBDLMJ_input;
     },
     getsummaries(param) {
-      const { columns, data } = param
-      const sums = []
+      const { columns, data } = param;
+      const sums = [];
       columns.forEach((column, index) => {
         if (index === 0) {
-          sums[index] = '合计'
-          return
+          sums[index] = '合计';
+          return;
         }
-        const values = data.map(item => Number(item[column.property]))
+        const values = data.map(item => Number(item[column.property]));
         if (!values.every(value => isNaN(value))) {
           sums[index] = values.reduce((prev, curr) => {
-            const value = Number(curr)
+            const value = Number(curr);
             if (!isNaN(value)) {
-              return prev + curr
+              return prev + curr;
             } else {
-              return prev
+              return prev;
             }
-          }, 0)
-          sums[index] += '平方千米'
+          }, 0);
+          sums[index] += '平方千米';
         } else {
-          sums[index] = ''
+          sums[index] = '';
         }
-      })
-      return sums
+      });
+      return sums;
     }
   }
-}
+};
 </script>
 
 <style scoped="scoped">

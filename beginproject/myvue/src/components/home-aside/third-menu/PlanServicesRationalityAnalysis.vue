@@ -1,31 +1,31 @@
 <template>
-	<div id="ra01">
-	  <el-container>
-		<span class="choose01">
-		  <el-tag type="info">选择分析因子</el-tag>
-		  <el-radio-group v-model="radio" >
-			<el-radio v-for="(values,index) in radata" :key="index" :label="index">{{values}}</el-radio>
-		  </el-radio-group>
-		</span>
-		<span class="choose02">
-		  <el-tag type="info" class="tag">选择分析范围</el-tag>
-		  <el-row>
-			<el-button class="btn-first">自定义范围</el-button>
-			<el-button class="btn-second">范围线导入</el-button>
-			<el-button class="btn-third">范围线提取</el-button>
-		  </el-row>
-		</span>
-		<span class="choose03">
-			<el-tag type="info" class="cache">是否进行缓冲区分析</el-tag>
-				<span class="inputNumber">
-				<span>缓冲距离：</span>
-				<el-input type="text" v-model="num"></el-input>
-				<span>米</span>
-				</span>
-			<el-button type="primary" class="priBtn" @click="isopendrawerchart">开始分析</el-button>
-		</span>
-	  </el-container>
-  </div>
+    <div id="ra01">
+        <el-container>
+            <span class="choose01">
+                <el-tag type="info">选择分析因子</el-tag>
+                <el-radio-group v-model="radio">
+                    <el-radio v-for="(values,index) in radata" :key="index" :label="index">{{ values }}</el-radio>
+                </el-radio-group>
+            </span>
+            <span class="choose02">
+                <el-tag type="info" class="tag">选择分析范围</el-tag>
+                <el-row>
+                    <el-button class="btn-first">自定义范围</el-button>
+                    <el-button class="btn-second">范围线导入</el-button>
+                    <el-button class="btn-third">范围线提取</el-button>
+                </el-row>
+            </span>
+            <span class="choose03">
+                <el-tag type="info" class="cache">是否进行缓冲区分析</el-tag>
+                <span class="inputNumber">
+                    <span>缓冲距离：</span>
+                    <el-input v-model="num" type="text" />
+                    <span>米</span>
+                </span>
+                <el-button type="primary" class="priBtn" @click="isopendrawerchart">开始分析</el-button>
+            </span>
+        </el-container>
+    </div>
 </template>
 
 <script>
@@ -40,15 +40,15 @@ export default {
 	  '禁止勘查符合性分析','压覆国家级自然保护区分析','压覆国家级风景名胜区分析','压覆国家公园分析','土地整治规划符合性分析']
     };
   },
+  watch:{
+	  radio:function(val){
+		  this.$store.commit('selectanalysisfactor',this.radata[val]);
+	  }
+  },
   methods:{
 	  isopendrawerchart(){
 		  this.$store.commit('opendrawerchart');
 		  this.$store.commit('selectanalysisfactor',this.radata[this.radio]);
-	  }
-  },
-  watch:{
-	  radio:function(val){
-		  this.$store.commit('selectanalysisfactor',this.radata[val]);
 	  }
   }
   

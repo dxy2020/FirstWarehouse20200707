@@ -1,17 +1,27 @@
 <template>
-	<div id="toolbox02">
-		<div class="toolbox03"><i class="el-icon-s-grid"></i><span>辖区</span></div>
-		<div class="toolbox03"><i class="el-icon-place"></i><span>要素拾取</span></div>
-		<div class="toolbox03"><i class="el-icon-setting"></i><span>工具</span></div>
-		<div class="toolbox03"><i class="el-icon-menu"></i><span>分屏</span></div>
-		<div class="toolbox03" style="border: none;"><i class="el-icon-delete"></i><span>清理</span></div>
-	</div>
+    <div id="toolbox02">
+        <div class="toolbox03">
+            <i class="el-icon-s-grid" /><span>辖区</span>
+        </div>
+        <div class="toolbox03">
+            <i class="el-icon-place" /><span>要素拾取</span>
+        </div>
+        <div class="toolbox03">
+            <i class="el-icon-setting" /><span>工具</span>
+        </div>
+        <div class="toolbox03">
+            <i class="el-icon-menu" /><span>分屏</span>
+        </div>
+        <div class="toolbox03" style="border: none;">
+            <i class="el-icon-delete" /><span>清理</span>
+        </div>
+    </div>
 </template>
 
 <script>
-	export default{
+export default{
 		
-	}
+};
 </script>
 
 <style scoped="scoped">

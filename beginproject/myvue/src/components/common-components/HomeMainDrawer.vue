@@ -1,20 +1,28 @@
 <template>
-	<transition name="el-zoom-in-bottom" style="margin: 0;padding: 0;">
-		<div v-show="this.$store.state.opendrawerchart" id="transition-box">
-			<div id="header">
-				<span style="font-size: 18px;">{{selectanalysis}}</span>
-				<el-button size="mini" type="primary" round style="float: right;margin-top: 8px; margin-right: 10px;" @click="getjson">收起</el-button>
-			</div>
-			<div id="chartcontain">
-				<home-main-drawer-table-chart></home-main-drawer-table-chart>
-			</div>
-		</div>
-	</transition>
+    <transition name="el-zoom-in-bottom" style="margin: 0;padding: 0;">
+        <div v-show="this.$store.state.opendrawerchart" id="transition-box">
+            <div id="header">
+                <span style="font-size: 18px;">{{ selectanalysis }}</span>
+                <el-button
+                    size="mini" type="primary" round
+                    style="float: right;margin-top: 8px; margin-right: 10px;" @click="getjson"
+                >
+                    收起
+                </el-button>
+            </div>
+            <div id="chartcontain">
+                <home-main-drawer-table-chart />
+            </div>
+        </div>
+    </transition>
 </template>
 
 <script>
-import HomeMainDrawerTableChart from './HomeMainDrawerTableChart.vue'
+import HomeMainDrawerTableChart from './HomeMainDrawerTableChart.vue';
 export default {
+  components: {
+    HomeMainDrawerTableChart
+  },
   props: {
     isOpen: {
       type: Boolean,
@@ -26,14 +34,11 @@ export default {
       isopen: true,
       datajson: []
       // selectanalysis:''
-    }
-  },
-  components: {
-    HomeMainDrawerTableChart
+    };
   },
   computed: {
     selectanalysis() {
-      return this.$store.state.selectanalysisfactor
+      return this.$store.state.selectanalysisfactor;
     }
   },
   methods: {
@@ -46,14 +51,14 @@ export default {
 					*/
       }).then(res => {
         // console.log(res.data);
-        this.datajson = res.data
+        this.datajson = res.data;
       }).catch(res => {
-        alert('访问失败！')
-        console.log(res)
-      })
+        alert('访问失败！');
+        console.log(res);
+      });
     }
   }
-}
+};
 
 </script>
 

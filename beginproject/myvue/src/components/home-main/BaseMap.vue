@@ -1,52 +1,57 @@
 <template>
-	<div id="map" ref="rootmap"> <!-- :style="{width:mapWidth}" -->
-		<div id="search01"><home-main-search-input-query></home-main-search-input-query></div>
-		<div id="toolbox01"><home-main-tool-box></home-main-tool-box></div>
-	</div>
+    <div id="map" ref="rootmap">
+        <!-- :style="{width:mapWidth}" -->
+        <div id="search01">
+            <home-main-search-input-query />
+        </div>
+        <div id="toolbox01">
+            <home-main-tool-box />
+        </div>
+    </div>
 </template>
 
 <script>
-	import "ol/ol.css";
-	import { Map, View } from "ol";
-	import TileLayer from "ol/layer/Tile";
-	import OSM from "ol/source/OSM";
-	import HomeMainSearchInputQuery from "../common-components/HomeMainSearchInputQuery.vue";
-	import HomeMainToolBox from "../common-components/HomeMainToolBox.vue";
-	export default {
-		name:'olmap',
-		// 从父组件出获取宽度
-		// props:{
-		// 	mapWidth:{
-		// 	type: [String, Number],
-		// 	default: 100
-		// 	}
-		// },
-		data() {
-			return {
+import "ol/ol.css";
+import { Map, View } from "ol";
+import TileLayer from "ol/layer/Tile";
+import OSM from "ol/source/OSM";
+import HomeMainSearchInputQuery from "../common-components/HomeMainSearchInputQuery.vue";
+import HomeMainToolBox from "../common-components/HomeMainToolBox.vue";
+export default {
+  name:'Olmap',
+  components:{
+    HomeMainSearchInputQuery,
+    HomeMainToolBox
+  },
+  // 从父组件出获取宽度
+  // props:{
+  // 	mapWidth:{
+  // 	type: [String, Number],
+  // 	default: 100
+  // 	}
+  // },
+  data() {
+    return {
 			  map: null
-			};
-		},
-		components:{
-			HomeMainSearchInputQuery,
-			HomeMainToolBox
-		},
-		mounted() {
-			// var mapcontainer = this.$refs.rootmap;
-			this.map = new Map({
+    };
+  },
+  mounted() {
+    // var mapcontainer = this.$refs.rootmap;
+    this.map = new Map({
 			  target: "map",
 			  layers: [
-				new TileLayer({
+        new TileLayer({
 				  source: new OSM()
-				})
+        })
 			  ],
 			  view: new View({
-				projection: "EPSG:4326",    //使用这个坐标系
-				center: [114.064839,22.548857],  //深圳
-				zoom: 12
+        projection: "EPSG:4326",    //使用这个坐标系
+        center: [114.064839,22.548857],  //深圳
+        zoom: 12
 			  })
-			});
+    });
 		  }
-		};
+};
 </script>
 
 <style scoped="scoped">

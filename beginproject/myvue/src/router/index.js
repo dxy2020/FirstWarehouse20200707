@@ -8,29 +8,29 @@ import PlanServicesRationalityAnalysis from "@/components/home-aside/third-menu/
 Vue.use(VueRouter);//组件
 
 const routes = [
-	{
-	  	path:"/login",
+  {
+	  	path:"/",//login
 	  	name:"Login",
 	  	component:Login
-	},
-	{
-	    path: "/",//home
+  },
+  {
+	    path: "/home",//home
 	    name: "Home",
 	    component: Home,
-		children:[
-			{
-				path:"/home/planservice",
-				name:"PlanServices",
-				component:PlanServices
-			},
-			{
-				path:"/home/PlanServicesRationalityAnalysis",//rationalityAnalysis
-				name:"PlanServicesRationalityAnalysis",
-				component:PlanServicesRationalityAnalysis
+    children:[
+      {
+        path:"/home/planservices",
+        name:"PlanServices",
+        component:PlanServices
+      },
+      {
+        path:"/home/planservicesrationalityanalysis",//rationalityAnalysis
+        name:"PlanServicesRationalityAnalysis",
+        component:PlanServicesRationalityAnalysis
 				
-			}
-		]
-	}
+      }
+    ]
+  }
 ];
 
 const router = new VueRouter({//路由
@@ -54,9 +54,9 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-const originalPush = VueRouter.prototype.push
-   VueRouter.prototype.push = function push(location) {
-   return originalPush.call(this, location).catch(err => err)
-}
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err);
+};
 
 export default router;

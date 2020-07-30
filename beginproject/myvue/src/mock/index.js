@@ -1,8 +1,8 @@
-import Mock from 'mockjs';
-import {getClassInformation} from './response/class.js';
+// import Mock from 'mockjs';
+// import {getClassInformation} from './response/class.js';
 
-//about
+// //about
 
-Mock.mock(/\getClassInformation/,"post",getClassInformation);
+// Mock.mock(/\getClassInformation/,"post",getClassInformation);
 
-export default Mock;
+// export default Mock;

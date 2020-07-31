@@ -25,31 +25,5 @@ export default {
 </script>
 
 <style lang="scss">
-  *{
-		margin: 0;
-		padding: 0;
-	}
-  // html{
-  //   body{
-  //     #app{
-  //       /*设置内部填充为0，几个布局元素之间没有间距*/
-  //       padding: 0px;
-  //        /*外部间距也是如此设置*/
-  //       margin: 0px;
-  //       /*统一设置高度为100%*/
-  //       height: 100%;
-  //       width:100%;
-  //     }
-  //   }
-  // }
-  //消除默认样式(主要：外边距，内边距)css
-	html,body,#app{
-		/*设置内部填充为0，几个布局元素之间没有间距*/
-        padding: 0px;
-         /*外部间距也是如此设置*/
-        margin: 0px;
-        /*统一设置高度为100%*/
-        height: 100%;
-        width:100%;
-	}
+  @import "@/assets/styles/_default-styles-clear.scss";
 </style>

@@ -23,7 +23,7 @@
                 <!-- <i slot="suffix" class="el-input__icon el-icon-date"></i>-->
                 </el-form-item>
                 <!--<i slot="suffix" :class="[loginForm.flag?'el-icon-minus':'el-icon-view']"  @click="loginForm.flag=!loginForm.flag" />
-        -->
+                -->
                 <!--autocomplete="auto" style="margin-top:8px;font-size:18px;"-->
                 <el-form-item>
                     <el-button type="primary" style="width: 100%;background: #505458;border: none" @click="login">
@@ -110,9 +110,6 @@ export default {
      -moz-border-radius: $radius;
   -webkit-border-radius: $radius;
   }
-  .box {
-    @include border-radius(10px);
-  }
   #login01 {
     @extend .label-size-default;
     position: fixed;
@@ -127,8 +124,10 @@ export default {
   .login-container {
     @include border-radius(15px);
     background:#fff url(img/login.png) no-repeat;
-    background-clip: padding-box;
-    background-size: 100%;
+    background: {
+      clip: padding-box;
+      size: 100%;
+    }
     margin: auto;
     width: 30%;
     height: 50%;
@@ -143,15 +142,18 @@ export default {
     text-align: left;
     color: #505458;
   }
-  .login-content{
+  .login-content {
   	text-align: left;
     margin-bottom: 20px;
   }
-  .el-form-item{
+  .el-form-item {
     margin-bottom: 30px;
     width: 50%;
+    .el-input {
+      border:0px;
+      outline:none;
+    }
   }
-  .el-input input{border:0px;outline:none;}
  
  
 </style>

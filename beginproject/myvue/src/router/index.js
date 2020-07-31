@@ -9,12 +9,12 @@ Vue.use(VueRouter);//组件
 
 const routes = [
   {
-	  	path:"/",//login
+	  	path:"/login",//login
 	  	name:"Login",
 	  	component:Login
   },
   {
-	    path: "/home",//home
+	    path: "/",//home
 	    name: "Home",
 	    component: Home,
     children:[

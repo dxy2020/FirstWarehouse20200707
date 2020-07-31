@@ -1,8 +1,8 @@
 <template>
-    <div id="menu01">
-        <img src="./img/u24.png" style="margin-top: 10px;margin-bottom: 5px;">
+    <div id="home-aside-first-menu">
+        <img src="./img/u24.png">
         <div
-            v-for="(value,index) in menu" :key="index" class="menu02"
+            v-for="(value,index) in menu" :key="index" class="menu-button"
             @click="isopenleftmenu02"
         >
             <router-link
@@ -59,23 +59,26 @@ export default {
 };
 </script>
 
-<style scoped="scoped">
-	#menu01{
-		width: 108px;
-		height: 100%;
+<style scoped="scoped" lang="scss">
+	#home-aside-first-menu{
+    height: 100%;
+		width: 200px;		
 		background-color: #505458;
 		text-align: center;
-		color: #FFFFFF;
-	}
-	.menu02{
-		margin-top:24px;
-		padding: 3px 1px 1px 1px;
-		border-radius: 4px
-	}
-	.menu02 p{
-		margin-top:1px;
-	}
-	.menu02:hover{
-		background-color: bisque;
-	}
+    color: #FFFFFF;
+    padding-top:20px;
+  }
+  #home-aside-first-menu{
+    img{
+      width: 60px;
+    }
+    .menu-button{
+      margin-top:35px;
+		  padding: 12px auto;
+      border-radius: 4px;
+      &:hover{
+        background-color:bisque;
+      }
+    }
+  }
 </style>

@@ -1,9 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Login from "@/views/Login/Login.vue";
-import Home from "@/views/Home/Home.vue";
-import PlanServices from "@/components/home-aside/second-menu/PlanServices.vue";
-import PlanServicesRationalityAnalysis from "@/components/home-aside/third-menu/PlanServicesRationalityAnalysis.vue";
+import Login from "@/views/login/Login.vue";
+import Home from "@/views/home/Home.vue";
+import PlanServices from "@/views/home/home-aside-second-menu/PlanServices.vue";
+import PlanServicesRationalityAnalysis from "@/views/home/home-aside-third-menu/PlanServicesRationalityAnalysis.vue";
 
 Vue.use(VueRouter);//组件
 

@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import FirstMenu from '@/components/home-aside/first-menu/FirstMenu.vue';
+import FirstMenu from '@/components/home-aside/HomeAsideFirstMenu.vue';
 import BaseMap from '@/components/home-main/BaseMap.vue';
 import HomeMainDrawer from '@/components/common-components/HomeMainDrawer.vue';
 import HomeHeader from '@/components/home-header/HomeHeader.vue';

@@ -190,7 +190,7 @@ export default {
 	}
 	#table-select-chart{
 		width: 55%;
-    height: 100%;
+    height: 94.5%;
 		background-color: #294D99;
 	}
   .el-table-column{

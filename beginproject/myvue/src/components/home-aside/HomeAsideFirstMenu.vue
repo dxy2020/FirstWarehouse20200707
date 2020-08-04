@@ -66,11 +66,11 @@ export default {
 		background-color: #505458;
 		text-align: center;
     color: #FFFFFF;
-    padding-top:20px;
   }
   #home-aside-first-menu{
     img{
       width: 60px;
+      padding-top: 20px;
     }
     .menu-button{
       margin-top:35px;

@@ -83,6 +83,7 @@ export default {
     // @include labelflex(flex,row,nowrap);
     background-color: #2C3E50;
     @extend .label-size-nopadding;
+    height: 94.5%;
     // overflow: visible;		
   }
 

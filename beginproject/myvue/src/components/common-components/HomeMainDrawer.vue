@@ -1,17 +1,16 @@
 <template>
     <transition name="el-zoom-in-bottom" style="margin: 0;padding: 0;">
-        <div v-show="this.$store.state.opendrawerchart" id="transition-box">
-            <div id="header">
+        <div v-show="this.$store.state.opendrawerchart" id="home-main-drawer">
+            <div id="drawer-header">
                 <span style="font-size: 18px;">{{ selectanalysis }}</span>
                 <el-button
-                    size="mini" type="primary" round
-                    style="float: right;margin-top: 8px; margin-right: 10px;" @click="getjson"
+                    size="mini" type="primary" round @click="getjson"
                 >
                     收起
                 </el-button>
             </div>
-            <div id="chartcontain">
-                <home-main-drawer-table-chart />
+            <div id="drawer-contain">
+                <home-main-drawer-table-chart></home-main-drawer-table-chart>
             </div>
         </div>
     </transition>
@@ -62,42 +61,29 @@ export default {
 
 </script>
 
-<style scoped="scoped">
-	#transition-box{
-		position: absolute;
-		height:55%;
-		width: 100%;
+<style scoped="scoped" lang="scss">
+@import "@/assets/styles/_common-styles.scss";
+@import "@/assets/styles/_flex-layout.scss";
+	#home-main-drawer{
+    @include labelflex(flex,column,nowrap);
+		position: relative;
+    height:55%;
+    bottom: 55%;
+    width: 100%;
 		border-radius: 4px;
 		box-sizing: border-box;
-		margin: 0;
-		right: 0;
-		bottom: 1px;
-		padding:2px 2px 2px 2px;
 		background-color: #ff5500;
-		/* z-index: 10; */
 	}
-	#header{
-		width: 100%;
-		height: 12%;
-		/* border: 1px solid #2C3E50; */
+	#drawer-header{
+    @include labelflex(inline-flex,row,nowrap);
+    // width: auto;
+    justify-content: space-between;
 	}
-	#header:before{
-		content:'';
-		display: inline-block;
-		vertical-align: middle;
-		height: 100%;
-	}
+	#drawer-contain{
+    // @include labelflex(flex,row,nowrap);
+    background-color: #2C3E50;
+    @extend .label-size-nopadding;
+    // overflow: visible;		
+  }
 
-	#chartcontain{
-		position: relative;
-		width: 100%;
-		height: 88%;
-		padding: 2px 2px 2px 2px;
-		bottom: 0;
-		right: 0;
-		left: 0;
-		top: 0;
-		background-color: #2C3E50;
-		overflow: hidden;
-	}
 </style>

@@ -1,11 +1,10 @@
 <template>
     <div id="map" ref="rootmap">
-        <!-- :style="{width:mapWidth}" -->
-        <div id="search01">
-            <home-main-search-input-query />
+        <div id="search-input-query">
+            <home-main-search-input-query></home-main-search-input-query>
         </div>
-        <div id="toolbox01">
-            <home-main-tool-box />
+        <div id="tool-box">
+            <home-main-tool-box></home-main-tool-box>
         </div>
     </div>
 </template>
@@ -54,23 +53,23 @@ export default {
 };
 </script>
 
-<style scoped="scoped">
-	#map{position: relative;
+<style scoped="scoped" lang="scss">
+@import "@/assets/styles/_flex-layout.scss"; 
+	#map{
+    position: relative;
 		height:100%;width: 100%;word-wrap: break-word;
 		word-break: break-all;}
 	/*隐藏ol的一些自带元素*/
 	.ol-attribution,.ol-zoom { display: none;}
-	#search01{
-		width: 500px;
-		height: 40px;
+	#search-input-query{
+    @include labelflex(flex,row,nowrap);
 		position: absolute;
-		left: 40px;
+		left: 60px;
 		top: 12px;
 		z-index: 10;
 	}
-	#toolbox01{
-		width: 480px;
-		height: 48px;
+	#tool-box{
+    @include labelflex(inline-flex,row,nowrap);
 		position: absolute;
 		right: 12px;
 		top: 12px;

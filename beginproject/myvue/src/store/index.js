@@ -8,7 +8,7 @@ const store = new Vuex.Store({
     // 存储token
     Authorization: localStorage.getItem('Authorization') ? localStorage.getItem('Authorization') : '',
     opendrawerchart:false,
-    openleftmenu02:false,
+    opensecondmenu:false,
     selectanalysisfactor:'',
     getmainwidth:100
 	
@@ -23,8 +23,8 @@ const store = new Vuex.Store({
     opendrawerchart(state){
       state.opendrawerchart=!state.opendrawerchart;
     },
-    openleftmenu02(state){
-      state.openleftmenu02=!state.openleftmenu02;
+    OpenSecondMenu(state){
+      state.opensecondmenu=!state.opensecondmenu;
     },
     selectanalysisfactor(state,value){
       state.selectanalysisfactor=value;

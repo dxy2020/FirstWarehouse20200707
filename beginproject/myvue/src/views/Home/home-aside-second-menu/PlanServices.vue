@@ -86,13 +86,6 @@ export default{
     };
   },
   methods:{
-    isOpenSecondMenu(){
-      this.opensecondmenu=!this.opensecondmenu;
-    },
-    isOpenThirdMenu(){
-      this.$store.commit('openleftmenu02');
-    }
-			
   }
 };
 </script>

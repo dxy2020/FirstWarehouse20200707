@@ -10,3 +10,8 @@
   -o-flex-direction: $direction;
   flex-direction: $direction;
 }
+@mixin labelflex($display,$flex-direction,$flex-wrap) {
+  display: $display;
+  flex-direction: $flex-direction;
+  flex-wrap: $flex-wrap;
+}

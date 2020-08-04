@@ -17,14 +17,8 @@
                     选择分析范围
                 </el-tag>
                 <el-row>
-                    <el-button class="btn-first">
-                        自定义范围
-                    </el-button>
-                    <el-button class="btn-second">
-                        范围线导入
-                    </el-button>
-                    <el-button class="btn-third">
-                        范围线提取
+                    <el-button v-for="(values,index) in range_analysis_function" :key="index" class="btn-first">
+                        {{ values }}
                     </el-button>
                 </el-row>
             </div>
@@ -37,7 +31,7 @@
                     <el-input v-model="num" type="text" />
                     <span>米</span>
                 </span>
-                <el-button type="primary" class="priBtn" @click="isopendrawerchart">
+                <el-button type="primary" @click="isOpenDrawer">
                     开始分析
                 </el-button>
             </div>
@@ -61,7 +55,8 @@ export default {
       radio: 1,
       num: "",
 	  	radata:['土地利用总体规划符合性分析','占用永久基本农田分析','占用高标准农田分析','矿产资源规划符合性分析',
-        '禁止勘查符合性分析','压覆国家级自然保护区分析','压覆国家级风景名胜区分析','压覆国家公园分析','土地整治规划符合性分析']
+        '禁止勘查符合性分析','压覆国家级自然保护区分析','压覆国家级风景名胜区分析','压覆国家公园分析','土地整治规划符合性分析'],
+      range_analysis_function:['自定义范围','范围线导入','范围线提取']      
     };
   },
   watch:{
@@ -70,7 +65,7 @@ export default {
 	  }
   },
   methods:{
-	  isopendrawerchart(){
+	  isOpenDrawer(){
 		  this.$store.commit('opendrawerchart');
 		  this.$store.commit('selectanalysisfactor',this.radata[this.radio]);
 	  }
@@ -80,7 +75,8 @@ export default {
 </script>
 
 <style scoped="scoped" lang="scss">
-	@import "@/assets/styles/_common-styles.scss";
+  @import "@/assets/styles/_common-styles.scss";
+  // @import "@/assets/styles/_flex-layout.scss";
 	#plan-services-rationality-analysis{
 		@include label-size-custom(700px);
     display: flex;
@@ -91,7 +87,7 @@ export default {
 		padding: {
 			top:5px;
 			left: 12px;
-		}
+    }
 	}
 	#select-analysis-factors{
 		.el-tag{
@@ -104,29 +100,19 @@ export default {
 				bottom: 12px;
 			}
 			font-size: 50px;
-			// .el-radio {
-				
-			// }
 		}
 	}
 	#select-analysis-scope{
-		// display: flex;
-		// flex-flow: row wrap;
 		.el-tag {
 			height: 60px;
 			line-height: 50px;
 		}
 		.el-row{
-			display: flex;
-			flex-flow: row wrap;
-			align-content: flex-start;
-			background-color: red;
 			.el-button{
 				width: 48%;
-
+        margin: 5px 4px;
 			}
-		}
-		
+		}		
 	}
 	#buffer-analysis{
 		.el-tag {
@@ -134,11 +120,13 @@ export default {
 			line-height: 50px;
 		}
 		.buffer-analysis-input{
-			display: inline-flex;
-			flex-flow: row nowrap;
 			.el-input{
-				width: 60%;
-			}
-		}
+        width: 50%;            
+      }      
+    }
+    .el-button{
+      display: block;
+      margin: 0 auto;
+    }
 	}
 </style>

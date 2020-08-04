@@ -3,7 +3,7 @@
         <img src="./img/u24.png">
         <div
             v-for="(value,index) in menu" :key="index" class="menu-button"
-            @click="isopenleftmenu02"
+            @click="isOpenSecondMenu"
         >
             <router-link
                 :to="value.tolink" tag="div" append
@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  name: 'FirstMenu',
+  name: 'HomeAsideFirstMenu',
   data() {
     return {
       menu: [
@@ -52,8 +52,8 @@ export default {
     };
   },
   methods: {
-    isopenleftmenu02() {
-      this.$store.commit('openleftmenu02');
+    isOpenSecondMenu() {
+      this.$store.commit('OpenSecondMenu');
     }
   }
 };

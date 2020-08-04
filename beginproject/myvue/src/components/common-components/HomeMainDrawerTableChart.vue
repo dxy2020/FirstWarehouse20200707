@@ -1,28 +1,23 @@
 <template>
-    <div id="tablechart01">
-        <div id="tablechart02">
+    <div id="drawer-table-chart">
+        <div id="table-all-data">
             <el-table
                 ref="singleTable"
                 :data="datajson"
-                height="100%"
                 :show-header="false"
                 style="width: 100%"
-                highlight-current-row
+                height="100%"
+                max-height="100%"
                 @current-change="handleCurrentChange"
             >
                 <el-table-column
                     type="index"
                     :index="indexMethod"
-                /><!-- 自动编号 -->
-                <!-- <el-table-column
-					prop="COUNT"
-					label="序号"
-					width="10">
-				</el-table-column> -->
+                    width="90"
+                />
                 <el-table-column
                     prop="ZLDWMC_input"
                     label="村名"
-                    width="60"
                 />
                 <el-table-column
                     prop="SUM_TBDLMJ_input"
@@ -30,29 +25,30 @@
                 />
             </el-table>
         </div>
-        <div id="tablechart03">
-            <div id="tablechart04">
-                <span>{{ currentRow.ZLDWMC_input }}({{ currentRow.ZLDWDM_input }})</span>
+        <div id="table-select-data">
+            <div id="table-select-name">
+                <span>{{ currentRow.ZLDWMC_input }}({{ currentRow.ZLDWDM_input }})
+                </span>
             </div>
-            <div id="tablechart05">
+            <div id="table-select-contain">
                 <el-table
                     :data="onecundata"
+                    show-summary
                     border
-                    :show-summary="true"
-                    :summary-method="getsummaries"
+                    max-height="100%"
+                    :summary-method="getSummaries"
                     :default-sort="{prop: 'SUM_TBDLMJ_input'}"
-                    height="100%"
                     style="width: 100%"
                 >
                     <el-table-column
                         prop="DLBM_input"
                         label="代码"
-                        width="80"
+                        width="150px"
                     />
                     <el-table-column
                         prop="DLMC_input"
                         label="名称"
-                        width="100"
+                        width="400px"
                     />
                     <el-table-column
                         prop="SUM_TBDLMJ_input"
@@ -62,7 +58,7 @@
                     />
                 </el-table>
             </div>
-            <div id="tablechart06">
+            <div id="table-select-chart">
                 <template>
                     <ve-pie :data="charData" :settings="chartSettings" />
                 </template>
@@ -76,7 +72,7 @@ export default {
   name: 'Tablechart',
   data() {
     this.chartSettings = {
-      radius: 50
+      // radius: 250,
       // offsetY:300
     };
     return {
@@ -131,7 +127,7 @@ export default {
       console.log(row, column);
       return row.SUM_TBDLMJ_input;
     },
-    getsummaries(param) {
+    getSummaries(param) {
       const { columns, data } = param;
       const sums = [];
       columns.forEach((column, index) => {
@@ -160,46 +156,47 @@ export default {
 };
 </script>
 
-<style scoped="scoped">
-	#tablechart01{
-		height: 100%;
-		width: 100%;
-		margin: 0;
-		padding: 1px 1px 1px 1px;
+<style scoped="scoped" lang="scss">
+@import "@/assets/styles/_common-styles.scss";
+@import "@/assets/styles/_flex-layout.scss";
+	#drawer-table-chart{
+    @include labelflex(flex,row,nowrap);
+    @extend .label-size-default;
+    
 	}
-	#tablechart02{
+	#table-all-data{
 		width: 20%;
-		height: 100%;
+    height: 100%;    
+    .el-table{
+      text-align: center;
+      align-content: center;
+    }
 	}
-	#tablechart03{
-		width: 80%;
-		height: 100%;
-		position: relative;
-		left: 20%;
-		bottom: 100%;
+   /deep/.el-table .cell{
+    overflow: visible;
+  }
+	#table-select-data{
+    height: 100%;
+    flex-grow: 1;    
+    @include labelflex(flex,row,wrap);
 		text-align: center;
-		padding: 1px 1px 1px 1px;
-		font-size: 10px;
-		background-color: #550000;
 	}
-	#tablechart04{
-		height: 8%;
+	#table-select-name{
+    width: 100%;
 	}
-	#tablechart05{
-		height: 92%;
-		width: 45%;
-		padding: 1px 1px 1px 1px;
+	#table-select-contain{
+    width: 45%;
+    height: 90%;
 	}
-	#tablechart06{
-		position: relative;
-		left: 45%;
-		bottom: 92%;
-		height: 92%;
+	#table-select-chart{
 		width: 55%;
-		padding: 1px 1px 1px 1px;
-		/* background-color: red; */
+    height: 100%;
 		background-color: #294D99;
 	}
+  .el-table-column{
+    height: 120px;
+    
+  }
 </style>
 
 <!--滚动条样式

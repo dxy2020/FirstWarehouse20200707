@@ -1,9 +1,9 @@
 <template>
-    <div id="search02">
-        <el-input v-model="input1" placeholder="请输入关键字" style="width: 70%;margin-right: 30px;">
+    <div id="search-input-query">
+        <el-input v-model="inputvalues" placeholder="请输入关键字">
             <el-button slot="append" icon="el-icon-search" style="background-color: #4680d1;color: white;" />
         </el-input>
-        <el-button plain style="margin: 0;">
+        <el-button plain>
             组合查询
         </el-button>
     </div>
@@ -13,15 +13,17 @@
 export default {
   data() {
     return {
-      input1: ''
+      inputvalues: ''
     };
   }
 };
 </script>
 
-<style scoped="scoped">
-	#search02{
-		width: 100%;
-		height: 100%;
-	}
+<style scoped="scoped" lang="scss">
+// @import "@/assets/styles/_common-styles.scss"; 
+// @import "@/assets/styles/_flex-layout.scss"; 
+  /deep/.el-input__inner {
+    width: 600px;
+    height: 70px;
+  }
 </style>

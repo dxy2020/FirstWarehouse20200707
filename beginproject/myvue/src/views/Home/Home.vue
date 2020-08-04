@@ -1,17 +1,17 @@
 <template>
     <div id="home01">
         <div id="header">
-            <HomeHeader />
+            <home-header></home-header>
         </div>
         <div id="contain">
             <!-- <div id="aside"></div> -->
             <div id="aside-left">
-                <first-menu @isopen="onshow"></first-menu>
+                <home-aside-first-menu></home-aside-first-menu>
             </div>
-            <div v-show="this.$store.state.openleftmenu02" id="aside-right">
+            <div v-show="this.$store.state.opensecondmenu" id="aside-right">
                 <router-view></router-view>
             </div><!-- <planservice></planservice> -->            
-            <div id="main" :style="{width:mainwh.width+'px'}">
+            <div id="main">
                 <base-map></base-map><!--:mapWidth="mainwh.mapwidth+'px'"-->
                 <home-main-drawer :is-open="isShow"></home-main-drawer>
             </div>
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import FirstMenu from '@/components/home-aside/HomeAsideFirstMenu.vue';
+import HomeAsideFirstMenu from '@/components/home-aside/HomeAsideFirstMenu.vue';
 import BaseMap from '@/components/home-main/BaseMap.vue';
 import HomeMainDrawer from '@/components/common-components/HomeMainDrawer.vue';
 import HomeHeader from '@/components/home-header/HomeHeader.vue';
@@ -28,7 +28,7 @@ export default {
   name: 'Home',
   components: {
     HomeHeader,
-    FirstMenu,
+    HomeAsideFirstMenu,
     BaseMap,
     HomeMainDrawer
   },
@@ -136,15 +136,15 @@ export default {
     flex-grow: 1;
 	}
 	
-	#drawerchart{
-		position: absolute;
-		left:352px;
-		height:60%;
-		width: auto;
-		margin: 0;
-		right: 0;
-		bottom: 0;
-		background-color: #0000FF;
-	}
+	// #drawerchart{
+	// 	position: absolute;
+	// 	left:352px;
+	// 	height:60%;
+	// 	width: auto;
+	// 	margin: 0;
+	// 	right: 0;
+	// 	bottom: 0;
+	// 	background-color: #0000FF;
+	// }
 
 </style>

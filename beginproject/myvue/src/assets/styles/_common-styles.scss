@@ -31,6 +31,21 @@
 }
 $myBlue: #4680d1;
 $myGlassColor:#323949;
+$myFontSize:12px;
+.myFontDefault{
+  font-style:normal;
+  font-variant:normal;
+  font-weight:normal;
+  font-size:12px;
+  font-family:Arial,Verdana,Sans-serif;
+}
+@mixin myFontCustom($FontSize:12px,$FontFamily:Arial){
+  font-style:normal;
+  font-variant:normal;
+  font-weight:normal;
+  font-size:$FontSize;
+  font-family:$FontFamily,Verdana,Sans-serif;
+}
 
 /*-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale; */

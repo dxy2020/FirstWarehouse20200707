@@ -8,12 +8,12 @@
                 style="width: 100%"
                 height="100%"
                 max-height="100%"
+                size="mini"
                 @current-change="handleCurrentChange"
             >
                 <el-table-column
                     type="index"
                     :index="indexMethod"
-                    width="90"
                 />
                 <el-table-column
                     prop="ZLDWMC_input"
@@ -35,20 +35,20 @@
                     :data="onecundata"
                     show-summary
                     border
+                    height="95%"
                     max-height="100%"
                     :summary-method="getSummaries"
                     :default-sort="{prop: 'SUM_TBDLMJ_input'}"
                     style="width: 100%"
+                    size="mini"
                 >
                     <el-table-column
                         prop="DLBM_input"
                         label="代码"
-                        width="150px"
                     />
                     <el-table-column
                         prop="DLMC_input"
                         label="名称"
-                        width="400px"
                     />
                     <el-table-column
                         prop="SUM_TBDLMJ_input"
@@ -60,7 +60,12 @@
             </div>
             <div id="table-select-chart">
                 <template>
-                    <ve-pie :data="charData" :settings="chartSettings" />
+                    <ve-pie
+                        :data="charData"
+                        width="100%"
+                        height="100%"
+                        :settings="chartSettings"
+                    />
                 </template>
             </div>
         </div>
@@ -72,7 +77,9 @@ export default {
   name: 'Tablechart',
   data() {
     this.chartSettings = {
-      // radius: 250,
+      // legendLimit:5,
+      hoverAnimation:false
+      // radius: 10,
       // offsetY:300
     };
     return {
@@ -162,19 +169,16 @@ export default {
 	#drawer-table-chart{
     @include labelflex(flex,row,nowrap);
     @extend .label-size-default;
-    
+    font-size: $myFontSize;
 	}
 	#table-all-data{
 		width: 20%;
-    height: 100%;    
+    height: 100%;
     .el-table{
       text-align: center;
       align-content: center;
     }
 	}
-   /deep/.el-table .cell{
-    overflow: visible;
-  }
 	#table-select-data{
     height: 100%;
     flex-grow: 1;    
@@ -190,13 +194,8 @@ export default {
 	}
 	#table-select-chart{
 		width: 55%;
-    height: 94.5%;
-		background-color: #294D99;
+    height: 90%;
 	}
-  .el-table-column{
-    height: 120px;
-    
-  }
 </style>
 
 <!--滚动条样式
@@ -217,4 +216,7 @@ export default {
   border-radius: 10px;
   background: #ededed;
   }
+   //  /deep/.el-table .cell{
+  //   overflow: visible;
+  // }
 -->

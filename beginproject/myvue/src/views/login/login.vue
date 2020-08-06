@@ -74,26 +74,11 @@ export default {
           // console.log(_this.userToken);
           //将用户token保存到vuex中
           _this.changeLogin({Authorization:_this.userToken});
-          _this.$router.push('/homepage');						
-          // console.log(_this.changeLogin);
-        
+          _this.$router.push('/homepage');        
         }).catch(error=>{
           console.log(error);
         });
       }
-      //this.$router.replace('/homepage');
-      // this.$axios
-      //     .post('/login', {
-      //         username: this.loginForm.username,
-      //         password: this.loginForm.password
-      //     })
-      //     .then(successResponse => {
-      //         if (successResponse.data.code === 200) {
-      //             this.$router.replace({path: '/index'})
-      //         }
-      //     })
-      //     .catch(failResponse => {
-      //     })
     }
   }
 };

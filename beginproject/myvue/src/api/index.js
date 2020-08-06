@@ -42,8 +42,8 @@ instance.interceptors.response.use(
   response=>{
     let that=this;
     if(response.data.code===10001){
-      alert('you login faile!please login an more times').then(()=>{
-        that.$router.replace('#');
+      alert('you login faile!please login one more time').then(()=>{
+        that.$router.replace('/login');
       });
     }
     return response;
@@ -54,7 +54,7 @@ instance.interceptors.response.use(
       case 401:
         this.$store.commit('dleToken');
         this.$router.replace({//跳转到登录页面
-          path:'#',
+          path:'/login',
           query:{
             redirect:router.currentRoute.fullPath
           }// 将跳转的路由path作为参数，登录成功后跳转到该路由
@@ -71,7 +71,8 @@ export default{
     return instance({
       method:'post',
       headers:{
-        'Content-type':contenType?contenType:'application/json'
+        // 'Content-type':'application/json'
+        'Content-Type':contenType?contenType:'application/json'
       },
       url:url,
       data:data,

@@ -17,7 +17,7 @@
         <div id="map-control-zoom">
             <el-tooltip
                 v-for="(values,index) in MapControlZoom" :key="index" class="item"
-                effect="dark" content="values.content" placement="right"
+                effect="dark" :content="values.content" placement="right"
             >
                 <el-button :icon="values.icon" @click="mapControlZoomClick(values.content)"></el-button>
             </el-tooltip>
@@ -40,7 +40,7 @@ export default {
         },
         {
           icon:'el-icon-place',
-          content:'切换'
+          content:'复位'
         }
       ]
     };

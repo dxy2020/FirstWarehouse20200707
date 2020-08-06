@@ -2,7 +2,7 @@
     <transition name="el-zoom-in-bottom" style="margin: 0;padding: 0;">
         <div v-show="this.$store.state.opendrawerchart" id="home-main-drawer">
             <div id="drawer-header">
-                <span style="font-size: 18px;">{{ selectanalysis }}</span>
+                <span>{{ selectanalysis }}</span>
                 <el-button
                     size="mini" type="primary" round @click="getjson"
                 >
@@ -75,16 +75,16 @@ export default {
 		background-color: #ff5500;
 	}
 	#drawer-header{
-    @include labelflex(inline-flex,row,nowrap);
-    // width: auto;
+    @include labelflex(flex,row,nowrap);
     justify-content: space-between;
+    height: 8%;
+    font-size: $myFontSize;
 	}
 	#drawer-contain{
     // @include labelflex(flex,row,nowrap);
     background-color: #2C3E50;
     @extend .label-size-nopadding;
-    height: 94.5%;
-    // overflow: visible;		
+    height: 92%;
   }
 
 </style>

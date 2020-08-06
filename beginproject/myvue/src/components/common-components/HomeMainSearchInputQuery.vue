@@ -22,8 +22,11 @@ export default {
 <style scoped="scoped" lang="scss">
 // @import "@/assets/styles/_common-styles.scss"; 
 // @import "@/assets/styles/_flex-layout.scss"; 
-  /deep/.el-input__inner {
-    width: 600px;
-    height: 70px;
+  ///deep/.el-input__inner {
+  //   width: 200px;
+  //   height: 40px;
+  // }
+  .el-input{
+    width: 300px;
   }
 </style>

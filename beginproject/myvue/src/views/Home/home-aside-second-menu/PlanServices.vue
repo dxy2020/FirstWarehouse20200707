@@ -93,21 +93,10 @@ export default{
 <style scoped="scoped" lang="scss">
   @import "@/assets/styles/_common-styles.scss";
 	#plan-services{
-    @include label-size-custom(700px);
+    @include label-size-custom(240px,100%);
     display: flex;
     flex-flow: column nowrap;
   }
-  // #breadcrumb{
-  //   width: auto;
-  //   display: inline-flex;
-  //   justify-content: space-between;
-  //   margin: {
-  //     top: 12px;
-  //     bottom:24px;
-  //   }
-  //   // height: 24px;
-  //   // padding-top: 5px;
-  // }
   #second-menu-bar{
     @extend .label-size-default;
     display: flex;
@@ -115,10 +104,10 @@ export default{
     // padding-left: 10px;
   }
 	.second-menu-button{
-		width: 49%;
+    width: 49%;
 		text-align: center;
 		border-bottom: 1px solid #B3C0D1;
-		font-size: 0.8em;
+		font-size: 12px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     img{
       width: 50%;

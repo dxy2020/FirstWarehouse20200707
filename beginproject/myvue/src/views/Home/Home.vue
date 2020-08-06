@@ -66,29 +66,6 @@ export default {
     // }
   },
   mounted() {
-    // console.log('我进来了');
-    // this.screenWidth = document.body.clientWidth;
-    // console.log(this.screenWidth);
-    // this.mainwh.width = this.screenWidth - 108;
-    // this.mainwh.mapwidth = this.screenWidth - 108;
-    // console.log(this.mainwh.width);
-    // const left02 = document.getElementById('left02');// 查看left02的宽度//324px
-    // console.log(window.getComputedStyle(left02).width);
-    // window.onresize = () => { // 当屏幕大小被调整调整，展示地图部分的宽度也被调整
-    //   return (() => {
-    //     this.screenWidth = document.body.clientWidth;
-    //     console.log(this.screenWidth);
-    //     if (this.$store.state.openleftmenu02 === true) {
-    //       this.mainwh.width = this.screenWidth - 460;
-    //       this.mainwh.mapwidth = this.screenWidth - 460;
-    //     } else {
-    //       this.mainwh.width = this.screenWidth - 108;
-    //       this.mainwh.mapwidth = this.screenWidth - 108;
-    //     }
-
-    //     // this.mainwh.mapwidth=this.screenWidth-108;
-    //   })();
-    // };
   },
   methods: {
     onshow() {
@@ -125,9 +102,12 @@ export default {
     flex-direction: row;
     flex-wrap: nowrap;
   }
+  #aside-left{
+    height: 100%;
+  }
   #aside-right{
-    height: auto;
-    border: red solid 2px;
+    height: 100%;
+    // border: red solid 2px;
 		background-color: white;
 		box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
 	}
@@ -135,16 +115,4 @@ export default {
     height:auto;
     flex-grow: 1;
 	}
-	
-	// #drawerchart{
-	// 	position: absolute;
-	// 	left:352px;
-	// 	height:60%;
-	// 	width: auto;
-	// 	margin: 0;
-	// 	right: 0;
-	// 	bottom: 0;
-	// 	background-color: #0000FF;
-	// }
-
 </style>

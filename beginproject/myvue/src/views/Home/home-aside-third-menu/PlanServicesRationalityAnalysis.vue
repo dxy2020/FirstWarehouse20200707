@@ -78,7 +78,7 @@ export default {
   @import "@/assets/styles/_common-styles.scss";
   // @import "@/assets/styles/_flex-layout.scss";
 	#plan-services-rationality-analysis{
-		@include label-size-custom(700px);
+		@include label-size-custom(240px,100%);
     display: flex;
     flex-flow: column nowrap;
 	}
@@ -86,47 +86,52 @@ export default {
 		@extend .label-size-nopadding;
 		padding: {
 			top:5px;
-			left: 12px;
+			left: 6px;
     }
 	}
 	#select-analysis-factors{
 		.el-tag{
-			height: 60px;
-			line-height: 50px;			
+      font-size: 6px;
 		}
 		.el-radio-group{
 			margin: {
-				top: 12px;
-				bottom: 12px;
+				top: 8px;
+				bottom: 8px;
 			}
-			font-size: 50px;
+			font-size: $myFontSize;
 		}
 	}
 	#select-analysis-scope{
 		.el-tag {
-			height: 60px;
-			line-height: 50px;
+      font-size: 6px;
+      // text-align: center;
 		}
 		.el-row{
 			.el-button{
-				width: 48%;
-        margin: 5px 4px;
+				width: 40%;
+        margin: 2px;
+        padding: 10px;
+
 			}
 		}		
 	}
 	#buffer-analysis{
 		.el-tag {
-			height: 60px;
-			line-height: 50px;
+			font-size: 6px;
 		}
 		.buffer-analysis-input{
+      font-size: 12px;     
 			.el-input{
-        width: 50%;            
-      }      
+        width: 50%;
+        height: 14px;
+        /deep/.el-input__inner{
+        height: 24px;
+       }
+      }
     }
     .el-button{
       display: block;
-      margin: 0 auto;
+      margin: 8px auto;
     }
 	}
 </style>

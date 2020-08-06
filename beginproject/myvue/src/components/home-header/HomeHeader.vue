@@ -1,7 +1,7 @@
 <template>
-    <div id="home-header">
+    <div id="home-header" @click="postUserInformation">
         <div id="home-header-theme">
-            <img src="./img/header.png" style="height:80%;margin-left: 20px;margin-right: 10px;">
+            <img src="./img/header.png" style="height:80%;margin-left: 8px;margin-right: 10px;">
             <span style="color: #ffffff;">国土空间基础信息平台</span>
         </div>
         <el-dropdown class="el-dropdown" @command="handleCommand">
@@ -21,12 +21,13 @@
 </template>
 
 <script>
+import axios from 'axios';
 import http from "@/api/index.js";
 export default {
   name:"HomeHeader",
   data(){
     return{
-      size:90
+      size:30
     };
   },
   methods: {
@@ -42,9 +43,15 @@ export default {
           console.log(res);
         }
       );
-    }
-	    }
-	  };
+    },
+    postUserInformation(){
+      http.post('/data/userform.json',{
+        course_id :this.id}).then(
+        res=>{
+          console.log(res);
+        });
+    }}
+};
 </script>
 
 <style scoped="scoped" lang="scss">
@@ -62,22 +69,15 @@ export default {
 		align-items:center;
 	}
 	.el-dropdown{
-		margin-right: 50px;
+		margin-right: 10px;
 		height: 100%;
 		@include labelflex(inline-flex,row,nowrap);
 		align-items:center;
 		.el-dropdown-link{
-			margin-left: 12px;
-			font-size: 50px;
+			margin-left: 10px;
+			font-size: 12px;
 			cursor: pointer;
 			color: white;	
 	}
-	}
-	
-	// #header02:before,.el-dropdown:before{
-	// 	content:'';
-	// 	display: inline-block;
-	// 	vertical-align: middle;
-	// 	height: 100%;
-	// }
+	}	
 </style>

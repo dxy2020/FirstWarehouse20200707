@@ -5,7 +5,7 @@
                 {{ values.content }}
             </el-breadcrumb-item>
         </el-breadcrumb>
-        <i class="el-icon-arrow-left" style="font-size: 40px;" @click="isOpenThirdMenu" />
+        <i class="el-icon-arrow-left" style="font-size: 16px;" @click="isOpenThirdMenu" />
     </div>
 </template>
 
@@ -48,8 +48,8 @@ export default {
       display: inline-flex;
       justify-content: space-between;
       margin: {
-        top: 12px;
-        bottom:24px;
+        top: 5px;
+        bottom:5px;
       }
   }
 

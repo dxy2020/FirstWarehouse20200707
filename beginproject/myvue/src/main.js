@@ -21,6 +21,7 @@ import {
   RadioButton,
   Switch,
   Button,
+  Tooltip,
   ButtonGroup,
   Table,
   TableColumn,
@@ -67,6 +68,7 @@ Vue.use(Tag);
 Vue.use(Icon);
 Vue.use(Row);
 Vue.use(Col);
+Vue.use(Tooltip);
 Vue.use(Container);
 Vue.use(Header);
 Vue.use(Aside);

@@ -62,19 +62,20 @@ export default {
 <style scoped="scoped" lang="scss">
 	#home-aside-first-menu{
     height: 100%;
-		width: 200px;		
+		width: 60px;		
 		background-color: #505458;
 		text-align: center;
     color: #FFFFFF;
   }
   #home-aside-first-menu{
     img{
-      width: 60px;
-      padding-top: 20px;
+      width: 45%;
+      padding-top: 8px;
     }
     .menu-button{
-      margin-top:35px;
-		  padding: 12px auto;
+      font-size: 12px;
+      margin-top:8px;
+		  // padding: 12px auto;
       border-radius: 4px;
       &:hover{
         background-color:bisque;

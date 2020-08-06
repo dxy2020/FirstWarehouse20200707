@@ -23,6 +23,7 @@ import * as olControl from 'ol/control';
 import TileLayer from "ol/layer/Tile";
 import Source from "ol/source/Source";
 import XYZ from 'ol/source/XYZ';
+import * as olProj from 'ol/proj';
 import HomeMainSearchInputQuery from "../common-components/HomeMainSearchInputQuery.vue";
 import HomeMainToolBox from "../common-components/HomeMainToolBox.vue";
 import MapControl from "../common-components/MapControl.vue";
@@ -62,46 +63,45 @@ export default {
     let Tianditu_cva = new TileLayer({
       title: "天地图矢量注记图层",
       source: new XYZ({
-        url: "http://api.tianditu.gov.cn/api?v=4.0&tk=" +this.TiandituKey,//TiandituKey为天地图密钥
-        // url: "http://t0.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}&tk=" +this.TiandituKey,//TiandituKey为天地图密钥
+        // url: "http://api.tianditu.gov.cn/api?v=4.0&tk=" +this.TiandituKey,//TiandituKey为天地图密钥
+        url: "http://t0.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}&tk=" +this.TiandituKey,//TiandituKey为天地图密钥
         wrapX: false
       })
     });
     //实例化Map对象加载地图
     // this.map = new Map({
-    let map=new Map({
+    this.map=new Map({
 			  //地图容器div的ID
       target: 'map',
-      controls: olControl.defaults({
-        /** @type {olx.control.AttributionOptions} */
-        attributionOptions: ({
-          collapsible: true
-        })
-      }).extend([
-        new olControl.ZoomToExtent({
-          extent: [
-            813079.7791264898, 5929220.284081122,
-            848966.9639063801, 5936863.986909639
-          ]
-        })
-      ]),
+      // controls: olControl.defaults({
+      //   /** @type {olx.control.AttributionOptions} */
+      //   attributionOptions: ({
+      //     collapsible: true
+      //   })
+      // }).extend([
+      //   new olControl.ZoomToExtent({
+      //     extent: [
+      //       813079.7791264898, 5929220.284081122,
+      //       848966.9639063801, 5936863.986909639
+      //     ]
+      //   })
+      // ]),
       //地图容器中加载的图层
       layers: [TiandiMap_vec, Tianditu_cva],
       //地图视图设置
       view: new View({
         //地图初始中心点
-        center:[12000000, 4000000],
+        center:olProj.fromLonLat([105, 35]),
         //地图初始显示级别
         zoom: 8,
         //最小级别
-        minZoom:2,
+        minZoom:1,
         //最大级别
         maxZoom:12,
         // projection: "EPSG:4326"
       })
     });
-    this.map=map;
-    // this.view=this.map.getView();
+    let map=this.map;
     let view =map.getView();
     this.view=view;
     this.zoom=view.getZoom();
@@ -109,15 +109,26 @@ export default {
     this.rotation=view.getRotation();
   },
   methods:{
-    // getZoomIn(){
-      
-    // },
     mapControlMove(values){
+      let view =this.map.getView();
+      let mapCenter=view.getCenter();
       if(values==='左移'){
-        console.log(values);
+        mapCenter[0]-=5000*Math.pow(2,11-view.getZoom());
+        view.animate({
+          center:mapCenter,
+          duration:250
+        });
       }
       else if(values==='右移'){
-        console.log(values);
+        // console.log('我进来了');        
+        mapCenter[0]+=5000*Math.pow(2,11-view.getZoom());
+        // console.log(mapCenter[0]);
+        view.animate({
+          center:mapCenter,
+          duration:250
+        });
+      }else{
+        alert('无效操作');
       }
       // switch(values){
       // case '左移':
@@ -137,8 +148,16 @@ export default {
       else if(values==='缩小'){
         view.setZoom(view.getZoom()-0.2);
       }
+      else if(values==='复位'){
+        //初始中心点
+        view.setCenter(this.center);
+        //初始旋转角度
+        view.setRotation(this.rotation);
+        //初始缩放级数
+        view.setZoom(this.zoom);
+      }
       else{
-        console.log(values);
+        alert('无效操作');
       }
     }
   }
@@ -167,7 +186,7 @@ export default {
 	#search-input-query{
     @include labelflex(flex,row,nowrap);
 		position: absolute;
-		left: 20px;
+		left: 5px;
 		top: 5px;
 		z-index: 10;
 	}

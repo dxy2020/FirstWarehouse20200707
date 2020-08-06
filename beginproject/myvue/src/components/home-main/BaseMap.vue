@@ -6,21 +6,32 @@
         <div id="tool-box">
             <home-main-tool-box></home-main-tool-box>
         </div>
+        <div id="mycontrol">
+            <!-- <el-button id="zoom-in" @click="getZoomIn">
+                放大
+            </el-button> -->
+            <map-control @mapControlMove="mapControlMove" @mapControlZoom="mapControlZoom"></map-control>
+        </div>
     </div>
 </template>
 
 <script>
 import "ol/ol.css";
-import { Map, View } from "ol";
+import Map from "ol/Map";
+import View from "ol/View";
+import * as olControl from 'ol/control';
 import TileLayer from "ol/layer/Tile";
-import OSM from "ol/source/OSM";
+import Source from "ol/source/Source";
+import XYZ from 'ol/source/XYZ';
 import HomeMainSearchInputQuery from "../common-components/HomeMainSearchInputQuery.vue";
 import HomeMainToolBox from "../common-components/HomeMainToolBox.vue";
+import MapControl from "../common-components/MapControl.vue";
 export default {
-  name:'Olmap',
+  name:'BaseMap',
   components:{
     HomeMainSearchInputQuery,
-    HomeMainToolBox
+    HomeMainToolBox,
+    MapControl
   },
   // 从父组件出获取宽度
   // props:{
@@ -31,25 +42,106 @@ export default {
   // },
   data() {
     return {
-			  map: null
+      map:'',
+      view:'',
+      zoom:'',
+      center:'',
+      rotation:'',
+      TiandituKey:'9b0af09fca5346f7bf6ed41cd3e1aef6'
     };
   },
   mounted() {
-    // var mapcontainer = this.$refs.rootmap;
-    this.map = new Map({
-			  target: "map",
-			  layers: [
-        new TileLayer({
-				  source: new OSM()
-        })
-			  ],
-			  view: new View({
-        projection: "EPSG:4326",    //使用这个坐标系
-        center: [114.064839,22.548857],  //深圳
-        zoom: 12
-			  })
+    let TiandiMap_vec=new TileLayer({
+      title:"天地图矢量图层",
+      source:new XYZ({
+        // url:"http://api.tianditu.gov.cn/api?v=4.0&tk=" +this.TiandituKey,//TiandituKey为天地图密钥
+        url:"http://t0.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}&tk=" +this.TiandituKey,//TiandituKey为天地图密钥
+        wrapX: false
+      })
     });
-		  }
+    let Tianditu_cva = new TileLayer({
+      title: "天地图矢量注记图层",
+      source: new XYZ({
+        url: "http://api.tianditu.gov.cn/api?v=4.0&tk=" +this.TiandituKey,//TiandituKey为天地图密钥
+        // url: "http://t0.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}&tk=" +this.TiandituKey,//TiandituKey为天地图密钥
+        wrapX: false
+      })
+    });
+    //实例化Map对象加载地图
+    // this.map = new Map({
+    let map=new Map({
+			  //地图容器div的ID
+      target: 'map',
+      controls: olControl.defaults({
+        /** @type {olx.control.AttributionOptions} */
+        attributionOptions: ({
+          collapsible: true
+        })
+      }).extend([
+        new olControl.ZoomToExtent({
+          extent: [
+            813079.7791264898, 5929220.284081122,
+            848966.9639063801, 5936863.986909639
+          ]
+        })
+      ]),
+      //地图容器中加载的图层
+      layers: [TiandiMap_vec, Tianditu_cva],
+      //地图视图设置
+      view: new View({
+        //地图初始中心点
+        center:[12000000, 4000000],
+        //地图初始显示级别
+        zoom: 8,
+        //最小级别
+        minZoom:2,
+        //最大级别
+        maxZoom:12,
+        // projection: "EPSG:4326"
+      })
+    });
+    this.map=map;
+    // this.view=this.map.getView();
+    let view =map.getView();
+    this.view=view;
+    this.zoom=view.getZoom();
+    this.center=view.getCenter();
+    this.rotation=view.getRotation();
+  },
+  methods:{
+    // getZoomIn(){
+      
+    // },
+    mapControlMove(values){
+      if(values==='左移'){
+        console.log(values);
+      }
+      else if(values==='右移'){
+        console.log(values);
+      }
+      // switch(values){
+      // case '左移':
+      //   console.log(values);break;
+      // case '右移':
+      //   console.log(values);break;
+      // }
+      
+    },
+    mapControlZoom(values){
+      //获取地图视图
+      let view =this.map.getView();
+      if(values==='放大'){        
+        //获得当前缩放级数;地图放大一级
+        view.setZoom(view.getZoom()+0.2);
+      }
+      else if(values==='缩小'){
+        view.setZoom(view.getZoom()-0.2);
+      }
+      else{
+        console.log(values);
+      }
+    }
+  }
 };
 </script>
 
@@ -60,19 +152,37 @@ export default {
 		height:100%;width: 100%;word-wrap: break-word;
 		word-break: break-all;}
 	/*隐藏ol的一些自带元素*/
-	.ol-attribution,.ol-zoom { display: none;}
+  #map{
+    /deep/.ol-zoom{
+      display: none;
+    }
+    /deep/.ol-attribution{
+      display: none;
+    }
+    /deep/.ol-zoom-extent{
+      top: 12px;
+    }
+  }
+	// .ol-attribution,.ol-zoom { display: none;}
 	#search-input-query{
     @include labelflex(flex,row,nowrap);
 		position: absolute;
-		left: 60px;
-		top: 12px;
+		left: 20px;
+		top: 5px;
 		z-index: 10;
 	}
 	#tool-box{
     @include labelflex(inline-flex,row,nowrap);
 		position: absolute;
-		right: 12px;
-		top: 12px;
+		right: 8px;
+		top: 5px;
 		z-index: 10;
-	}
+  }
+  #mycontrol{
+    // @include labelflex(flex,column,nowrap);
+    position: absolute;
+    left: 5px;
+    bottom: 56%;
+    z-index: 10;
+  }
 </style>

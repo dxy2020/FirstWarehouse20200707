@@ -1,32 +1,30 @@
 <template>
-    <div id="login01">
-        <div id="login02">
-            <el-form class="login-container" label-position="left" label-width="0px">
+    <div id="login">
+        <div id="login-container">
+            <el-form class="login-content" label-position="left" label-width="0px">
                 <h3 class="login-title">
                     国土空间基础信息云应用平台
                 </h3>
-                <p class="login-content">
+                <span class="login-welcome">
                     Welcome欢迎登陆
-                </p>
+                </span>
                 <el-form-item>
                     <el-input
-                        v-model="loginForm.username" prefix-icon="el-icon-user-solid" type="text"
-                        auto-complete="off" placeholder="账号"
+                        ref="input" v-model="loginForm.username" prefix-icon="el-icon-user-solid"
+                        type="text" auto-complete="off" placeholder="账号"
                     />
                 </el-form-item>
-
                 <el-form-item>
                     <el-input
                         v-model="loginForm.password" prefix-icon="el-icon-lock" type="password"
-                        show-password auto-complete="off" placeholder="密码"
-                    /><!--suffix-icon="el-icon-view"--> 
-                <!-- <i slot="suffix" class="el-input__icon el-icon-date"></i>-->
+                        show-password auto-complete="off" placeholder="密码" @keyup.enter.native="login"
+                    />
                 </el-form-item>
-                <!--<i slot="suffix" :class="[loginForm.flag?'el-icon-minus':'el-icon-view']"  @click="loginForm.flag=!loginForm.flag" />
-                -->
-                <!--autocomplete="auto" style="margin-top:8px;font-size:18px;"-->
                 <el-form-item>
-                    <el-button type="primary" style="width: 100%;background: #505458;border: none" @click="login">
+                    <el-button
+                        type="primary" style="width: 100%;background: #505458;border: none"
+                        @click="login"
+                    >
                         登录
                     </el-button>
                 </el-form-item>
@@ -38,6 +36,7 @@
  
 <script>
 // import axios from 'axios';
+import http from "@/api/index.js";
 import {mapMutations} from 'vuex';
 export default {
   name: "Login",
@@ -45,11 +44,13 @@ export default {
     return {
       loginForm: {
         username: '',
-        password: '',
-        //flag: false
+        password: ''
       },
       responseResult: []
     };
+  },
+  mounted(){
+    this.$refs['input'].focus();
   },
   methods: {
     ...mapMutations(['changeLogin']),
@@ -58,87 +59,60 @@ export default {
       if(this.loginForm.username===''||this.loginForm.password===''){
         alert('账号或密码不能为空');
       }else{
-      // console.log(this.$axios);
-        this.$axios({
-          method:'post',
-          url:'http://localhost:90/vue-axios/userform.php',
-          data:_this.loginForm
-        }).then(res=>{
-          console.log(_this.loginForm);
-          console.log(res);
-          //JSON.parse(jsonString);
-          // console.log(JSON.parse(res));
-          // console.log(JSON.parse(res.data));
-          // _this.userToken='Bearer'+res.data.data.body.token;
-          _this.userToken='Bearer'+res.data.token;
-          // console.log(_this.userToken);
-          //将用户token保存到vuex中
-          _this.changeLogin({Authorization:_this.userToken});
-          _this.$router.push('/homepage');        
-        }).catch(error=>{
-          console.log(error);
+        http.post('/dev-api/vue-axios/userform.php',_this.loginForm).then(res=>{
+          if(res.data.status===1){
+            _this.userToken='2020'+res.data.data;
+            //将用户token保存到vuex中
+            _this.changeLogin({Authorization:_this.userToken,username:_this.loginForm.username});
+            _this.$router.push('/home');
+          }
+          else if(res.data.status===2){
+            alert('密码错误，重新输入');
+          }
+          else{
+            alert("用户不存在，请申请账号！");
+          }          
         });
       }
-    }
+    },
   }
 };
 </script>
  
 <style scoped="scoped" lang="scss">
-  .label-size-default{
-    height: 100%;
-    width: 100%;
-  }
-  @mixin border-radius($radius) {
-          border-radius: $radius;
-      -ms-border-radius: $radius;
-     -moz-border-radius: $radius;
-  -webkit-border-radius: $radius;
-  }
-  #login01 {
+@import "@/assets/styles/_common-styles.scss";
+@import "@/assets/styles/_flex-layout.scss";
+  #login{
     @extend .label-size-default;
-    position: fixed;
-    // background:no-repeat;/*background:url("../assets/eva.jpg") no-repeat;*/
-    background: {
-      repeat: no-repeat;
-      position: center;
-      size: cover;
-    }
-    margin-top: 10%;
+    @include labelflex(flex,row,wrap);
+    justify-content: center;
+    align-items: center;
   }
-  .login-container {
-    @include border-radius(15px);
+  #login-container{
+    height: 398px;
+    width: 697px;
+  }
+  .login-content {
+    @extend .label-size-default;
+    @include border-radius(20px);
     background:#fff url(img/login.png) no-repeat;
     background: {
       clip: padding-box;
       size: 100%;
     }
-    margin: auto;
-    width: 30%;
-    height: 50%;
-    padding: 35px 35px 15px 35px;
-    /*background: #fff;*/
-    border: 1px solid #eaeaea;
-    box-shadow: 0 0 25px #cac6c6;
-    
-  } 
-  .login-title {
-    margin: 0px auto 40px;
-    text-align: left;
-    color: #505458;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    @include labelflex(flex,column,nowrap);
+    justify-content: center;
+    padding: 0px 12px;
   }
-  .login-content {
-  	text-align: left;
-    margin-bottom: 20px;
-  }
-  .el-form-item {
-    margin-bottom: 30px;
-    width: 50%;
-    .el-input {
-      border:0px;
-      outline:none;
+  .login-content{
+    .login-welcome{
+      margin: 12px 0px;
     }
-  }
- 
+    .el-form-item {
+      width: 50%;
+      margin: 12px 0px;
+    }
+  } 
  
 </style>

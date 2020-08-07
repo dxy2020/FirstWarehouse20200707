@@ -7,7 +7,7 @@
         <el-dropdown class="el-dropdown" @command="handleCommand">
             <el-avatar :size="size" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
             <span class="el-dropdown-link">				
-                user<i class="el-icon-arrow-down el-icon--right" />
+                {{ this.$store.state.user }}<i class="el-icon-arrow-down el-icon--right" />
             </span>
             <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item>
@@ -46,11 +46,13 @@ export default {
     },
     postUserInformation(){
       http.post('/data/userform.json',{
-        course_id :this.id}).then(
+        course_id :'戴洗衣'//this.id
+      }).then(
         res=>{
           console.log(res);
         });
-    }}
+    }
+  }
 };
 </script>
 

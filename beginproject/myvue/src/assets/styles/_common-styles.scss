@@ -15,6 +15,13 @@
   width: $width;
   height: $height;  
 }
+
+@mixin border-radius($radius) {
+  border-radius: $radius;
+-ms-border-radius: $radius;
+-moz-border-radius: $radius;
+-webkit-border-radius: $radius;
+}
 .vertical-center{
   margin-top: 0;
   padding-top: 0;

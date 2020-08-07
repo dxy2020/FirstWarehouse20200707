@@ -6,6 +6,7 @@ const store = new Vuex.Store({
  
   state: {
     // 存储token
+    user:'',
     Authorization: localStorage.getItem('Authorization') ? localStorage.getItem('Authorization') : '',
     opendrawerchart:false,
     opensecondmenu:false,
@@ -18,6 +19,7 @@ const store = new Vuex.Store({
     // 修改token，并将token存入localStorage
     changeLogin(state, user) {
       state.Authorization = user.Authorization;
+      state.user=user.username;
       localStorage.setItem('Authorization', user.Authorization);
     },
     opendrawerchart(state){

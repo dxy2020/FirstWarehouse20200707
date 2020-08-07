@@ -9,12 +9,19 @@ Vue.use(VueRouter);//组件
 
 const routes = [
   {
-	  	path:"/login",//login
-	  	name:"Login",
-	  	component:Login
+    path:"/",
+    redirect:"/login"
   },
   {
-	    path: "/",//home
+    path:"/login",//login
+    name:"Login",
+    component:Login,
+    meta:{
+      requiresAuth:true
+    }
+  },
+  {
+	    path: "/home",//home
 	    name: "Home",
 	    component: Home,
     children:[

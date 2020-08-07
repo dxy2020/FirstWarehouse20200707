@@ -86,7 +86,6 @@ Vue.use(VCharts);
 Vue.config.productionTip = false;
 //只在开发环境中引入，生产环境不引入mock。mock文件夹与main.js同等级。
 if(process.env.NODE_ENV !=="production")require("./mock");
-
 new Vue({
   router,
   store,

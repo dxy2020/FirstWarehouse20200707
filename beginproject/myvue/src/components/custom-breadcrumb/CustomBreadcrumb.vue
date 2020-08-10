@@ -5,7 +5,7 @@
                 {{ values.content }}
             </el-breadcrumb-item>
         </el-breadcrumb>
-        <i class="el-icon-arrow-left" style="font-size: 16px;" @click="isOpenThirdMenu" />
+        <i class="el-icon-arrow-left" style="font-size: 16px;" @click="isOpenSecondMenu" />
     </div>
 </template>
 
@@ -27,17 +27,21 @@ export default {
     };
   },
   watch:{
-    $route:{
-      handler:function(val,oldVal){
-        console.log(val.name,oldVal.path);
+    $route(to, from) {
+      if (to.path === '/' && from.path === '/home/planservice') {
+        this.$store.commit('openleftmenu02');
       }
-    }
+    },
+    // $route:{
+    //   handler:function(val,oldVal){
+    //     console.log(val.name,oldVal.path);
+    //   }
+    // }
   },
   methods:{
-    isOpenThirdMenu(){
-      this.$store.commit('openleftmenu02');
-    }
-			
+    isOpenSecondMenu() {
+      this.$store.commit('OpenSecondMenu');
+    },			
   }
 };
 </script>

@@ -1,8 +1,11 @@
 <template>
     <div id="home-main-tool-box">
         <div v-for="(values,index) in ToolBoxContain" :key="index" class="tool-box-contain">
-            <i :class="values.IconClass" />
-            <span class="tool-box-name">{{ values.name }}</span><span v-if="index<ToolBoxContain.length-1">|</span>
+            <span class="tool-box-contain-function">
+                <i :class="values.IconClass" />
+                <span class="tool-box-name">{{ values.name }}</span>
+            </span> 
+            <span v-if="index<ToolBoxContain.length-1">|</span>
         </div>
     </div>
 </template>
@@ -50,13 +53,16 @@ export default{
 	}
 	.tool-box-contain{
 		padding-left: 2px;
-		font-size: 16px;
-		cursor: pointer;		
-		&>:nth-child(2){
+		font-size: 16px;			
+	}
+  .tool-box-contain-function{
+    cursor: pointer;
+    &>:nth-child(2){
 			margin-right: 3px;
 		}
-		&:hover{
+    &:hover{
 			background-color: #409EFF;
 		}
-	}
+    @include border-radius(4px);
+  }
 </style>

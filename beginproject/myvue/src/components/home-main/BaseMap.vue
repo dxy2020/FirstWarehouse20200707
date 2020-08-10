@@ -7,9 +7,6 @@
             <home-main-tool-box></home-main-tool-box>
         </div>
         <div id="mycontrol">
-            <!-- <el-button id="zoom-in" @click="getZoomIn">
-                放大
-            </el-button> -->
             <map-control @mapControlMove="mapControlMove" @mapControlZoom="mapControlZoom"></map-control>
         </div>
     </div>
@@ -186,22 +183,22 @@ export default {
 	#search-input-query{
     @include labelflex(flex,row,nowrap);
 		position: absolute;
-		left: 5px;
+		left: 4px;
 		top: 5px;
-		z-index: 10;
+    z-index: 10;
 	}
 	#tool-box{
     @include labelflex(inline-flex,row,nowrap);
 		position: absolute;
 		right: 8px;
 		top: 5px;
-		z-index: 10;
+    z-index: 10;
   }
   #mycontrol{
     // @include labelflex(flex,column,nowrap);
     position: absolute;
     left: 5px;
-    bottom: 56%;
+    top:50px;
     z-index: 10;
   }
 </style>

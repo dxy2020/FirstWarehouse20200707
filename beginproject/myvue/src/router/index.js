@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Login from "@/views/login/Login.vue";
 import Home from "@/views/home/Home.vue";
-import PlanServices from "@/views/home/home-aside-second-menu/PlanServices.vue";
+import HomeAsideSecondMenu from "@/views/home/home-aside-second-menu/HomeAsideSecondMenu.vue";
 import PlanServicesRationalityAnalysis from "@/views/home/home-aside-third-menu/PlanServicesRationalityAnalysis.vue";
 
 Vue.use(VueRouter);//组件
@@ -26,9 +26,9 @@ const routes = [
 	    component: Home,
     children:[
       {
-        path:"/home/planservices",
-        name:"PlanServices",
-        component:PlanServices
+        path:"/home/homeasidesecondmenu",
+        name:"HomeAsideSecondMenu",
+        component:HomeAsideSecondMenu
       },
       {
         path:"/home/planservicesrationalityanalysis",//rationalityAnalysis
@@ -52,8 +52,9 @@ router.beforeEach((to, from, next) => {
     next();
   } else {
     let token = localStorage.getItem('Authorization');
- 
-    if (token === 'null' || token === '') {
+    console.log(token); 
+    if (token === null || token === '') {
+      console.log(token);
       next('/login');
     } else {
       next();

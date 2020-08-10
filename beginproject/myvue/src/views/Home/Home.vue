@@ -8,9 +8,9 @@
             <div id="aside-left">
                 <home-aside-first-menu></home-aside-first-menu>
             </div>
-            <div v-show="this.$store.state.opensecondmenu" id="aside-right">
+            <div v-show="this.$store.state.openSecondMenu" id="aside-right">
                 <router-view></router-view>
-            </div><!-- <planservice></planservice> -->            
+            </div><!-- <planservice></planservice> -->           
             <div id="main">
                 <base-map></base-map><!--:mapWidth="mainwh.mapwidth+'px'"-->
                 <home-main-drawer :is-open="isShow"></home-main-drawer>
@@ -59,11 +59,6 @@ export default {
     //     }
     //   }
     // },
-    // $route(to, from) {
-    //   if (to.path === '/' && from.path === '/home/planservice') {
-    //     this.$store.commit('openleftmenu02');
-    //   }
-    // }
   },
   mounted() {
   },

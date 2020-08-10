@@ -1,20 +1,24 @@
 <template>
-    <div id="home-header" @click="postUserInformation">
+    <div id="home-header">
         <div id="home-header-theme">
             <img src="./img/header.png" style="height:80%;margin-left: 8px;margin-right: 10px;">
             <span style="color: #ffffff;">国土空间基础信息平台</span>
         </div>
         <el-dropdown class="el-dropdown" @command="handleCommand">
             <el-avatar :size="size" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
-            <span class="el-dropdown-link">				
+            <span class="el-dropdown-link" @click="getUserInformation">				
                 {{ this.$store.state.user }}<i class="el-icon-arrow-down el-icon--right" />
             </span>
             <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>
+                <el-dropdown-item command="user_information">
                     个人信息
                 </el-dropdown-item>
-                <el-dropdown-item>设置</el-dropdown-item>
-                <el-dropdown-item>退出</el-dropdown-item>
+                <el-dropdown-item command="set">
+                    设置
+                </el-dropdown-item>
+                <el-dropdown-item command="out">
+                    退出
+                </el-dropdown-item>
             </el-dropdown-menu>
         </el-dropdown>
     </div>
@@ -33,25 +37,25 @@ export default {
   methods: {
     handleCommand(command) {
       this.$message('click on item ' + command);
+      switch (command){
+      case "out":this.signOut();break;
+      }
+    },
+    signOut(){
+      console.log('我进来了');
+      localStorage.clear();
+      this.$router.push('/login');
     },
     getUserInformation(){
-      console.log('我进来了');
-      http.get('/data/userform.json',{
-        course_id:this.id
-      }).then(
-        res=>{
-          console.log(res);
-        }
-      );
+    //   console.log('我进来了');
+    //   http.get('/data/userform.json',{
+    //     course_id:this.id
+    //   }).then(
+    //     res=>{
+    //       console.log(res);
+    //     }
+    //   );
     },
-    postUserInformation(){
-      http.post('/data/userform.json',{
-        course_id :'戴洗衣'//this.id
-      }).then(
-        res=>{
-          console.log(res);
-        });
-    }
   }
 };
 </script>

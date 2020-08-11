@@ -1,9 +1,11 @@
 import Vue from "vue";
+import store from "../store/index.js";
 import VueRouter from "vue-router";
 import Login from "@/views/login/Login.vue";
 import Home from "@/views/home/Home.vue";
 import HomeAsideSecondMenu from "@/views/home/home-aside-second-menu/HomeAsideSecondMenu.vue";
 import PlanServicesRationalityAnalysis from "@/views/home/home-aside-third-menu/PlanServicesRationalityAnalysis.vue";
+import {routerBreadcrumb} from "@/utils/breadcrumb-data.js";
 
 Vue.use(VueRouter);//组件
 
@@ -28,13 +30,18 @@ const routes = [
       {
         path:"/home/homeasidesecondmenu",
         name:"HomeAsideSecondMenu",
-        component:HomeAsideSecondMenu
+        component:HomeAsideSecondMenu,
+        // meta:{
+        //   list:routerBreadcrumb.second_planning_services.list
+        // }
       },
       {
-        path:"/home/planservicesrationalityanalysis",//rationalityAnalysis
+        path:"/home/homeasidesecondmenu/planservicesrationalityanalysis",//rationalityAnalysis
         name:"PlanServicesRationalityAnalysis",
-        component:PlanServicesRationalityAnalysis
-				
+        component:PlanServicesRationalityAnalysis,
+        meta:{
+          list:routerBreadcrumb.third_difference_analysis.list
+        }				
       }
     ]
   }
@@ -59,6 +66,22 @@ router.beforeEach((to, from, next) => {
     } else {
       next();
     }
+  };
+  // 在路由中将本地面包屑数据赋值给vuex的组件面包屑数据
+  // if(/\/home\/homeasidesecondmenu\//.test(to.path)){
+  //   console.log('我是三级菜单');
+  // }
+  if(to.path==='/home/homeasidesecondmenu'&&/\/home\/homeasidesecondmenu\//.test(from.path)){
+    store.commit('changeBreadcrumb',[]);
+  };
+  if(to.meta.list){
+    let list=to.meta.list;
+    store.commit('changeBreadcrumb',list);
+  }
+  //解决面包屑跳转到首页时背景颜色没变化
+  if(to.path==='/home'){
+    store.state.openSecondMenu=false;
+    // store.commit('OpenSecondMenu');//这样有问题
   }
 });
 

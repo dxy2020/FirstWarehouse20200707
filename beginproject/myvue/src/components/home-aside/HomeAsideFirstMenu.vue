@@ -3,7 +3,7 @@
         <img :src="top_img_switch?top_img_src01:top_img_src02" @click="removeDescription">
         <div
             v-for="(value,index) in menu" :key="index" class="menu-button"
-            @click="isOpenSecondMenu(index)"
+            :style="{'background-color':(changeIndex===index?changeBackgroundColor:'')}" @click="isOpenSecondMenu(index)"
         >
             <router-link
                 :to="{path:value.tolink,query:value.query}" tag="div" append
@@ -29,6 +29,7 @@ export default {
       top_img_src02:require('./img/u65.png'),
       clickcount:0,
       isShowDescription:true,
+      changeIndex:0,
       menu: [
         {
           tolink: '/home/homeasidesecondmenu',
@@ -74,6 +75,16 @@ export default {
       ]
     };
   },
+  computed:{
+    changeBackgroundColor(){
+      //二级菜单关闭时背景颜色默认
+      if(this.$store.state.openSecondMenu===false){
+        return '';
+      }else{
+        return 'bisque';
+      }
+    }
+  },
   methods: {
     isOpenSecondMenu(index) {
       if(this.$store.state.openSecondMenu===false){
@@ -84,8 +95,10 @@ export default {
           this.$store.commit('OpenSecondMenu');
         }else{
           this.$store.commit('secondMenuSelect',index);
-        }
-      };      
+        };
+        //改变背景颜色
+        this.changeIndex=index;        
+      };    
     },
     removeDescription(){
       this.top_img_switch=!this.top_img_switch;

@@ -66,7 +66,7 @@ export default {
   },
   methods:{
 	  isOpenDrawer(){
-		  this.$store.commit('opendrawerchart');
+		  this.$store.commit('openDrawerChart');
 		  this.$store.commit('selectanalysisfactor',this.radata[this.radio]);
 	  }
   }

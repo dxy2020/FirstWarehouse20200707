@@ -56,7 +56,7 @@ export default{
           name:'规划服务',
           content:[
             {
-              routerlinkthird:'/home/planservicesrationalityanalysis',
+              routerlinkthird:'/home/homeasidesecondmenu/planservicesrationalityanalysis',
               imgsrc:require('./img/analysis01.png'),
               contentname:'智能选址'
             },

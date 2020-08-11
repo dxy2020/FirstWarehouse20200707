@@ -59,7 +59,6 @@ instance.interceptors.response.use(
 
 export default{
   post(url,data,contenType){
-    // console.log(setData(data));
     return instance({
       method:'post',
       headers:{
@@ -73,7 +72,7 @@ export default{
     });
   },
   get(url, params) {
-    console.log(setData(params));
+    // console.log(setData(params));
     return instance({
       method: 'get',
       url: url,
@@ -84,6 +83,6 @@ export default{
   }
 };
 
-function setData(data){
-  return data;
-}
+// function setData(data){
+//   return data;
+// }

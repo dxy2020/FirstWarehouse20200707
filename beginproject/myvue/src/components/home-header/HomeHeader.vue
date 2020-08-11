@@ -42,19 +42,18 @@ export default {
       }
     },
     signOut(){
-      console.log('我进来了');
       localStorage.clear();
       this.$router.push('/login');
     },
     getUserInformation(){
-    //   console.log('我进来了');
-    //   http.get('/data/userform.json',{
-    //     course_id:this.id
-    //   }).then(
-    //     res=>{
-    //       console.log(res);
-    //     }
-    //   );
+      // console.log('我进来了');
+      // http.get('/data/userform.json',{
+      //   course_id:this.id
+      // }).then(
+      //   res=>{
+      //     console.log(res);
+      //   }
+      // );
     },
   }
 };

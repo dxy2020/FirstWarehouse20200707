@@ -29,7 +29,7 @@ export default {
       top_img_src02:require('./img/u65.png'),
       clickcount:0,
       isShowDescription:true,
-      changeIndex:0,
+      changeIndex:10,
       menu: [
         {
           tolink: '/home/homeasidesecondmenu',

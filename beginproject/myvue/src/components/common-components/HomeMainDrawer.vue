@@ -4,7 +4,7 @@
             <div id="drawer-header">
                 <span>{{ selectanalysis }}</span>
                 <el-button
-                    size="mini" type="primary" round @click="getjson"
+                    size="mini" type="primary" round class="drawer-header-btn" @click="isCloseDrawer"
                 >
                     收起
                 </el-button>
@@ -31,8 +31,6 @@ export default {
   data() {
     return {
       isopen: true,
-      datajson: []
-      // selectanalysis:''
     };
   },
   computed: {
@@ -41,20 +39,8 @@ export default {
     }
   },
   methods: {
-    getjson() {
-      this.$axios({
-        method: 'get',
-        url: '/data/planservices.json'
-        /* 数据需要放在public文件夹中，并且URL不用写public(publi是向外曝露的服务器路径)
-					vue-cli3把以前的static改为public，故vue-cli3之前版本放在static，vue-cli3放在public中
-					*/
-      }).then(res => {
-        // console.log(res.data);
-        this.datajson = res.data;
-      }).catch(res => {
-        alert('访问失败！');
-        console.log(res);
-      });
+    isCloseDrawer(){
+      this.$store.commit('openDrawerChart');
     }
   }
 };
@@ -75,10 +61,16 @@ export default {
 		background-color: #ff5500;
 	}
 	#drawer-header{
-    @include labelflex(flex,row,nowrap);
+    @include labelflex(inline-flex,row,nowrap);
     justify-content: space-between;
     height: 8%;
     font-size: $myFontSize;
+    align-items: center;
+    padding: 0px 5px;
+    .drawer-header-btn{
+      height: 80%;
+      padding: 2px 8px;
+    }
 	}
 	#drawer-contain{
     // @include labelflex(flex,row,nowrap);

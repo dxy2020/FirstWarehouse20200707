@@ -41,7 +41,7 @@ export default{
               contentname:'统计分析'
             },
             {
-              routerlinkthird:'#',
+              routerlinkthird:'/home/homeasidesecondmenu/layermanagement',
               imgsrc:require('./img/analysis01.png'),
               contentname:'专题制图'
             },
@@ -61,7 +61,7 @@ export default{
               contentname:'智能选址'
             },
             {
-              routerlinkthird:'/home/planservice/rationalityAnalysis',
+              routerlinkthird:'/home/homeasidesecondmenu/planningservice',
               imgsrc:require('./img/analysis01.png'),
               contentname:'差异分析'
             },

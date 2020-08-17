@@ -5,6 +5,8 @@ import Login from "@/views/login/Login.vue";
 import Home from "@/views/home/Home.vue";
 import HomeAsideSecondMenu from "@/views/home/home-aside-second-menu/HomeAsideSecondMenu.vue";
 import PlanServicesRationalityAnalysis from "@/views/home/home-aside-third-menu/PlanServicesRationalityAnalysis.vue";
+import PlanningService from "@/views/home/home-aside-third-menu/PlanningService.vue";
+import LayerManagement from "@/views/home/home-aside-third-menu/LayerManagement.vue";
 import {routerBreadcrumb} from "@/utils/breadcrumb-data.js";
 
 Vue.use(VueRouter);//组件
@@ -42,6 +44,22 @@ const routes = [
         meta:{
           list:routerBreadcrumb.third_difference_analysis.list
         }				
+      },
+      {
+        path:"/home/homeasidesecondmenu/planningservice",//规划服务--版本2
+        name:"PlanningService",
+        component:PlanningService,
+        meta:{
+          list:routerBreadcrumb.third_planning_service.list
+        }				
+      },
+      {
+        path:"/home/homeasidesecondmenu/layermanagement",//规划服务--版本2
+        name:"LayerManagement",
+        component:LayerManagement,
+        meta:{
+          list:routerBreadcrumb.third_layer_management.list
+        }				
       }
     ]
   }
@@ -71,9 +89,26 @@ router.beforeEach((to, from, next) => {
   // if(/\/home\/homeasidesecondmenu\//.test(to.path)){
   //   console.log('我是三级菜单');
   // }
-  if(to.path==='/home/homeasidesecondmenu'&&/\/home\/homeasidesecondmenu\//.test(from.path)){
+  // if(to.path==='/home/homeasidesecondmenu'&&/\/home\/homeasidesecondmenu\//.test(from.path)){
+  //   console.log('to.path:',getCharacterNum(to.path,/\//g));
+  //   console.log('from.path:',getCharacterNum(from.path,/\//g));
+  //   console.log('path.type:',typeof to.path);
+  //   store.commit('changeBreadcrumb',[]);
+  // };
+  //通过统计路径中'/'判断几级菜单
+  let toPathNum=getCharacterNum(to.path,/\//g);
+  let fromPathNum=getCharacterNum(from.path,/\//g);
+  if(toPathNum==2){
     store.commit('changeBreadcrumb',[]);
-  };
+  }
+  if(fromPathNum==3){
+    store.commit('openDrawerChart',true);
+  }
+  //当通过面包屑直接跳转到二级路由或首页时，抽屉状态为false
+  // if(/\/home\/homeasidesecondmenu\//.test(from.path)){
+  //   store.commit('openDrawerChart',true);
+  // }
+
   if(to.meta.list){
     let list=to.meta.list;
     store.commit('changeBreadcrumb',list);
@@ -84,6 +119,14 @@ router.beforeEach((to, from, next) => {
     // store.commit('OpenSecondMenu');//这样有问题
   }
 });
+
+//获取字符串包含指定的字符的个数
+function getCharacterNum(str,char){
+  let result=str.match(char);
+  // let result=str.match(/\//g);
+  console.log((result||[]).length);
+  return (result||[]).length;
+};
 
 const originalPush = VueRouter.prototype.push;
 VueRouter.prototype.push = function push(location) {

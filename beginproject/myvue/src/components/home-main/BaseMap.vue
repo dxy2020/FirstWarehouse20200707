@@ -16,11 +16,14 @@
 import "ol/ol.css";
 import Map from "ol/Map";
 import View from "ol/View";
+import * as olExtent from 'ol/extent';
 import * as olControl from 'ol/control';
 import TileLayer from "ol/layer/Tile";
 import Source from "ol/source/Source";
+import WMTS from 'ol/source/WMTS';
 import XYZ from 'ol/source/XYZ';
 import * as olProj from 'ol/proj';
+import WMTSTileGrid from 'ol/tilegrid/WMTS';
 import HomeMainSearchInputQuery from "../common-components/HomeMainSearchInputQuery.vue";
 import HomeMainToolBox from "../common-components/HomeMainToolBox.vue";
 import MapControl from "../common-components/MapControl.vue";
@@ -50,18 +53,33 @@ export default {
   },
   mounted() {
     let TiandiMap_vec=new TileLayer({
-      title:"天地图矢量图层",
+      name:"天地图矢量图层",
       source:new XYZ({
-        // url:"http://api.tianditu.gov.cn/api?v=4.0&tk=" +this.TiandituKey,//TiandituKey为天地图密钥
+        // url:"http://t0.tianditu.gov.cn/vec_c/wmts?tk=" +this.TiandituKey,//TiandituKey为天地图密钥
         url:"http://t0.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}&tk=" +this.TiandituKey,//TiandituKey为天地图密钥
+        matrixSet:"c",
         wrapX: false
       })
     });
     let Tianditu_cva = new TileLayer({
-      title: "天地图矢量注记图层",
+      name: "天地图矢量注记图层",
       source: new XYZ({
         // url: "http://api.tianditu.gov.cn/api?v=4.0&tk=" +this.TiandituKey,//TiandituKey为天地图密钥
         url: "http://t0.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}&tk=" +this.TiandituKey,//TiandituKey为天地图密钥
+        wrapX: false
+      })
+    });
+    var TiandiMap_img = new TileLayer({
+      name: "天地图影像图层",
+      source: new XYZ({
+        url: "http://t0.tianditu.com/DataServer?T=img_w&x={x}&y={y}&l={z}&tk=" + this.TiandituKey,//parent.TiandituKey()为天地图密钥
+        wrapX: false
+      })
+    });
+    var TiandiMap_cia = new TileLayer({
+      name: "天地图影像注记图层",
+      source: new XYZ({
+        url: "http://t0.tianditu.com/DataServer?T=cia_w&x={x}&y={y}&l={z}&tk=" + this.TiandituKey,//parent.TiandituKey()为天地图密钥
         wrapX: false
       })
     });
@@ -70,21 +88,8 @@ export default {
     this.map=new Map({
 			  //地图容器div的ID
       target: 'map',
-      // controls: olControl.defaults({
-      //   /** @type {olx.control.AttributionOptions} */
-      //   attributionOptions: ({
-      //     collapsible: true
-      //   })
-      // }).extend([
-      //   new olControl.ZoomToExtent({
-      //     extent: [
-      //       813079.7791264898, 5929220.284081122,
-      //       848966.9639063801, 5936863.986909639
-      //     ]
-      //   })
-      // ]),
       //地图容器中加载的图层
-      layers: [TiandiMap_vec, Tianditu_cva],
+      layers: [TiandiMap_vec, Tianditu_cva,TiandiMap_img,TiandiMap_cia],
       //地图视图设置
       view: new View({
         //地图初始中心点
@@ -104,11 +109,33 @@ export default {
     this.zoom=view.getZoom();
     this.center=view.getCenter();
     this.rotation=view.getRotation();
+    //map中的图层数组
+    let layer = new Array();
+    //图层名称数组
+    // let layerName = new Array();
+    //图层可见属性数组
+    // let layerVisibility = new Array();
+    //vuex图层数据存储：名称和状态
+    let layerManagement=new Array();
+    let layers=map.getLayers();
+    for(let i=0;i<layers.getLength();i++){
+      //获取每个图层的名称、是否可见属性
+      layer[i] = layers.item(i);
+      layerManagement[i]={"name":layer[i].get('name'),"state":layer[i].getVisible()};
+    }
+    this.$store.commit('layerManagement',layerManagement);
+ 
   },
   methods:{
     mapControlMove(values){
       let view =this.map.getView();
       let mapCenter=view.getCenter();
+      console.log(this.map.getLayers());
+      let layers=this.map.getLayers();
+      console.log('item:',layers.item());
+      console.log(layers.item(3).getVisible());
+      let layer=this.map.getLayers().item(3);
+      layer.setVisible(false);
       if(values==='左移'){
         mapCenter[0]-=5000*Math.pow(2,11-view.getZoom());
         view.animate({

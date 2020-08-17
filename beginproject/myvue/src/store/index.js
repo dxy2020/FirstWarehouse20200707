@@ -15,6 +15,7 @@ const store = new Vuex.Store({
     getmainwidth:100,
     secondMenuName:'',
     addBreadcrumb:[],//面包屑	
+    layerManagement:[]//图层管理
   },
  
   mutations: {
@@ -25,14 +26,16 @@ const store = new Vuex.Store({
       localStorage.setItem('Authorization', user.Authorization);
       localStorage.setItem('user', user.username);
     },
-    openDrawerChart(state){
-      state.opendrawerchart=!state.opendrawerchart;
+    openDrawerChart(state,locking=false){
+      if(locking===false){
+        state.opendrawerchart=!state.opendrawerchart;        
+      }else state.opendrawerchart=false;
     },
     OpenSecondMenu(state){
       state.openSecondMenu=!state.openSecondMenu;
     },
     secondMenuSelect(state,index){
-      state.secondMenuSelect=index;
+      state.secondMenuSelect=index;//切换二级菜单内容
       switch (index){
       case 0:state.secondMenuName='通用服务';break;
       case 1:state.secondMenuName='规划服务';break;
@@ -52,6 +55,10 @@ const store = new Vuex.Store({
     //赋值面包屑
     changeBreadcrumb(state,value){
       state.addBreadcrumb=value;
+    },
+    //图层管理
+    layerManagement(state,layers){
+      state.layerManagement=layers;
     }
   }
 });

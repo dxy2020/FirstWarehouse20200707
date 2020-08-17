@@ -56,7 +56,7 @@ export default {
         {
           iclass:'el-icon-s-claim',
           name:'规划服务',
-          topath:'/home/homeasidesecondmenu',
+          topath:'/home/homeasidesecondmenu',///home/homeasidesecondmenu/planningservice
           index:'3'
         },
         {

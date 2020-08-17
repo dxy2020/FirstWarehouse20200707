@@ -1,3 +1,4 @@
+<!--一级菜单：div-->
 <template>
     <div id="home-aside-first-menu" :style="{width:first_menu_width+'px'}">
         <img :src="top_img_switch?top_img_src01:top_img_src02" @click="removeDescription">
@@ -87,6 +88,8 @@ export default {
   },
   methods: {
     isOpenSecondMenu(index) {
+      //改变背景颜色
+      this.changeIndex=index; 
       if(this.$store.state.openSecondMenu===false){
         this.$store.commit('OpenSecondMenu');
         this.$store.commit('secondMenuSelect',index);
@@ -95,15 +98,13 @@ export default {
           this.$store.commit('OpenSecondMenu');
         }else{
           this.$store.commit('secondMenuSelect',index);
-        };
-        //改变背景颜色
-        this.changeIndex=index;        
+        }; 
       };    
     },
     removeDescription(){
       this.top_img_switch=!this.top_img_switch;
       this.isShowDescription=!this.isShowDescription;      
-      this.first_menu_width=this.top_img_switch?60:40;   
+      this.first_menu_width=this.top_img_switch?60:40;
     }
   }
 };

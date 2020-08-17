@@ -6,7 +6,8 @@
         <div id="contain">
             <!-- <div id="aside"></div> -->
             <div id="aside-left">
-                <home-aside-first-menu></home-aside-first-menu>
+                <!-- <home-aside-first-menu></home-aside-first-menu> -->
+                <home-aside-first-menu-imitate></home-aside-first-menu-imitate>
             </div>
             <div v-show="this.$store.state.openSecondMenu" id="aside-right">
                 <router-view></router-view>
@@ -21,6 +22,7 @@
 
 <script>
 import HomeAsideFirstMenu from '@/components/home-aside/HomeAsideFirstMenu.vue';
+import HomeAsideFirstMenuImitate from '@/components/home-aside/HomeAsideFirstMenuImitate.vue';
 import BaseMap from '@/components/home-main/BaseMap.vue';
 import HomeMainDrawer from '@/components/common-components/HomeMainDrawer.vue';
 import HomeHeader from '@/components/home-header/HomeHeader.vue';
@@ -28,9 +30,10 @@ export default {
   name: 'Home',
   components: {
     HomeHeader,
-    HomeAsideFirstMenu,
+    // HomeAsideFirstMenu,
     BaseMap,
-    HomeMainDrawer
+    HomeMainDrawer,
+    HomeAsideFirstMenuImitate,//一级菜单模仿
   },
   data() {
     return {

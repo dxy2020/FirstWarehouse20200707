@@ -46,12 +46,12 @@ export default {
       this.breadcrumb_item[1].name=newval;
     },
     // $route:'getBreadcrumb',
-    '$route'(to, from) {
-      console.log(to.path,from.path);
-      if (to.path === '/home' && from.path === '/home/homeasidesecondmenu') {
-        this.$store.commit('openDrawerChart');
-      }
-    },
+    // '$route'(to, from) {
+    //   console.log(to.path,from.path);
+    //   if (to.path === '/home' && from.path === '/home/homeasidesecondmenu') {
+    //     this.$store.commit('openDrawerChart');
+    //   }
+    // },
     $route:{
       handler:function(val,oldVal){
         console.log(this.$route.path);
@@ -65,6 +65,7 @@ export default {
   methods:{
     isOpenSecondMenu() {
       this.$store.commit('OpenSecondMenu');
+      this.$store.commit('openDrawerChart',true);
     },
     getBreadcrumb(){
       console.log(this.$route.path);
@@ -74,14 +75,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "@/assets/styles/_common-styles.scss"; 
   #breadcrumb{
-      width: auto;
-      display: inline-flex;
-      justify-content: space-between;
-      margin: {
-        top: 5px;
-        bottom:5px;
-      }
+    width: auto;
+    display: inline-flex;
+    justify-content: space-between;
+    margin: {
+      top: 5px;
+      bottom:5px;
+    }
+    .el-breadcrumb{
+      font-size: 12px;
+    }
   }
 
 </style>

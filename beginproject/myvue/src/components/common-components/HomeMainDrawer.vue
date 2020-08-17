@@ -1,6 +1,7 @@
 <template>
     <transition name="el-zoom-in-bottom" style="margin: 0;padding: 0;">
-        <div v-show="this.$store.state.opendrawerchart" id="home-main-drawer">
+        <!-- <div v-show="this.$store.state.opendrawerchart" id="home-main-drawer"> -->
+        <div v-if="this.$store.state.opendrawerchart" id="home-main-drawer">
             <div id="drawer-header">
                 <span>{{ selectanalysis }}</span>
                 <el-button
@@ -53,30 +54,33 @@ export default {
 	#home-main-drawer{
     @include labelflex(flex,column,nowrap);
 		position: relative;
-    height:55%;
-    bottom: 55%;
+    height:56%;
+    bottom: 56%;
     width: 100%;
 		border-radius: 4px;
 		box-sizing: border-box;
-		background-color: #ff5500;
+		background-color: #ffffff;
+    padding: 0px 4px;
 	}
 	#drawer-header{
     @include labelflex(inline-flex,row,nowrap);
     justify-content: space-between;
-    height: 8%;
+    height:10%;
+    width: 100%;
+    box-sizing: border-box;
     font-size: $myFontSize;
     align-items: center;
-    padding: 0px 5px;
+    border-bottom: 2px solid #dedfe4;
     .drawer-header-btn{
-      height: 80%;
-      padding: 2px 8px;
+      height: 70%;
+      padding: 4px 10px;
     }
 	}
 	#drawer-contain{
     // @include labelflex(flex,row,nowrap);
-    background-color: #2C3E50;
     @extend .label-size-nopadding;
-    height: 92%;
+    // flex-grow: 1;//若用flex-grow则会被el-table撑开，舍弃
+    height: 90%;
   }
 
 </style>

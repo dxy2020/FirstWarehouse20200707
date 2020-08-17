@@ -31,9 +31,12 @@ import {
   FormItem,
   Tabs,
   Tag,
+  Tree,
   Icon,
   Row,
   Col,
+  Collapse,
+  CollapseItem,
   Container,
   Header,
   Aside,
@@ -65,10 +68,13 @@ Vue.use(Form);
 Vue.use(FormItem);
 Vue.use(Tabs);
 Vue.use(Tag);
+Vue.use(Tree);
 Vue.use(Icon);
 Vue.use(Row);
 Vue.use(Col);
 Vue.use(Tooltip);
+Vue.use(Collapse);
+Vue.use(CollapseItem);
 Vue.use(Container);
 Vue.use(Header);
 Vue.use(Aside);
@@ -78,11 +84,21 @@ Vue.prototype.$alert = MessageBox.alert;
 Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$prompt = MessageBox.prompt;
 Vue.prototype.$message = Message;
-
 Vue.use(Loading.directive);
 Vue.prototype.$axios=axios;
 // Vue.use(ElementUI);
 Vue.use(VCharts);
+//按需引入echarts
+//引入基本模板
+let echarts = require('echarts/lib/echarts');
+// 引入饼图等组件
+require("echarts/lib/chart/pie");
+// 引入提示框和title组件，图例
+require('echarts/lib/component/tooltip');
+require('echarts/lib/component/title');
+require('echarts/lib/component/legend');
+require('echarts/lib/component/legendScroll');//图例翻译滚动
+Vue.prototype.$echarts = echarts;
 Vue.config.productionTip = false;
 //只在开发环境中引入，生产环境不引入mock。mock文件夹与main.js同等级。
 if(process.env.NODE_ENV !=="production")require("./mock");

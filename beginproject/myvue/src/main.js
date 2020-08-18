@@ -4,7 +4,8 @@ import store from "./store";
 // import ElementUI from "element-ui";完整引入
 import 'element-ui/lib/theme-chalk/index.css';
 import axios from 'axios';
-import VCharts from 'v-charts';
+// import VCharts from 'v-charts';//修改为按需引入
+import VePie from 'v-charts/lib/pie.common.js';
 import App from "./App.vue";
 import {
   Avatar,
@@ -87,7 +88,9 @@ Vue.prototype.$message = Message;
 Vue.use(Loading.directive);
 Vue.prototype.$axios=axios;
 // Vue.use(ElementUI);
-Vue.use(VCharts);
+// Vue.use(VCharts);//完整引入
+//按需引入v-charts
+Vue.component(VePie.name,VePie);
 //按需引入echarts
 //引入基本模板
 let echarts = require('echarts/lib/echarts');

@@ -65,14 +65,15 @@ export default {
       // console.log('当前图层树管理：',val,oldval);
       let layers=this.map.getLayers();//获取图层
       let layerArray=layers.array_;//获取图层数据
+      // console.log('标准图层尺子:',this.layerInsertRuler); 
+      // console.log('当前图层：',layerArray.map(x=>x.values_.name));
       if(val[1]===false){//val[1]===false:表示取消图层
         // let layerArray=layers.array_;
-        // layers.removeAt(3);//删除图层     
+        // layers.removeAt(3);//删除图层    
         layers.removeAt(layerArray.findIndex(x=>x.values_.name===val[0].label));
       }else{//增加图层，需要判断顺序在哪插入 
         // console.log('标准图层尺子:',this.layerInsertRuler); //根据图层树从上往下的label数组
         let layerNameArray=layerArray.map(x=>x.values_.name);
-        // console.log('当前图层Name：',layerNameArray);
         let ruler=this.layerInsertRuler.indexOf(val[0].label);
         let startSite=this.layerInsertRuler.findIndex(x=>x===layerNameArray[0]);//最下面图层的位置
         let endSite=this.layerInsertRuler.findIndex(x=>x===layerNameArray[layerNameArray.length-1]);//最上面图层在尺子中的位置
@@ -84,14 +85,24 @@ export default {
         if(ruler>startSite){layers.insertAt(0,layer)}//向最底下加图层
         else if(ruler<endSite){layers.push(layer)}//向上面加图层
         else{
-          for(let i=endSite,j=1;i<startSite;i++,j++){
-            if(ruler>this.layerInsertRuler[i]){
-              layers.insertAt(j,layer);
-              break;//跳出循环
+          if(layerNameArray.length=2){//当只有两个图层时直接加在中间
+            layers.insertAt(1,layer);
+          }else{
+            for(let j=1,k=startSite-1;j<layerNameArray.length-1;j++){//j=1,j<layerNameArray.length-1:不用判断首尾两个图层
+              for(let i=k;i>endSite;i--){//k记录当前比匹配的位置，从该位置反向寻找，提高效率
+                if(this.layerInsertRuler[i]===layerNameArray[j]){
+                  if(ruler>i||j==layerNameArray.length-2){
+                    layers.insertAt(j+1,layer);
+                    // console.log('当前图层Name：',this.map.getLayers().array_.map(x=>x.values_.name));
+                    return;//结束
+                  }
+                  k=i-1;
+                  break;//跳出当前循环
+                }
+              }
             }
           }
-        }     
-        // console.log('最后的图层',this.map.getLayers().array_.map(x=>x.values_.name));
+        }
         // layers.push(layer);//在最后插入一个元素，即向最上一层添加
         // layers.insertAt(1,ImageVector);//向指定位置添加图层，后期要用
       }

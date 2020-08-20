@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name:"TagRadio",
+  name:"TagButton",
   props:{
     tagTitle:{
       type:String,
@@ -28,7 +28,6 @@ export default {
   },
   data(){
     return{
-      radio:2,
     };
   }
 };

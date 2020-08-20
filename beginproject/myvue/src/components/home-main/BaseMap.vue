@@ -27,6 +27,9 @@ import WMTSTileGrid from 'ol/tilegrid/WMTS';
 import HomeMainSearchInputQuery from "../common-components/HomeMainSearchInputQuery.vue";
 import HomeMainToolBox from "../common-components/HomeMainToolBox.vue";
 import MapControl from "../common-components/MapControl.vue";
+import layerManagementMethod from "@/api/layer-management.js";//配置图层管理的方法
+import {olLayer} from "@/api/layer-management.js";//配置图层管理的方法
+import {mapGetters} from 'vuex';
 export default {
   name:'BaseMap',
   components:{
@@ -46,50 +49,82 @@ export default {
       map:'',
       view:'',
       zoom:'',
+      layers:[],
       center:'',
       rotation:'',
-      TiandituKey:'9b0af09fca5346f7bf6ed41cd3e1aef6'
+      // TiandituKey:'9b0af09fca5346f7bf6ed41cd3e1aef6'
+      layerInsertRuler:[],//图层管理el-tree的参考物
     };
   },
+  computed:{
+    ...mapGetters(['layersLoading']),
+  },
+  watch:{
+    layersLoading(val,oldval){
+      //笨办法：一切推倒重来，但太暴力，可能存在空白期,舍弃。
+      // console.log('当前图层树管理：',val,oldval);
+      let layers=this.map.getLayers();//获取图层
+      let layerArray=layers.array_;//获取图层数据
+      if(val[1]===false){//val[1]===false:表示取消图层
+        // let layerArray=layers.array_;
+        // layers.removeAt(3);//删除图层     
+        layers.removeAt(layerArray.findIndex(x=>x.values_.name===val[0].label));
+      }else{//增加图层，需要判断顺序在哪插入 
+        // console.log('标准图层尺子:',this.layerInsertRuler); //根据图层树从上往下的label数组
+        let layerNameArray=layerArray.map(x=>x.values_.name);
+        // console.log('当前图层Name：',layerNameArray);
+        let ruler=this.layerInsertRuler.indexOf(val[0].label);
+        let startSite=this.layerInsertRuler.findIndex(x=>x===layerNameArray[0]);//最下面图层的位置
+        let endSite=this.layerInsertRuler.findIndex(x=>x===layerNameArray[layerNameArray.length-1]);//最上面图层在尺子中的位置
+        // let site=this.layerInsertRuler.findIndex(x=>x===layerNameArray[i]);//没必要每次从头遍历，舍弃
+        let layer=olLayer.loadingXYZ(val[0]);
+        // if(startSite===-1||endSite===-1){//只需要写一个就ok:没必要，当startSite===-1||endSite===-1表示没有图层，
+        //   layers.push(layer);//insertAt和push都是没有问题
+        // }else{   }
+        if(ruler>startSite){layers.insertAt(0,layer)}//向最底下加图层
+        else if(ruler<endSite){layers.push(layer)}//向上面加图层
+        else{
+          for(let i=endSite,j=1;i<startSite;i++,j++){
+            if(ruler>this.layerInsertRuler[i]){
+              layers.insertAt(j,layer);
+              break;//跳出循环
+            }
+          }
+        }     
+        // console.log('最后的图层',this.map.getLayers().array_.map(x=>x.values_.name));
+        // layers.push(layer);//在最后插入一个元素，即向最上一层添加
+        // layers.insertAt(1,ImageVector);//向指定位置添加图层，后期要用
+      }
+      //获取并修改图层是否可见
+      // let layerManagement=new Array();
+      // let layers=map.getLayers();
+      // for(let i=0;i<layers.getLength();i++){
+      // //获取每个图层的名称、是否可见属性
+      //   let layer=new Array();
+      //   layer[i] = layers.item(i);
+      //   if(val.includes(layer.get('name'))){
+      //     console.log('当前图层展示');
+      //     layer.setVisible(true);
+      //   }else layer.setVisible(false);//不可见
+      // layerManagement[i]={name:layer[i].get('name'),state:layer[i].getVisible()};
+      // }      
+    }
+  },
   mounted() {
-    let TiandiMap_vec=new TileLayer({
-      name:"天地图矢量图层",
-      source:new XYZ({
-        // url:"http://t0.tianditu.gov.cn/vec_c/wmts?tk=" +this.TiandituKey,//TiandituKey为天地图密钥
-        url:"http://t0.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}&tk=" +this.TiandituKey,//TiandituKey为天地图密钥
-        matrixSet:"c",
-        wrapX: false
-      })
-    });
-    let Tianditu_cva = new TileLayer({
-      name: "天地图矢量注记图层",
-      source: new XYZ({
-        // url: "http://api.tianditu.gov.cn/api?v=4.0&tk=" +this.TiandituKey,//TiandituKey为天地图密钥
-        url: "http://t0.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}&tk=" +this.TiandituKey,//TiandituKey为天地图密钥
-        wrapX: false
-      })
-    });
-    var TiandiMap_img = new TileLayer({
-      name: "天地图影像图层",
-      source: new XYZ({
-        url: "http://t0.tianditu.com/DataServer?T=img_w&x={x}&y={y}&l={z}&tk=" + this.TiandituKey,//parent.TiandituKey()为天地图密钥
-        wrapX: false
-      })
-    });
-    var TiandiMap_cia = new TileLayer({
-      name: "天地图影像注记图层",
-      source: new XYZ({
-        url: "http://t0.tianditu.com/DataServer?T=cia_w&x={x}&y={y}&l={z}&tk=" + this.TiandituKey,//parent.TiandituKey()为天地图密钥
-        wrapX: false
-      })
-    });
+    let layersInit=new Array();
+    let layerManagementName=this.$store.getters.layerManagementInit;
+    let layerInsertRuler=new Array();
+    // this.layerInsertRuler=layerManagementName.map(x=>x['label']);//获取图层树所有的label，作为尺子
+    layerManagementMethod.traverseLayerTreeValue(this.$store.state.layerManagement,layerInsertRuler,'label');
+    this.layerInsertRuler=layerInsertRuler;
+    layerManagementMethod.loadingLayers(this.$store.getters.layerManagementInit,layersInit);//加载图层    
     //实例化Map对象加载地图
     // this.map = new Map({
     this.map=new Map({
 			  //地图容器div的ID
       target: 'map',
       //地图容器中加载的图层
-      layers: [TiandiMap_vec, Tianditu_cva,TiandiMap_img,TiandiMap_cia],
+      layers: layersInit,
       //地图视图设置
       view: new View({
         //地图初始中心点
@@ -116,24 +151,12 @@ export default {
     //图层可见属性数组
     // let layerVisibility = new Array();
     //vuex图层数据存储：名称和状态
-    let layerManagement=new Array();
-    let layers=map.getLayers();
-    for(let i=0;i<layers.getLength();i++){
-      //获取每个图层的名称、是否可见属性
-      layer[i] = layers.item(i);
-      layerManagement[i]={"name":layer[i].get('name'),"state":layer[i].getVisible()};
-    }
-    this.$store.commit('layerManagement',layerManagement);
- 
   },
   methods:{
     mapControlMove(values){
       let view =this.map.getView();
       let mapCenter=view.getCenter();
-      console.log(this.map.getLayers());
       let layers=this.map.getLayers();
-      console.log('item:',layers.item());
-      console.log(layers.item(3).getVisible());
       let layer=this.map.getLayers().item(3);
       layer.setVisible(false);
       if(values==='左移'){

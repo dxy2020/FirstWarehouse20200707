@@ -21,6 +21,17 @@ export default{
       // return val.filter(x=>{return x['visible']===true});//此时使用concat接收不合适
     }
   },
+  //获取图层树叶子的某个数据，如name
+  traverseLayerTreeValue(val,getLayersValue,value){//对图层数据进行遍历,val：Array
+    val.forEach(item => {//遍历数据，获取对象
+      if(item.children!==undefined&&item.children[0].id!==undefined){//判断对象是否有children,且存在数据，若有则遍历children
+        this.traverseLayerTreeValue(item.children,getLayersValue,value);//递归遍历children内容
+        getLayersValue.push(item[value]);//得到父节点的值
+      }else{//对象无children
+        getLayersValue.push(item[value]);//动态取属性，放在getLayersValue中
+      }
+    });
+  },
   //traverseLayerTreeold和recursiveLayerTree的结合，可删。
   traverseLayerTree(val,getLayers){//对图层数据进行遍历,val：Array，getLayers:Array，接收需要初始化加载的图层数据
     val.forEach(item => {//遍历数据，获取对象

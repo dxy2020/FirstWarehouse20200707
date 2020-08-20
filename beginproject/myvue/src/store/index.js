@@ -1,5 +1,10 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import TileLayer from "ol/layer/Tile";
+import XYZ from 'ol/source/XYZ';
+import {layerManagement} from "@/utils/layer-management.js";//配置图层管理的数据
+import layerManagementMethod from "@/api/layer-management.js";//配置图层管理的方法
+
 
 Vue.use(Vuex);
 const store = new Vuex.Store({
@@ -15,7 +20,8 @@ const store = new Vuex.Store({
     getmainwidth:100,
     secondMenuName:'',
     addBreadcrumb:[],//面包屑	
-    layerManagement:[]//图层管理
+    layerManagement:layerManagement.layerTreeOne,//图层管理所有数据
+    nodeCheckChange:[],//图层管理结点树选中或取消的数据
   },
  
   mutations: {
@@ -56,9 +62,21 @@ const store = new Vuex.Store({
     changeBreadcrumb(state,value){
       state.addBreadcrumb=value;
     },
-    //图层管理
-    layerManagement(state,layers){
-      state.layerManagement=layers;
+    //图层管理：当前选择图层加载的数据及增删
+    nodeCheckChange(state,layer){//layer:Array
+      state.nodeCheckChange=layer;
+    }
+  },
+  getters:{
+    layerManagementInit:state=>{//从所有数据中取出初始化图层加载数据
+      let layersInit=new Array();
+      layerManagementMethod.traverseLayerTree(state.layerManagement,layersInit);//提取初始化图层数据
+      // layerManagementMethod.loadingLayers(layersInit,state.layersLoading);//获取图层存储到layersLoading中
+      return layersInit;
+    },
+    //当前改变的节点及增删，使用数组存储，layersLoading[0]=draggingNode,layersLoading[1]=ev
+    layersLoading:state=>{//对象数组的监听(深度监听，待优化)
+      return state.nodeCheckChange;
     }
   }
 });
